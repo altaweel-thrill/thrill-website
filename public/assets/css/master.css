@@ -7262,10 +7262,10 @@ img {
 }
 .roll__area-3 {
   padding: 31px 10px;
-  background-color: var(--pink-2);
+  background-color: #4a0094;
 }
 .roll__area-3 .roll__slide h2 {
-  color: var(--black-2);
+  color: #fff;
 }
 .roll__wrapper {
   -webkit-transition-timing-function: linear;
