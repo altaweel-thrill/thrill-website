@@ -15576,7 +15576,7 @@ img {
 /*  27. TEAM CSS START
 /*----------------------------------------*/
 .team__area {
-  background-color: var(--black-2);
+  background-color: #231F20;
   overflow: hidden;
 }
 @media only screen and (min-width: 1400px) and (max-width: 1919px) {
