@@ -1,11 +1,15 @@
 const express = require('express');
 const ejs = require('ejs');
 const path = require('path')
+var nodemailer = require('nodemailer');
+const bodyParser = require('body-parser');
+
 
 const app = express();
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname , '/public')));
 // app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.urlencoded({ extended: false }))
 
 var port = process.env.PORT || 3000;
 app.listen(port,function(){
@@ -37,4 +41,51 @@ app.get('/contact',function(req,res){
 app.get('*',function(req,res){
     res.render("404");
     
+})
+
+
+app.post("/"  ,function async (req,res){
+
+    const name = req.body.name;
+    const email = req.body.email;
+    const phone = req.body.phone;
+    const subject = req.body.subject;
+    const message = req.body.message;
+    
+
+
+
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        host: 'smtp.gmail.com',
+        port: 578,
+         secure: false,
+        auth: {
+          user: 'altaweel@thrillagency.net',
+          pass: 'fcju clee mnmf llkh'
+        }
+      });
+      
+      var mailOptions = {
+        from: 'altaweel@thrillagency.net',
+        to: 'hello@thrillagency.net',
+        subject: 'contact from thrill website',
+        text: "Nmae : "+name+"\n"
+        +"email : "+email+"\n"
+        +"phone : "+phone+"\n"
+        +"subject : "+subject+"\n"
+        +"message : "+message+"\n"
+
+      };
+      
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+
+      res.render("contact");
+
 })

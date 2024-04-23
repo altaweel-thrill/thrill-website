@@ -116,32 +116,32 @@
               </div>
               <div class="col-xxl-7 col-xl-7 col-lg-7 col-md-7">
                 <div class="contact__form">
-                  <form action="" method="GET">
+                  <form action="/" method="post">
                     <div class="row g-3">
                       <div class="col-xxl-6 col-xl-6 col-12">
-                        <input type="text" name="name" placeholder="Name *">
+                        <input type="text" required name="name" placeholder="Name *">
                       </div>
                       <div class="col-xxl-6 col-xl-6 col-12">
-                        <input type="email" name="email" placeholder="Email *">
+                        <input type="email" required name="email" placeholder="Email *">
                       </div>
                     </div>
                     <div class="row g-3">
                       <div class="col-xxl-6 col-xl-6 col-12">
-                        <input type="tel" name="phone" placeholder="Phone">
+                        <input type="tel" required name="phone" placeholder="Phone">
                       </div>
                       <div class="col-xxl-6 col-xl-6 col-12">
-                        <input type="text" name="subject" placeholder="Subject *">
+                        <input type="text" required name="subject" placeholder="Subject *">
                       </div>
                     </div>
                     <div class="row g-3">
                       <div class="col-12">
-                        <textarea name="message" placeholder="Messages *"></textarea>
+                        <textarea name="message" required placeholder="Messages *"></textarea>
                       </div>
                     </div>
                     <div class="row g-3">
                       <div class="col-12">
                         <div class="btn_wrapper">
-                          <button class="wc-btn-primary btn-hover btn-item"><span></span> Send <br>Message <i
+                          <button type="submit" class="wc-btn-primary btn-hover btn-item"><span></span> Send <br>Message <i
                               class="fa-solid fa-arrow-right"></i></button>
                         </div>
                       </div>
