@@ -88,7 +88,7 @@
   --gray-15: #C0C0C0;
   --gray-16: #939393;
   --pink: #FAEDE9;
-  --pink-2: #FF9776;
+  --pink-2: #ADADED;
   --pink-3: #F3ECEC;
   --pink-4: #FFFAF0;
   --pink-5: #E0E3CC;
@@ -6441,7 +6441,7 @@ img {
   }
 }
 .hero__text-2 {
-  background-image: url(../imgs/icon/7.png);
+  /* background-image: url(../imgs/icon/7.png); */
   background-repeat: no-repeat;
   background-position: 64% 58%;
   padding-left: 32%;
