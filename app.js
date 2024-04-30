@@ -38,10 +38,22 @@ app.get('/contact',function(req,res){
             
 })
 
+
+app.get('/thanks',function(req,res){
+  res.render("thanks");
+  
+})
+
 app.get('*',function(req,res){
     res.render("404");
     
 })
+
+
+
+
+
+
 
 
 app.post("/"  ,function async (req,res){
@@ -86,6 +98,7 @@ app.post("/"  ,function async (req,res){
         }
       });
 
-      res.render("contact");
+      // res.render("thanks");
+      res.redirect('/thanks');
 
 })
