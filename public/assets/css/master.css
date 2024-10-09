@@ -2294,7 +2294,7 @@ img {
 }
 @media only screen and (max-width: 767px) {
   .sec-title-3 {
-    font-size: 48px;
+    font-size: 40px;
   }
 }
 .sec-title-4 {
@@ -5858,7 +5858,7 @@ img {
 }
 .hero__area-2 .hero2-shape {
   position: absolute;
-  left: 30%;
+  left: 34%;
   top: 41%;
   max-width: 41%;
   overflow: hidden;
@@ -5887,12 +5887,12 @@ img {
 @media only screen and (max-width: 767px) {
   .hero__area-2 .hero2-shape {
     left: 5%;
-    top: 30%;
+    top: 25%;
     max-width: 90%;
   }
 }
 .hero__area-2 .hero2-shape img {
-  max-width: 100%;
+  max-width: 90%;
 }
 .hero__area-2 .sec-title-3 {
   color: var(--white);
