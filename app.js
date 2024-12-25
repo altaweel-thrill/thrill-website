@@ -27,6 +27,12 @@ app.get('/service',function(req,res){
     
 })
 
+
+app.get('/card',function(req,res){
+  res.render("card");
+  
+})
+
 app.get('/about',function(req,res){
         res.render("about");
         
