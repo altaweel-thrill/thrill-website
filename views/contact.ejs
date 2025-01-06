@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="assets/css/master.css">
   <link rel="stylesheet" href="style.css">
 
+  <script src="https://www.google.com/recaptcha/enterprise.js?render=6LeecK8qAAAAAPPJQDmpQQhwkoHc95rbNRJcq1Ou"></script>
 
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -194,7 +195,15 @@
   <script src="assets/js/main.js"></script>
 
 
-
+  <script>
+    function onClick(e) {
+      e.preventDefault();
+      grecaptcha.enterprise.ready(async () => {
+        const token = await grecaptcha.enterprise.execute('6LeecK8qAAAAAPPJQDmpQQhwkoHc95rbNRJcq1Ou', {action: 'LOGIN'});
+      });
+    }
+  </script>
+  
  <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KZHSZZN8"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
