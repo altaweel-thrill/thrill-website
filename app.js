@@ -53,7 +53,13 @@ app.get('/portfolio',function(req,res){
             res.render("portfolio");
             
 })
+app.get('/flowy',function(req,res){
+            res.render("flowy");    
+})
 
+app.get('/hlayel',function(req,res){
+            res.render("hlayel");    
+})
 app.get('/thanks',function(req,res){
   res.render("thanks");
   
