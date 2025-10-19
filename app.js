@@ -35,6 +35,22 @@ app.get('/card',function(req,res){
   
 })
 
+app.get('/aqed',function(req,res){
+  res.render("aqed");
+  
+})
+
+app.get('/gsf',function(req,res){
+  res.render("gsf");
+
+})
+
+app.get('/louga',function(req,res){
+  res.render("louga");
+
+})
+
+
 app.get('/about',function(req,res){
         res.render("about");
         
@@ -45,9 +61,6 @@ app.get('/contact',function(req,res){
             res.render("contact");
             
 })
-
-
-
 
 app.get('/portfolio',function(req,res){
             res.render("portfolio");
@@ -64,16 +77,20 @@ app.get('/thanks',function(req,res){
   res.render("thanks");
   
 })
+app.get('/algarawi',function(req,res){
+  res.render("algarawi");
+  
+})
+
+app.get('/seapoint',function(req,res){
+  res.render("seapoint");
+
+})
 
 app.get('*',function(req,res){
     res.render("404");
     
 })
-
-
-
-
-
 
 
 
