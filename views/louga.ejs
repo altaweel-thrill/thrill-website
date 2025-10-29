@@ -26,8 +26,198 @@
   <link rel="stylesheet" href="assets/css/master.css">
   <link rel="stylesheet" href="style.css">
 
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  <!-- Custom Behance-style layout -->
+  <style>
+    /* === Behance style layout for case study === */
+
+    body.dark,
+    .portfolio__detail-content {
+      background-color: #0a0a0a;
+      color: #fff;
+    }
+
+    .sec-title-wrapper .sec-title {
+      font-weight: 600;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      font-size: clamp(2.8rem, 1vw + 2.4rem, 4rem);
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    .project-intro {
+      color: #9f9f9f;
+      font-size: 1rem;
+      line-height: 1.6;
+      max-width: 560px;
+      margin-top: 24px;
+    }
+
+    /* remove theme lines/borders/padding in gallery area */
+    .portfolio__detail-content .container.g-0.line {
+      max-width: 100%;
+      padding-left: 0;
+      padding-right: 0;
+      border: 0;
+    }
+
+    .portfolio__detail-top .container.g-0.line {
+      border: 0;
+    }
+
+    .portfolio__detail-content .line-3,
+    .portfolio__detail-top .line-3 {
+      display: none;
+    }
+
+    /* main gallery wrapper */
+    .behance-gallery {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 24px 120px;
+    }
+
+    .behance-block,
+    .behance-block-wide {
+      margin-bottom: 80px;
+    }
+
+    .behance-block img,
+    .behance-block-wide img {
+      width: 100%;
+      height: auto;
+      border-radius: 24px;
+      display: block;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+      background-color: #0f0f0f;
+      will-change: transform, opacity;
+    }
+
+    /* two-column sections */
+    .behance-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 80px;
+      padding: 0;
+    }
+
+    .behance-col img {
+      width: 100%;
+      height: auto;
+      border-radius: 16px;
+      display: block;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+      background-color: #0f0f0f;
+      will-change: transform, opacity;
+    }
+
+    /* buttons section tweaks */
+    .portfolio__detail-btns {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 60px;
+      padding-bottom: 60px;
+      margin-top: 40px;
+    }
+
+    .portfolio__detail-btns a.wc-btn-primary {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 100px;
+      padding: 14px 28px;
+      font-size: 15px;
+      line-height: 1.2;
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .portfolio__detail-btns a.wc-btn-primary span {
+      display: none;
+    }
+
+    /* CTA block bottom section */
+    .cta__area {
+      background-color: #0a0a0a;
+    }
+
+    .cta__sub-title {
+      color: #888;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+
+    .cta__title {
+      color: #fff;
+      font-weight: 600;
+      line-height: 1.2;
+      font-size: clamp(2rem, 0.5vw + 1.5rem, 2.6rem);
+      max-width: 700px;
+    }
+
+    .btn_wrapper .wc-btn-primary {
+      background: #fff;
+      color: #000;
+      border-radius: 100px;
+      border: 0;
+      padding: 14px 24px;
+      line-height: 1.2;
+      font-size: 15px;
+      font-weight: 500;
+      margin-top: 28px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn_wrapper .wc-btn-primary i {
+      font-size: 14px;
+    }
+
+    /* responsive */
+    @media (max-width: 991px) {
+
+      .behance-gallery {
+        padding: 0 16px 80px;
+      }
+
+      .behance-row-2 {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        margin-bottom: 60px;
+      }
+
+      .behance-block,
+      .behance-block-wide {
+        margin-bottom: 60px;
+      }
+
+      .behance-block img,
+      .behance-block-wide img,
+      .behance-col img {
+        border-radius: 14px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      }
+
+      .portfolio__detail-btns {
+        flex-direction: column;
+        gap: 24px;
+        text-align: center;
+      }
+    }
+  </style>
+
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
@@ -42,42 +232,24 @@
   <div class="cursor1"></div>
   <div class="cursor2"></div>
 
-
   <%- include('components/loading.ejs'); -%>
-
-
-
- 
-
-
 
   <!-- Scroll Smoother -->
   <div class="has-smooth" id="has_smooth"></div>
 
-
   <!-- Go Top Button -->
   <button id="scroll_top" class="scroll-top"><i class="fa-solid fa-arrow-up"></i></button>
 
-
   <!-- Header area start -->
   <%- include('components/header'); -%>
-
   <!-- Header area end -->
-
-
-
-  
-
 
   <div id="smooth-wrapper">
     <div id="smooth-content">
       <main>
 
-        <!-- Hero area start -->
-      
-
-
-         <section class="portfolio__detail">
+        <!-- Case Study Section -->
+        <section class="portfolio__detail">
           <div class="portfolio__detail-top">
             <div class="container g-0 line pt-110 pb-130">
               <span class="line-3"></span>
@@ -86,6 +258,8 @@
                 <div class="col-xxl-8 col-xl-8 col-lg-7 col-md-7">
                   <div class="sec-title-wrapper">
                     <h2 class="sec-title animation__char_come">Louga</h2>
+
+                   
                   </div>
                 </div>
 
@@ -94,8 +268,6 @@
                     <ul>
                       <li>Category <span>Branding</span></li>
                       <li>Client <span>Louga</span></li>
-                     
-                      
                     </ul>
                   </div>
                 </div>
@@ -103,70 +275,109 @@
             </div>
           </div>
 
-          <div class="portfolio__detail-thumb">
-            <img src="assets/imgs/portfolio/louga/1.gif" alt="Portfolio Thumbnail" data-speed="auto">
-          </div>
-
-          <div class="portfolio__detail-thumb">
-            <img src="assets/imgs/portfolio/louga/2.gif" alt="Portfolio Thumbnail" data-speed="auto">
-          </div>
-
-        
 
           <div class="portfolio__detail-content">
             <div class="container g-0 line ">
+              <span class="line-3"></span>
+
+              <!-- Behance-style Gallery -->
+              <div class="behance-gallery">
+
+                <!-- Hero / main showcase -->
+
+                    <div class="behance-block-wide">
+                  <img src="assets/imgs/portfolio/louga/1.gif" alt="Louga preview main">
+                </div>
+
+
+                 <div class="behance-block-wide ">
+                  <img src="assets/imgs/portfolio/louga/1.png" alt="Louga preview main">
+                </div>
+
+                <div class="behance-block-wide">
+                  <img src="assets/imgs/portfolio/louga/2.gif" alt="Louga preview main">
+                </div>
+
             
-              
 
-              <div class="block-thumb">
-                <img src="assets/imgs/portfolio/louga/1.gif" alt="Portfolio Image" data-speed="0.5">
-              </div>
-
-             
-
-              <div class="block-gallery">
-                <img src="assets/imgs/portfolio/louga/3.png" alt="Portfolio Image">
-                <img src="assets/imgs/portfolio/louga/4.png" alt="Portfolio Image">
-              </div>
-
-              <div class="block-thumb">
-                <img src="assets/imgs/portfolio/louga/10.png" alt="Portfolio Image" data-speed="0.5">
-              </div>
-
-            
-
-              <div class="block-thumb">
-                <img src="assets/imgs/portfolio/louga/8.png" alt="Portfolio Image" data-speed="0.5">
-              </div>
-
-                 <div class="block-img-text">
-                <img src="assets/imgs/portfolio/louga/11.png" alt="Portfolio Image">
-                <img src="assets/imgs/portfolio/louga/13.png" alt="Portfolio Image">
                
-              </div>
-
-              <div class="block-thumb">
-                <img src="assets/imgs/portfolio/louga/3.gif" alt="Portfolio Image" data-speed="0.5">
-              </div>
-
-              
-              <div class="row">
-                <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12">
-                  <div class="portfolio__detail-btns pt-150 pb-150">
-                    <a href="/gsf" class="wc-btn-primary btn-hover"><span></span> Prev Work</a>
-                    <a href="/hlayel" class="wc-btn-primary btn-hover"><span></span> Next Work</a>
+                <!-- Two-column spread -->
+                <div class="behance-row-2">
+                  <div class="behance-col">
+                    <img src="assets/imgs/portfolio/louga/3.png" alt="Louga mockup 1">
+                  </div>
+                  <div class="behance-col">
+                    <img src="assets/imgs/portfolio/louga/4.png" alt="Louga mockup 2">
                   </div>
                 </div>
+
+                <!-- Single full-width -->
+                <div class="behance-block">
+                  <img src="assets/imgs/portfolio/louga/10.png" alt="Louga layout">
+                </div>
+
+                <!-- Two-column spread -->
+                <div class="behance-row-2">
+                  <div class="behance-col">
+                    <img src="assets/imgs/portfolio/louga/6.png" alt="Louga card">
+                  </div>
+                  <div class="behance-col">
+                    <img src="assets/imgs/portfolio/louga/7.png" alt="Louga pattern">
+                  </div>
+                </div>
+
+                <!-- Two-column spread -->
+                <div class="behance-row-2">
+                  <div class="behance-col">
+                    <img src="assets/imgs/portfolio/louga/5.png" alt="Louga social post">
+                  </div>
+                  <div class="behance-col">
+                    <img src="assets/imgs/portfolio/louga/9.png" alt="Louga ad">
+                  </div>
+                </div>
+
+                <!-- Single full-width -->
+                <div class="behance-block">
+                  <img src="assets/imgs/portfolio/louga/8.png" alt="Louga brand elements">
+                </div>
+
+                <!-- Two-column spread -->
+                <div class="behance-row-2">
+                  <div class="behance-col">
+                    <img src="assets/imgs/portfolio/louga/11.png" alt="Louga stationery">
+                  </div>
+                  <div class="behance-col">
+                    <img src="assets/imgs/portfolio/louga/13.png" alt="Louga signage">
+                  </div>
+                </div>
+
+                <!-- Final end shot -->
+                <div class="behance-block">
+                  <img src="assets/imgs/portfolio/louga/12.png" alt="Louga final">
+                </div>
+
+                  <div class="behance-block">
+                  <img src="assets/imgs/portfolio/louga/3.gif" alt="Louga final">
+                </div>
+
+                <!-- Prev / Next -->
+                <div class="row">
+                  <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12">
+                    <div class="portfolio__detail-btns">
+                      <a href="/gsf" class="wc-btn-primary btn-hover"><span></span> <i class="fa-solid fa-arrow-left"></i> Prev Work</a>
+                      <a href="/hlayel" class="wc-btn-primary btn-hover"><span></span> Next Work <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+
               </div>
+              <!-- /behance-gallery -->
+
             </div>
           </div>
 
         </section>
-
-
-
-             
-      
+        <!-- /Case Study Section -->
 
 
         <!-- CTA area start -->
@@ -179,8 +390,10 @@
                   <p class="cta__sub-title">Work with us</p>
                   <h2 class="cta__title title-anim">We would love to hear more about your project</h2>
                   <div class="btn_wrapper">
-                    <a href="/contact" class="wc-btn-primary btn-hover btn-item"><span></span>Let’s talk us <i
-                        class="fa-solid fa-arrow-right"></i></a>
+                    <a href="/contact" class="wc-btn-primary btn-hover btn-item">
+                      <span></span>Let’s talk us
+                      <i class="fa-solid fa-arrow-right"></i>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -191,10 +404,7 @@
 
       </main>
 
-
-
       <%- include('components/footer.ejs'); -%>
-
 
     </div>
   </div>
@@ -216,11 +426,65 @@
   <script src="assets/js/jquery.meanmenu.min.js"></script>
   <script src="assets/js/main.js"></script>
 
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M9D497GS"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
+  <!-- ✅ GSAP gallery reveal / parallax -->
+  <script>
+    // register plugin (احتياط لو ما تسجل قبل)
+    if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
+      gsap.registerPlugin(ScrollTrigger);
+    }
 
+    // كل الصور في المعرض
+    const galleryImages = document.querySelectorAll(
+      ".behance-block img, .behance-block-wide img, .behance-col img"
+    );
+
+    galleryImages.forEach((img) => {
+      // نخفي وننزل الصورة بالبداية
+      gsap.set(img, {
+        autoAlpha: 0,
+        y: 40,
+      });
+
+      // وندخلها بسكرول
+      gsap.to(img, {
+        autoAlpha: 1,
+        y: 0,
+        duration: 1.1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: img,
+          start: "top 80%", // اول ما الصورة تدخل تحت الهيدر شوي
+          toggleActions: "play none none none",
+          once: true, // مره وحده فقط
+        },
+      });
+    });
+
+    // بارالاكس خفيف للصور الواسعة
+    const parallaxBlocks = document.querySelectorAll(
+      ".behance-block-wide img, .behance-block img"
+    );
+
+    parallaxBlocks.forEach((img) => {
+      gsap.to(img, {
+        yPercent: -5,
+        ease: "none",
+        scrollTrigger: {
+          trigger: img,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1,
+        },
+      });
+    });
+  </script>
+
+  <!-- Google Tag Manager (noscript) -->
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M9D497GS" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe>
+  </noscript>
+  <!-- End Google Tag Manager (noscript) -->
 
 </body>
 
