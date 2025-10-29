@@ -87,6 +87,11 @@ app.get('/seapoint',function(req,res){
 
 })
 
+app.get('/luini',function(req,res){
+  res.render("luini");
+
+})
+
 app.get('*',function(req,res){
     res.render("404");
     
