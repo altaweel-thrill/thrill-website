@@ -3,5 +3,5 @@ node_modules
 tmp/
 tests/
 docs/
-assets/imgs/portfolio/flowy/
-assets/imgs/portfolio/louga/
+public/assets/imgs/portfolio/flowy/
+public/assets/imgs/portfolio/louga/
