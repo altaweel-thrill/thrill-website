@@ -1,0 +1,7 @@
+node_modules
+*.log
+tmp/
+tests/
+docs/
+assets/imgs/portfolio/flowy/
+assets/imgs/portfolio/louga/
