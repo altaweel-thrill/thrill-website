@@ -5849,7 +5849,7 @@ img {
           animation: wcRotate 18s infinite linear;
 }
 .hero__area-2 {
-  background-image: url(../imgs/bg/lines.png);
+  background-image: url(../imgs/thrill.mp4);
   background-repeat: no-repeat;
   background-size: cover;
   background-color: var(--black-2);
@@ -6482,12 +6482,14 @@ img {
   }
 }
 .hero__text-2 p {
+  text-align: left;
   max-width: 330px;
   font-weight: 400;
   font-size: 18px;
   line-height: 1.4;
   color: var(--white);
   padding-bottom: 5px;
+  padding-left: 21px;
 }
 @media only screen and (min-width: 1200px) and (max-width: 1399px) {
   .hero__text-2 p {
