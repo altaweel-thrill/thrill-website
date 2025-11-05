@@ -50,6 +50,12 @@ app.get('/louga',function(req,res){
 
 })
 
+app.get('/bazar',function(req,res){
+  res.render("bazar");
+
+})
+
+
 
 app.get('/about',function(req,res){
         res.render("about");
