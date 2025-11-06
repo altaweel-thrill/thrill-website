@@ -54,7 +54,10 @@ app.get('/bazar',function(req,res){
   res.render("bazar");
 
 })
+app.get('/moheet',function(req,res){
+  res.render("moheet");
 
+})
 
 
 app.get('/about',function(req,res){
