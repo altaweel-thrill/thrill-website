@@ -59,6 +59,10 @@ app.get('/moheet',function(req,res){
 
 })
 
+app.get('/mood-code',function(req,res){
+  res.render("mood-code");
+
+})
 
 app.get('/about',function(req,res){
         res.render("about");
