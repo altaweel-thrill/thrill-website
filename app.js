@@ -69,6 +69,13 @@ app.get('/nubul',function(req,res){
 
 })
 
+
+
+app.get('/ribbon',function(req,res){
+  res.render("ribbon");
+
+})
+
 app.get('/about',function(req,res){
         res.render("about");
         
