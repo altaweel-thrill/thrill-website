@@ -76,6 +76,11 @@ app.get('/ribbon',function(req,res){
 
 })
 
+app.get('/mora',function(req,res){
+  res.render("mora");
+
+})
+
 app.get('/about',function(req,res){
         res.render("about");
         
