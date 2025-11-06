@@ -1318,11 +1318,13 @@
 
     portfolioline.to(".portfolio__text", {
       scale: 3,
-      duration: 1
+      duration: 1,
+       opacity: 0.2,
     })
     portfolioline.to(".portfolio__text", {
       scale: 3,
-      duration: 1
+      duration: 1,
+      opacity: 0.1,
     })
     portfolioline.to(".portfolio__text", {
       scale: 1,

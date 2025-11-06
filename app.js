@@ -64,6 +64,11 @@ app.get('/mood-code',function(req,res){
 
 })
 
+app.get('/nubul',function(req,res){
+  res.render("nubul");
+
+})
+
 app.get('/about',function(req,res){
         res.render("about");
         

@@ -11445,7 +11445,7 @@ img {
 /*----------------------------------------*/
 .portfolio__text {
   text-align: center;
-  font-size: 150px;
+  font-size: 100px;
   font-weight: 500;
   color: var(--white);
   text-transform: uppercase;
@@ -12039,14 +12039,7 @@ img {
   scale: 0.5;
   opacity: 0;
 }
-.portfolio__item:nth-child(even) {
-  top: 50%;
-}
-@media only screen and (max-width: 767px) {
-  .portfolio__item:nth-child(even) {
-    top: 0%;
-  }
-}
+
 .portfolio__item:hover .portfolio__info {
   opacity: 1;
   visibility: visible;
@@ -12217,7 +12210,7 @@ img {
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 1fr 30px 1fr;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 0px 30px;
   position: relative;
   margin-bottom: 0;
