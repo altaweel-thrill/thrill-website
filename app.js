@@ -87,6 +87,12 @@ app.get('/about',function(req,res){
 })
 
 
+app.get('/parkview',function(req,res){
+        res.render("parkview");
+
+})
+
+
 app.get('/contact',function(req,res){
             res.render("contact");
             
