@@ -86,6 +86,11 @@ app.get('/about',function(req,res){
         
 })
 
+app.get('/nahj',function(req,res){
+        res.render("nahj");
+
+})
+
 
 app.get('/parkview',function(req,res){
         res.render("parkview");
