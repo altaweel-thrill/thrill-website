@@ -86,6 +86,12 @@ app.get('/about',function(req,res){
         
 })
 
+
+app.get('/web-and-app',function(req,res){
+        res.render("web-and-app");
+
+})
+
 app.get('/nahj',function(req,res){
         res.render("nahj");
 
