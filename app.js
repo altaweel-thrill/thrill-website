@@ -35,6 +35,12 @@ app.get('/card',function(req,res){
   
 })
 
+
+
+app.get('/8portions',function(req,res){
+  res.render("8portions");
+  
+})
 app.get('/aqed',function(req,res){
   res.render("aqed");
   
