@@ -45,6 +45,11 @@ app.get('/hlayell',function(req,res){
   res.render("hlayell");
   
 })
+
+app.get('/nahjroastery',function(req,res){
+  res.render("nahjroastery");
+  
+})
 app.get('/aqed',function(req,res){
   res.render("aqed");
   
