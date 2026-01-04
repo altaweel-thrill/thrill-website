@@ -41,8 +41,8 @@ app.get('/8portions',function(req,res){
   res.render("8portions");
   
 })
-app.get('/hlayelsm',function(req,res){
-  res.render("hlayelsm");
+app.get('/hlayell',function(req,res){
+  res.render("hlayell");
   
 })
 app.get('/aqed',function(req,res){
