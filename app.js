@@ -50,6 +50,13 @@ app.get('/nahjroastery',function(req,res){
   res.render("nahjroastery");
   
 })
+
+app.get('/nubull',function(req,res){
+  res.render("nubull");
+  
+})
+
+
 app.get('/aqed',function(req,res){
   res.render("aqed");
   
