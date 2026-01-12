@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> Lavish - Thrill Agency</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="icon" type="image/x-icon" href="assets/imgs/logo/favicon.png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+
+  <!-- All CSS files -->
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+  <link rel="stylesheet" href="assets/css/progressbar.css">
+  <link rel="stylesheet" href="assets/css/meanmenu.min.css">
+  <link rel="stylesheet" href="assets/css/master.css">
+  <link rel="stylesheet" href="style.css">
+
+<style>
+body {
+  margin: 0;
+  background: #0a0a0a;
+  font-family: "Kanit", sans-serif;
+  color: #fff;
+}
+
+/* ================= TITLE ================= */
+.page-header {
+  padding: 140px 0 80px;
+  text-align: center;
+}
+
+.page-header h1 {
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  font-weight: 600;
+  margin: 0;
+}
+
+.page-header p {
+  margin-top: 14px;
+  font-size: 16px;
+  color: #9f9f9f;
+}
+
+/* ================= SECTION ================= */
+.reels-portfolio {
+  padding-bottom: 120px;
+}
+
+.container {
+  max-width: 1400px;
+  margin: auto;
+  padding: 0 24px;
+}
+
+/* ================= GRID ================= */
+.reels-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+}
+
+/* ================= CARD ================= */
+.reel-card {
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
+  background: #000;
+  cursor: pointer;
+}
+
+/* 9:16 */
+.reel-card .media {
+  aspect-ratio: 9 / 15 ;
+  overflow: hidden;
+}
+
+.reel-card img,
+.reel-card video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .5s ease, filter .4s ease;
+}
+
+/* Overlay */
+.reel-card .overlay {
+  position: absolute;
+  inset: 0;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .35s ease;
+}
+
+.reel-card.video:hover .play-icon {
+  opacity: 0;
+}
+
+.play-icon {
+  position: absolute;
+  inset: 0;
+  z-index: 3;                 /* 👈 أعلى من الفيديو */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44px;
+  color: #fff;
+  opacity: 1;                 /* 👈 ظاهرة */
+  transition: opacity .25s ease;
+  pointer-events: none;
+}
+
+/* ✅ CSS HOVER ONLY (NO JS) */
+.reel-card:hover .overlay {
+  opacity: 1;
+  visibility: visible;
+}
+
+.reel-card:hover img,
+.reel-card:hover video {
+  filter: brightness(0.55);
+  transform: scale(1.05);
+}
+
+/* Text */
+.overlay h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.overlay p {
+  margin: 0;
+  font-size: 13px;
+  color: #ccc;
+}
+
+/* Tag */
+.tag {
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 100px;
+  background: #ff0050;
+  width: fit-content;
+}
+
+/* Play Icon */
+.play-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 42px;
+  color: #fff;
+  opacity: 0;
+  transition: opacity .3s ease;
+  pointer-events: none;
+}
+
+/* PLAY ICON – visible by default */
+.play-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 42px;
+  color: #fff;
+  opacity: 1;              /* 👈 ظاهرة */
+  transition: opacity .3s ease;
+  pointer-events: none;
+}
+
+/* ❌ تختفي عند hover */
+.reel-card.video:hover .play-icon {
+  opacity: 0;
+}
+
+.overlay h4 {
+  margin: 4px 0 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.overlay p {
+  margin: 0;
+  font-size: 13px;
+  color: #d0d0d0;
+}
+
+/* TAG */
+.tag {
+  width: fit-content;
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 100px;
+  background: #ff0050;
+}
+
+/* PLAY ICON */
+.play-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44px;
+  color: #fff;
+  opacity: 1;
+  transition: opacity .3s ease;
+  pointer-events: none;
+}
+
+
+
+/* ================= CTA ================= */
+.cta {
+  border-top: 1px solid rgba(255,255,255,.08);
+  padding: 100px 24px;
+  text-align: center;
+}
+
+.cta span {
+  display: block;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  color: #888;
+  margin-bottom: 14px;
+}
+
+.cta h2 {
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  font-weight: 600;
+  margin: 0;
+}
+
+.cta a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 32px;
+  padding: 14px 28px;
+  border-radius: 100px;
+  background: #fff;
+  color: #000;
+  font-size: 15px;
+  text-decoration: none;
+  transition: transform .3s ease;
+}
+
+.cta a:hover {
+  transform: translateY(-3px);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 1200px) {
+  .reels-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 991px) {
+  .reels-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 575px) {
+  .reels-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+
+<body class="dark">
+
+  <!-- Cursor Animation -->
+  <div class="cursor1"></div>
+  <div class="cursor2"></div>
+
+  <%- include('components/loading.ejs'); -%>
+
+  <!-- Scroll Smoother -->
+  <div class="has-smooth" id="has_smooth"></div>
+
+  <!-- Go Top Button -->
+  <button id="scroll_top" class="scroll-top"><i class="fa-solid fa-arrow-up"></i></button>
+
+  <!-- Header area start -->
+  <%- include('components/header'); -%>
+  <!-- Header area end -->
+ <div id="smooth-wrapper">
+    <div id="smooth-content">
+      <main>
+<!-- ===== TITLE ===== -->
+<section class="page-header">
+  <div class="container">
+    <h1> Lavish Catering </h1>
+    <p>Social Media Content</p>
+  </div>
+</section>
+
+<!-- ===== REELS ===== -->
+<section class="reels-portfolio">
+  <div class="container">
+    <div class="reels-grid">
+
+     
+
+      <!-- IMAGE REEL -->
+      <div class="reel-card">
+        <div class="media">
+          <img src="assets/imgs/portfolio/lavish/1.jpg">
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Story / Reel</span>
+          <h4> Lavish Catering </h4>
+          <p>الإهتمام بالتفاصيل.. هو لافيش!⭐️</p>
+        </div>
+      </div>
+
+
+       <div class="reel-card">
+        <div class="media">
+          <img src="assets/imgs/portfolio/lavish/2.jpg">
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Story / Reel</span>
+          <h4>Lavish Catering</h4>
+          <p> تفاصيل فاخرة.. وطاولة تفوق التوقّعات <br>
+لافـيش، نرتّب ذوقك قبل مناسبتك</p>
+        </div>
+      </div>
+
+
+       <div class="reel-card">
+        <div class="media">
+          <img src="assets/imgs/portfolio/lavish/3.jpg">
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Story / Reel</span>
+          <h4>Lavish Catering</h4>
+          <p> يُمـلى العين، والمذاق! </p>
+        </div>
+      </div>
+
+
+       <div class="reel-card">
+        <div class="media">
+          <img src="assets/imgs/portfolio/lavish/4.jpg">
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Story / Reel</span>
+          <h4>Lavish Catering</h4>
+          <p> طبـقك مع كيترينق لافيش، يمُلى بكل ماهو لذيذ!🤍 </p>
+        </div>
+      </div>
+
+
+       <div class="reel-card">
+        <div class="media">
+          <img src="assets/imgs/portfolio/lavish/5.jpg">
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Story / Reel</span>
+          <h4>Lavish Catering</h4>
+          <p> طلّة مُبهـرة من لافيش💫</p> 
+        </div>
+      </div>
+
+      <div class="reel-card">
+        <div class="media">
+          <img src="assets/imgs/portfolio/lavish/6.jpg">
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Story / Reel</span>
+          <h4>Lavish Catering</h4>
+          <p> ✨تفاصيل الضيافة تحكي عن نفسها </p> 
+        </div>
+      </div>
+
+      <div class="reel-card">
+        <div class="media">
+          <img src="assets/imgs/portfolio/lavish/7.jpg">
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Story / Reel</span>
+          <h4>Lavish Catering</h4>
+          <p> منتجاتنا عن قُـرب ✨ </p> 
+        </div>
+      </div>
+
+      <div class="reel-card">
+        <div class="media">
+          <img src="assets/imgs/portfolio/lavish/8.jpg">
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Story / Reel</span>
+          <h4>Lavish Catering</h4>
+          <p> كل تفصيلة محسوبة لتكتمل تجربتكم💫 <br>
+Every detail is carefully crafted to complete your experience💫</p> 
+        </div>
+      </div>
+
+      <div class="reel-card">
+        <div class="media">
+          <img src="assets/imgs/portfolio/lavish/9.jpg">
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Story / Reel</span>
+          <h4>Lavish Catering</h4>
+          <p> كيرتيـنق الفطور يكمل مع أنواع الشاي🌱 </p> 
+        </div>
+      </div>
+
+      <div class="reel-card">
+        <div class="media">
+          <img src="assets/imgs/portfolio/lavish/10.jpg">
+        </div>
+        <div class="overlay">
+          <span class="tag">Story / Reel</span>
+          <h4>Lavish Catering</h4>
+          <p> تفاصيل تُقدَّم بذوق.. ونكهات تبقى في الذاكرة⭐️ <br> 
+Refined details.. flavors that linger in memory⭐</p> 
+        </div>
+      </div>
+
+      <div class="reel-card">
+        <div class="media">
+          <img src="assets/imgs/portfolio/lavish/11.jpg">
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Story / Reel</span>
+          <h4>Lavish Catering</h4>
+          <p> اختيارات متنوعة، تناسب الجميع </p> 
+        </div>
+      </div>
+
+      <div class="reel-card">
+        <div class="media">
+          <img src="assets/imgs/portfolio/lavish/12.jpg">
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Story / Reel</span>
+          <h4>Lavish Catering</h4>
+          <p> تنسيق كل تفصيـلة✨ <br> 
+              Every detail, perfectly curated✨ </p> 
+        </div>
+      </div>
+        
+
+       <div class="reel-card video">
+        <div class="media">
+          <video src="assets/imgs/portfolio/lavish/1.mp4" muted loop></video>
+             <span class="play-icon">
+      <i class="fa-solid fa-play"></i>
+    </span>
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Instagram Reel</span>
+          <h4>Lavish Catering</h4>
+          <p> مناسبتك الجاية.. خليها مع لافيش!💫 </p>
+        </div>
+      </div>
+
+
+
+    <div class="reel-card video">
+        <div class="media">
+          <video src="assets/imgs/portfolio/lavish/2.mp4" muted loop></video>
+             <span class="play-icon">
+      <i class="fa-solid fa-play"></i>
+    </span>
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Instagram Reel</span>
+          <h4>Lavish Catering</h4>
+          <p> اللمة تكمل بلذة الطعام.. وهُنا مايميز لافيش <br>
+Gather with your loved ones.. with great catering from Lavish
+</p>
+        </div>
+      </div>
+
+
+      <div class="reel-card video">
+        <div class="media">
+          <video src="assets/imgs/portfolio/lavish/3.mp4" muted loop></video>
+             <span class="play-icon">
+      <i class="fa-solid fa-play"></i>
+    </span>
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Instagram Reel</span>
+          <h4>Lavish Catering</h4>
+          <p> احجز لمناسبتك القادمة<br>
+              Book Now <br>
+              +966 54 554 3888 📞</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+ 
+<!-- ===== CTA ===== -->
+<section class="cta">
+  <span>WORK WITH US</span>
+  <h2>We would love to hear about your project</h2>
+  <a href="/contact">
+    Let’s talk
+    <i class="fa-solid fa-arrow-right"></i>
+  </a>
+</section>
+
+ </main>
+
+      <%- include('components/footer.ejs'); -%>
+
+    </div>
+  </div>
+
+
+  <!-- All JS files -->
+  <script src="assets/js/jquery-3.6.0.min.js"></script>
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/swiper-bundle.min.js"></script>
+  <script src="assets/js/counter.js"></script>
+  <script src="assets/js/gsap.min.js"></script>
+  <script src="assets/js/ScrollTrigger.min.js"></script>
+  <script src="assets/js/ScrollToPlugin.min.js"></script>
+  <script src="assets/js/ScrollSmoother.min.js"></script>
+  <script src="assets/js/SplitText.min.js"></script>
+  <script src="assets/js/chroma.min.js"></script>
+  <script src="assets/js/mixitup.min.js"></script>
+  <script src="assets/js/vanilla-tilt.js"></script>
+  <script src="assets/js/jquery.meanmenu.min.js"></script>
+  <script src="assets/js/main.js"></script>
+
+<script>
+document.querySelectorAll(".reel-card.video video").forEach(video => {
+  const card = video.closest(".reel-card");
+
+  card.addEventListener("mouseenter", () => {
+    video.play().catch(()=>{});
+  });
+
+  card.addEventListener("mouseleave", () => {
+    video.pause();
+    video.currentTime = 0;
+  });
+});
+</script>
+
+</body>
+</html>

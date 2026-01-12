@@ -56,6 +56,17 @@ app.get('/nubull',function(req,res){
   
 })
 
+app.get('/lavish',function(req,res){
+  res.render("lavish");
+  
+})
+
+app.get('/park_view',function(req,res){
+  res.render("park_view");
+  
+})
+
+
 
 app.get('/aqed',function(req,res){
   res.render("aqed");
