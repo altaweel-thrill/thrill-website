@@ -65,7 +65,11 @@ app.get('/park_view',function(req,res){
   res.render("park_view");
   
 })
-
+  
+app.get('/betula',function(req,res){
+  res.render("betula");
+  
+})
 
 
 app.get('/aqed',function(req,res){
