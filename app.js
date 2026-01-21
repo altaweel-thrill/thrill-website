@@ -34,6 +34,12 @@ app.get('/card',function(req,res){
   res.render("card");
   
 })
+app.get('/social-media',function(req,res){
+  res.render("social-media");
+  
+})
+
+
 
 
 
