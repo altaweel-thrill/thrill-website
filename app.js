@@ -71,6 +71,11 @@ app.get('/betula',function(req,res){
   
 })
 
+app.get('/luinii',function(req,res){
+  res.render("luinii");
+  
+})
+
 
 app.get('/aqed',function(req,res){
   res.render("aqed");
