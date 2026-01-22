@@ -34,6 +34,12 @@ app.get('/card',function(req,res){
   res.render("card");
   
 })
+app.get('/social-media',function(req,res){
+  res.render("social-media");
+  
+})
+
+
 
 
 
@@ -49,7 +55,7 @@ app.get('/hlayell',function(req,res){
 app.get('/nahjroastery',function(req,res){
   res.render("nahjroastery");
   
-})
+}) //done
 
 app.get('/nubull',function(req,res){
   res.render("nubull");
