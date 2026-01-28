@@ -92,6 +92,10 @@ app.get('/allhazems',function(req,res){
   
 })
 
+app.get('/sea_point',function(req,res){
+  res.render("sea_point");
+  
+})
 
 
 app.get('/aqed',function(req,res){
