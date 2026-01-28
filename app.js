@@ -87,10 +87,11 @@ app.get('/marissa',function(req,res){
   
 })
 
-app.get('/alhazems',function(req,res){
-  res.render("alhazems");
+app.get('/allhazems',function(req,res){
+  res.render("allhazems");
   
 })
+
 
 
 app.get('/aqed',function(req,res){
