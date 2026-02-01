@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> TireEX - Thrill Agency</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="icon" type="image/x-icon" href="assets/imgs/logo/favicon.jpg">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+
+  <!-- All CSS files -->
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+  <link rel="stylesheet" href="assets/css/progressbar.css">
+  <link rel="stylesheet" href="assets/css/meanmenu.min.css">
+  <link rel="stylesheet" href="assets/css/master.css">
+  <link rel="stylesheet" href="style.css">
+
+<style>
+body {
+  margin: 0;
+  background: #0a0a0a;
+  font-family: "Kanit", sans-serif;
+  color: #fff;
+}
+
+/* ================= TITLE ================= */
+.page-header {
+  padding: 140px 0 80px;
+  text-align: center;
+}
+
+.page-header h1 {
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  font-weight: 600;
+  margin: 0;
+}
+
+.page-header p {
+  margin-top: 14px;
+  font-size: 16px;
+  color: #9f9f9f;
+}
+
+/* ================= SECTION ================= */
+.reels-portfolio {
+  padding-bottom: 120px;
+}
+
+.container {
+  max-width: 1400px;
+  margin: auto;
+  padding: 0 24px;
+}
+
+/* ================= GRID ================= */
+.reels-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+}
+
+/* ================= CARD ================= */
+.reel-card {
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
+  background: #000;
+  cursor: pointer;
+}
+
+/* 9:16 */
+.reel-card .media {
+  aspect-ratio: 4 / 4 ;
+  overflow: hidden;
+}
+
+/* 9:16 */
+.reel-card .media2 {
+  aspect-ratio: 9 / 16 ;
+  overflow: hidden;
+}
+
+.reel-card img,
+.reel-card video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .5s ease, filter .4s ease;
+}
+
+/* Overlay */
+.reel-card .overlay {
+  position: absolute;
+  inset: 0;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .35s ease;
+}
+
+.reel-card.video:hover .play-icon {
+  opacity: 0;
+}
+
+.play-icon {
+  position: absolute;
+  inset: 0;
+  z-index: 3;                 /* 👈 أعلى من الفيديو */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44px;
+  color: #fff;
+  opacity: 1;                 /* 👈 ظاهرة */
+  transition: opacity .25s ease;
+  pointer-events: none;
+}
+
+/* ✅ CSS HOVER ONLY (NO JS) */
+.reel-card:hover .overlay {
+  opacity: 1;
+  visibility: visible;
+}
+
+.reel-card:hover img,
+.reel-card:hover video {
+  filter: brightness(0.55);
+  transform: scale(1.05);
+
+}
+
+/* Text */
+.overlay h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.overlay p {
+  margin: 0;
+  font-size: 13px;
+  color: #ccc;
+}
+
+/* Tag */
+.tag {
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 100px;
+  background: #ff0050;
+  width: fit-content;
+}
+
+/* Play Icon */
+.play-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 42px;
+  color: #fff;
+  opacity: 0;
+  transition: opacity .3s ease;
+  pointer-events: none;
+}
+
+/* PLAY ICON – visible by default */
+.play-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 42px;
+  color: #fff;
+  opacity: 1;              /* 👈 ظاهرة */
+  transition: opacity .3s ease;
+  pointer-events: none;
+}
+
+/* ❌ تختفي عند hover */
+.reel-card.video:hover .play-icon {
+  opacity: 0;
+}
+
+.overlay h4 {
+  margin: 4px 0 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.overlay p {
+  margin: 0;
+  font-size: 13px;
+  color: #d0d0d0;
+}
+
+/* TAG */
+.tag {
+  width: fit-content;
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 100px;
+  background: #ff0050;
+}
+
+/* PLAY ICON */
+.play-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44px;
+  color: #fff;
+  opacity: 1;
+  transition: opacity .3s ease;
+  pointer-events: none;
+}
+
+
+
+/* ================= CTA ================= */
+.cta {
+  border-top: 1px solid rgba(255,255,255,.08);
+  padding: 100px 24px;
+  text-align: center;
+}
+
+.cta span {
+  display: block;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  color: #888;
+  margin-bottom: 14px;
+}
+
+.cta h2 {
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  font-weight: 600;
+  margin: 0;
+}
+
+.cta a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 32px;
+  padding: 14px 28px;
+  border-radius: 100px;
+  background: #fff;
+  color: #000;
+  font-size: 15px;
+  text-decoration: none;
+  transition: transform .3s ease;
+}
+
+.cta a:hover {
+  transform: translateY(-3px);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 1200px) {
+  .reels-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 991px) {
+  .reels-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 575px) {
+  .reels-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+
+<body class="dark">
+
+  <!-- Cursor Animation -->
+  <div class="cursor1"></div>
+  <div class="cursor2"></div>
+
+  <%- include('components/loading.ejs'); -%>
+
+  <!-- Scroll Smoother -->
+  <div class="has-smooth" id="has_smooth"></div>
+
+  <!-- Go Top Button -->
+  <button id="scroll_top" class="scroll-top"><i class="fa-solid fa-arrow-up"></i></button>
+
+  <!-- Header area start -->
+  <%- include('components/header'); -%>
+  <!-- Header area end -->
+ <div id="smooth-wrapper">
+    <div id="smooth-content">
+      <main>
+<!-- ===== TITLE ===== -->
+<section class="page-header">
+  <div class="container">
+    <h1> TireEX </h1>
+    <p>Social Media Content</p>
+  </div>
+</section>
+
+<!-- ===== REELS ===== -->
+<section class="reels-portfolio">
+  <div class="container">
+    <div class="reels-grid">
+
+     
+
+      <!-- IMAGE REEL -->
+      <div class="reel-card">
+        <div class="media">
+          <img src="assets/imgs/portfolio/tireex/1.png">
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Story / Reel</span>
+          <h4> TireEX.sa </h4>
+          <p> ✨ مع #تايراكس، نوفر لك تجربة فريدة تخلينا الخيار الأفضل <br> 
+مع أكثر من 500,000 عميل مبسوط، حنا موجودين دايما لك لخدمة سريعة واحترافية</p>
+        </div>
+      </div>
+
+
+       <div class="reel-card">
+        <div class="media">
+          <img src="assets/imgs/portfolio/tireex/2.png">
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Story / Reel</span>
+          <h4>TireEX.sa</h4>
+          <p>🔧 مع تايراكس، ما تحتاج تشيل هم الكفرات <br>
+موظفينا هنا عشان يضمنوا لك أفضل تجربة، من الحجز إلين التركيب.<br> خلك مرتاح برحلة مريحة وخل الباقي علينا  </p> 
+        </div>
+      </div>
+
+
+       <div class="reel-card">
+        <div class="media">
+          <img src="assets/imgs/portfolio/tireex/3.png">
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Story / Reel</span>
+          <h4>TireEX.sa</h4>
+          <p>   ما عندك وقت للورش؟ #تايراكس يجيك وين ما كنت، حتى لو جدولك مزحوم <br>
+🛠️💻 اطلب من موقعنا و #ريح_راسك من أي مشاوير إضافية <br>
+خلي خدمتك توصل لك بكل سهولة </p>
+        </div>
+      </div>
+
+
+       <div class="reel-card">
+        <div class="media">
+          <img src="assets/imgs/portfolio/tireex/4.png">
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Story / Reel</span>
+          <h4>TireEX.sa</h4>
+          <p> كفراتك... مسؤوليتنا <br>
+تايراكس تقدم لك خدمة مريحة وسريعة، نجيك وين ما كنت </p>       
+        </div>
+      </div>
+
+      <div class="reel-card">
+        <div class="media">
+          <img src="assets/imgs/portfolio/tireex/5.jpg">
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Story / Reel</span>
+          <h4>TireEX.sa</h4>
+          <p> جهاز الترصيص في #تايراكس يضمن لك التوازن المثالي لأداء كفراتك ويعزز من عمرها  </p>
+        </div>
+      </div>
+        
+
+      <div class="reel-card">
+        <div class="media">
+          <img src="assets/imgs/portfolio/tireex/6.jpg">
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Story / Reel</span>
+          <h4>TireEX.sa</h4>
+          <p> ﺗﻌﻠﻴﻘﺎﺗﻜﻢ ﻣﺼﺪرﻧﺎ اﻷﺳﺎﺳﻲ ﻟﺜﻘﺘﻨﺎ وﺗﻄويرنا <br>
+ﻻ ﺗﻨﺴﻮن ﺗﺸﺎرﻛﻮﻧﺎ آراﺋﻜﻢ </p>
+        </div>
+      </div>
+        
+
+      <div class="reel-card">
+        <div class="media">
+          <img src="assets/imgs/portfolio/tireex/7.png">
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Story / Reel</span>
+          <h4>TireEX.sa</h4>
+          <p> 🔥💯جدد كفرات سيارتك بأسعار منافسة وجودة مضمونة وبكل سهولة مع #تايركس لانه #من_جد_غير <br>
+📲 استمتع بتجربة سريعة ومريحة، وخلنا نهتم بك </p>
+        </div>
+      </div>
+        
+
+      <div class="reel-card">
+        <div class="media">
+          <img src="assets/imgs/portfolio/tireex/8.png">
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Story / Reel</span>
+          <h4>TireEX.sa</h4>
+          <p> 😎👌اختيار الكفر صار أسهل مع #تايركس! اسعارنا واضحة ماعندنا شي نخفيه الحيرة انحلت معانا  </p>
+        </div>
+      </div>
+        
+
+      <div class="reel-card">
+        <div class="media">
+          <img src="assets/imgs/portfolio/tireex/9.png">
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Story / Reel</span>
+          <h4>TireEX.sa</h4>
+          <p> 🛠️ كل خطواتك باتجاه الأداء الأفضل تبدأ من هنا <br>
+🛒 اختار الإطارات اللي تناسبك <br>
+💳 اشترِها بكل سهولة <br>
+📅 حجز موعد وتركيب <br>
+تايراكس، رحلتك السهلة نحو قيادة مريحة </p>
+        </div>
+      </div>
+
+       <div class="reel-card">
+        <div class="media">
+          <img src="assets/imgs/portfolio/tireex/10.png">
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Story / Reel</span>
+          <h4>TireEX.sa</h4>
+          <p>✅🔧 من مستودعاتنا الكبيرة والمجهزة، نضمن لك الاطارات بأعلى معايير الجودة وبضمان الوكيل  </p>
+        </div>
+      </div>
+
+       <div class="reel-card">
+        <div class="media">
+          <img src="assets/imgs/portfolio/tireex/11.png">
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Story / Reel</span>
+          <h4>TireEX.sa</h4>
+          <p> 🚗 خرافة ولا حقيقة؟ <br>
+ كفرين وتفكر تحطهم قدام؟ 🤔 ترا الأفضل دائمًا يكونون في الخلف عشان الثبات والتحكم، خاصة لو الجو ممطر والطريق زلق <br>
+خلّ سلامتك أولويتك  
+  </p>
+        </div>
+      </div>
+       <div class="reel-card">
+        <div class="media">
+          <img src="assets/imgs/portfolio/tireex/12.png">
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Story / Reel</span>
+          <h4>TireEX.sa</h4>
+          <p>  🚗💜 فريق تايراكس، الجودة والإتقان في كل خطوة.. لأن رضاك هو هدفنا  </p>
+        </div>
+      </div>
+
+       <div class="reel-card">
+        <div class="media">
+          <img src="assets/imgs/portfolio/tireex/13.png">
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Story / Reel</span>
+          <h4>TireEX.sa</h4>
+          <p> ✅🚐  مع تايراكس، راحتك هي الأولوية <br>
+اطلب الأن! وخلنا #نجيك_لمكانك </p>
+        </div>
+      </div>
+
+      <div class="reel-card">
+        <div class="media">
+          <img src="assets/imgs/portfolio/tireex/14.jpg">
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Story / Reel</span>
+          <h4>TireEX.sa</h4>
+          <p> فنجان قهوة في يدك وصيانة سيارتك في يدينا <br>
+ومو بس كذا! ترا ضمانها من ضمان الوكيل وعندنا خيارات دفع متعددة اطلب الآن #نجيك_لمكانك    </p>
+        </div>
+      </div>
+
+      <div class="reel-card">
+        <div class="media">
+          <img src="assets/imgs/portfolio/tireex/15.jpg">
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Story / Reel</span>
+          <h4>TireEX.sa</h4>
+          <p>  Hello legs day skipper 😁 <br>
+شايفك ياللي تسحب على تمارين الأرجل <br>
+#تايراكس
+  </p>
+        </div>
+      </div>
+
+      <div class="reel-card">
+        <div class="media">
+          <img src="assets/imgs/portfolio/tireex/16.jpg">
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Story / Reel</span>
+          <h4>TireEX.sa</h4>
+          <p>  دائما مستعدين! 🔧💪 مع #تايراكس<br> تحصل على خدمة احترافية مكان ماكنت ارتاح وخلنا نتولاها</p>
+        </div>
+      </div>
+
+       <div class="reel-card video">
+        <div class="media2">
+          <video src="assets/imgs/portfolio/tireex/thrill.mp4"  loop></video>
+             <span class="play-icon">
+      <i class="fa-solid fa-play"></i>
+    </span>
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Instagram Reel</span>
+          <h4>TireEX.sa</h4>
+          <p>  </p>
+        </div>
+      </div>
+
+
+      <div class="reel-card video">
+        <div class="media2">
+          <video src="assets/imgs/portfolio/tireex/1.MOV"  loop></video>
+             <span class="play-icon">
+      <i class="fa-solid fa-play"></i>
+    </span>
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Instagram Reel</span>
+          <h4>TireEX.sa</h4>
+          <p> 👨🏻‍🔧🫡 اكتشفوا الجانب الآخر من حياة الفنيين. مش بس شغل، عندهم مواهب </p>
+        </div>
+      </div>
+
+      <div class="reel-card video">
+        <div class="media2">
+          <video src="assets/imgs/portfolio/tireex/2.MOV"  loop></video>
+             <span class="play-icon">
+      <i class="fa-solid fa-play"></i>
+    </span>
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Instagram Reel</span>
+          <h4>TireEX.sa</h4>
+          <p> وراء كل خدمة احترافية، فني مميز وفان مستعد. تاير اكس دائماً هنا لأجلك
+ </p>
+        </div>
+      </div>
+
+      <div class="reel-card video">
+        <div class="media2">
+          <video src="assets/imgs/portfolio/tireex/3.MOV"  loop></video>
+             <span class="play-icon">
+      <i class="fa-solid fa-play"></i>
+    </span>
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Instagram Reel</span>
+          <h4>TireEX.sa</h4>
+          <p>  تاير اكس من #جد_غير اطلب الخدمه ونجيك وين ما كنت 👨🏻‍🔧 </p>
+        </div>
+      </div>
+
+      <div class="reel-card video">
+        <div class="media2">
+          <video src="assets/imgs/portfolio/tireex/4.MOV"  loop></video>
+             <span class="play-icon">
+      <i class="fa-solid fa-play"></i>
+    </span>
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Instagram Reel</span>
+          <h4>TireEX.sa</h4>
+          <p> شكلك محتار إذا إطاراتك تحتاج تغيير؟ <br>
+            تاير اكس هنا للمساعدة </p>
+        </div>
+      </div>
+
+      <div class="reel-card video">
+        <div class="media2">
+          <video src="assets/imgs/portfolio/tireex/5.MOV"  loop></video>
+             <span class="play-icon">
+      <i class="fa-solid fa-play"></i>
+    </span>
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Instagram Reel</span>
+          <h4>TireEX.sa</h4>
+          <p> شكلك محتار إذا إطاراتك تحتاج تغيير؟
+تاير اكس هنا للمساعدة  </p>
+        </div>
+      </div>
+
+      <div class="reel-card video">
+        <div class="media2">
+          <video src="assets/imgs/portfolio/tireex/6.MOV"  loop></video>
+             <span class="play-icon">
+      <i class="fa-solid fa-play"></i>
+    </span>
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Instagram Reel</span>
+          <h4>TireEX.sa</h4>
+          <p> اطلب اطار قوديير بدعسة wrangler territory mt المناسب لطلعاتك الشتوية  </p>
+        </div>
+      </div>
+
+      <div class="reel-card video">
+        <div class="media2">
+          <video src="assets/imgs/portfolio/tireex/7.MOV"  loop></video>
+             <span class="play-icon">
+      <i class="fa-solid fa-play"></i>
+    </span>
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Instagram Reel</span>
+          <h4>TireEX.sa</h4>
+          <p> ريح بالك, تاير اكس يضبطك 👨🏻‍🔧</p>
+        </div>
+      </div>
+
+      <div class="reel-card video">
+        <div class="media2">
+          <video src="assets/imgs/portfolio/tireex/8.MOV"  loop></video>
+             <span class="play-icon">
+      <i class="fa-solid fa-play"></i>
+    </span>
+        </div>
+
+        <div class="overlay">
+          <span class="tag">Instagram Reel</span>
+          <h4>TireEX.sa</h4>
+          <p>جربتوا الخدمة ولا للحين ؟؟</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ===== CTA ===== -->
+<section class="cta">
+  <span>WORK WITH US</span>
+  <h2>We would love to hear about your project</h2>
+  <a href="/contact">
+    Let’s talk
+    <i class="fa-solid fa-arrow-right"></i>
+  </a>
+</section>
+
+ </main>
+
+      <%- include('components/footer.ejs'); -%>
+
+    </div>
+  </div>
+
+
+  <!-- All JS files -->
+  <script src="assets/js/jquery-3.6.0.min.js"></script>
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/swiper-bundle.min.js"></script>
+  <script src="assets/js/counter.js"></script>
+  <script src="assets/js/gsap.min.js"></script>
+  <script src="assets/js/ScrollTrigger.min.js"></script>
+  <script src="assets/js/ScrollToPlugin.min.js"></script>
+  <script src="assets/js/ScrollSmoother.min.js"></script>
+  <script src="assets/js/SplitText.min.js"></script>
+  <script src="assets/js/chroma.min.js"></script>
+  <script src="assets/js/mixitup.min.js"></script>
+  <script src="assets/js/vanilla-tilt.js"></script>
+  <script src="assets/js/jquery.meanmenu.min.js"></script>
+  <script src="assets/js/main.js"></script>
+
+<script>
+document.querySelectorAll(".reel-card.video video").forEach(video => {
+  const card = video.closest(".reel-card");
+
+  card.addEventListener("mouseenter", () => {
+    video.play().catch(()=>{});
+  });
+
+  card.addEventListener("mouseleave", () => {
+    video.pause();
+    video.currentTime = 0;
+  });
+});
+</script>
+
+</body>
+</html>

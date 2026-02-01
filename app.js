@@ -97,6 +97,20 @@ app.get('/sea_point',function(req,res){
   
 })
 
+app.get('/enma',function(req,res){
+  res.render("enma");
+  
+})
+
+app.get('/lubeex',function(req,res){
+  res.render("lubeex");
+  
+})
+app.get('/tireex',function(req,res){
+  res.render("tireex");
+  
+})
+
 
 app.get('/aqed',function(req,res){
   res.render("aqed");
