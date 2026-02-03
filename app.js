@@ -110,6 +110,11 @@ app.get('/tireex',function(req,res){
   res.render("tireex");
   
 })
+app.get('/marsa',function(req,res){
+  res.render("marsa");
+  
+})
+
 
 
 app.get('/aqed',function(req,res){
