@@ -38,6 +38,10 @@ app.get('/social-media',function(req,res){
   res.render("social-media");
   
 })
+app.get('/privacy-policy',function(req,res){
+  res.render("privacy-policy");
+  
+})
 
 
 
