@@ -3,9 +3,8 @@ const ejs = require('ejs');
 const path = require('path')
 var nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
-const {RecaptchaEnterpriseServiceClient} = require('@google-cloud/recaptcha-enterprise');
 
-
+require("dotenv").config();
 
 const app = express();
 app.set("view engine", "ejs");
@@ -234,106 +233,75 @@ app.get('/luini',function(req,res){
 
 
 
+
+const axios = require("axios");
+const rateLimit = require("express-rate-limit");
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+});
+
+app.post("/contact", limiter, async (req, res) => {
+  const { name, email, phone, subject, message, recaptchaToken, website } = req.body;
+
+  if (website) return res.status(400).send("Spam detected");
+  if (!recaptchaToken) return res.status(400).send("No captcha");
+
+  try {
+    console.log("recaptchaToken:", recaptchaToken);
+console.log("token length:", recaptchaToken?.length);
+console.log("secret exists:", !!process.env.RECAPTCHA_SECRET);
+    const verify = await axios.post(
+      "https://www.google.com/recaptcha/api/siteverify",
+      null,
+      {
+        params: {
+          secret: process.env.RECAPTCHA_SECRET,
+          response: recaptchaToken,
+        },
+      }
+    );
+
+    console.log("captcha:", verify.data);
+
+    if (!verify.data.success || verify.data.score < 0.3) {
+      return res.status(400).send("Captcha failed");
+    }
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: "hello@thrillagency.net",
+      subject: "Contact Form - Thrill",
+      text: `
+Name: ${name}
+Email: ${email}
+Phone: ${phone}
+Subject: ${subject}
+Message: ${message}
+      `,
+    });
+
+    return res.redirect("/thanks");
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send("Server error");
+  }
+});
+
+
+
+
+
 app.get('*',function(req,res){
     res.render("404");
     
 })
-
-
-
-app.post("/"  ,function async (req,res){
-
-    const name = req.body.name;
-    const email = req.body.email;
-    const phone = req.body.phone;
-    const subject = req.body.subject;
-    const message = req.body.message;
-    
-
-
-
-    var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        host: 'smtp.gmail.com',
-        port: 578,
-         secure: false,
-        auth: {
-          user: 'altaweel@thrillagency.net',
-          pass: 'fcju clee mnmf llkh'
-        }
-      });
-      
-      var mailOptions = {
-        from: 'altaweel@thrillagency.net',
-        to: 'hello@thrillagency.net',
-        subject: 'contact from thrill website',
-        text: "Nmae : "+name+"\n"
-        +"email : "+email+"\n"
-        +"phone : "+phone+"\n"
-        +"subject : "+subject+"\n"
-        +"message : "+message+"\n"
-
-      };
-      
-      transporter.sendMail(mailOptions, function(error, info){
-        if (error) {
-          console.log(error);
-        } else {
-          console.log('Email sent: ' + info.response);
-        }
-      });
-
-      // res.render("thanks");
-      res.redirect('/thanks');
-
-})
-
-
-async function createAssessment({
-  // TODO: Replace the token and reCAPTCHA action variables before running the sample.
-  projectID = "thrill-website-1736151402229",
-  recaptchaKey = "6LeecK8qAAAAAPPJQDmpQQhwkoHc95rbNRJcq1Ou",
-  token = "action-token",
-  recaptchaAction = "action-name",
-}) {
-  // Create the reCAPTCHA client.
-  // TODO: Cache the client generation code (recommended) or call client.close() before exiting the method.
-  const client = new RecaptchaEnterpriseServiceClient();
-  const projectPath = client.projectPath(projectID);
-
-  // Build the assessment request.
-  const request = ({
-    assessment: {
-      event: {
-        token: token,
-        siteKey: recaptchaKey,
-      },
-    },
-    parent: projectPath,
-  });
-
-  const [ response ] = await client.createAssessment(request);
-
-  // Check if the token is valid.
-  if (!response.tokenProperties.valid) {
-    console.log(`The CreateAssessment call failed because the token was: ${response.tokenProperties.invalidReason}`);
-    return null;
-  }
-
-  // Check if the expected action was executed.
-  // The `action` property is set by user client in the grecaptcha.enterprise.execute() method.
-  if (response.tokenProperties.action === recaptchaAction) {
-    // Get the risk score and the reason(s).
-    // For more information on interpreting the assessment, see:
-    // https://cloud.google.com/recaptcha-enterprise/docs/interpret-assessment
-    console.log(`The reCAPTCHA score is: ${response.riskAnalysis.score}`);
-    response.riskAnalysis.reasons.forEach((reason) => {
-      console.log(reason);
-    });
-
-    return response.riskAnalysis.score;
-  } else {
-    console.log("The action attribute in your reCAPTCHA tag does not match the action you are expecting to score");
-    return null;
-  }
-}

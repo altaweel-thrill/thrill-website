@@ -26,8 +26,7 @@
   <link rel="stylesheet" href="assets/css/master.css">
   <link rel="stylesheet" href="style.css">
 
-  <script src="https://www.google.com/recaptcha/enterprise.js?render=6LeecK8qAAAAAPPJQDmpQQhwkoHc95rbNRJcq1Ou"></script>
-
+<script src="https://www.google.com/recaptcha/api.js?render=6LdZxNYsAAAAAFet6g0axs3w1JAcgaDY-vahAlLh"></script>
 
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -140,7 +139,12 @@
               </div>
               <div class="col-xxl-7 col-xl-7 col-lg-7 col-md-7">
                 <div class="contact__form">
-                  <form action="/" method="post">
+                 <form action="/contact" method="post" id="contactForm">
+  <input type="hidden" name="recaptchaToken" id="recaptchaToken">
+
+  <!-- Honeypot ضد البوتات -->
+  <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
+
                     <div class="row g-3">
                       <div class="col-xxl-6 col-xl-6 col-12">
                         <input type="text" required name="name" placeholder="Name *">
@@ -209,20 +213,28 @@
   <script src="assets/js/main.js"></script>
 
 
-  <script>
-    function onClick(e) {
-      e.preventDefault();
-      grecaptcha.enterprise.ready(async () => {
-        const token = await grecaptcha.enterprise.execute('6LeecK8qAAAAAPPJQDmpQQhwkoHc95rbNRJcq1Ou', {action: 'LOGIN'});
-      });
-    }
-  </script>
   
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M9D497GS"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
+<script>
+  const contactForm = document.getElementById("contactForm");
 
+  contactForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    grecaptcha.ready(function () {
+      grecaptcha.execute(
+        "6LdZxNYsAAAAAFet6g0axs3w1JAcgaDY-vahAlLh",
+        { action: "CONTACT_FORM" }
+      ).then(function (token) {
+        document.getElementById("recaptchaToken").value = token;
+        HTMLFormElement.prototype.submit.call(contactForm);
+      });
+    });
+  });
+</script>
 </body>
 
 </html>
