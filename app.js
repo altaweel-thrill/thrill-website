@@ -296,9 +296,75 @@ Message: ${message}
     return res.status(500).send("Server error");
   }
 });
+app.get('/sitemap.xml', (req, res) => {
+  const baseUrl = 'https://thrillagency.net';
+
+  const pages = [
+    '/',
+    '/service',
+    '/card',
+    '/social-media',
+    '/privacy-policy',
+    '/about',
+    '/web-and-app',
+    '/contact',
+    '/portfolio',
+    '/flowy',
+    '/hlayel',
+    '/algarawi',
+    '/seapoint',
+    '/luini',
+    '/8portions',
+    '/hlayell',
+    '/nahjroastery',
+    '/nubull',
+    '/lavish',
+    '/park_view',
+    '/betula',
+    '/luinii',
+    '/marissa',
+    '/allhazems',
+    '/sea_point',
+    '/enma',
+    '/lubeex',
+    '/tireex',
+    '/marsa',
+    '/meetmoot',
+    '/aqed',
+    '/gsf',
+    '/louga',
+    '/bazar',
+    '/moheet',
+    '/mood-code',
+    '/nubul',
+    '/ribbon',
+    '/mora',
+    '/nahj',
+    '/parkview'
+  ];
+
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${pages.map(page => `
+  <url>
+    <loc>${baseUrl}${page}</loc>
+    <changefreq>weekly</changefreq>
+    <priority>${page === '/' ? '1.0' : '0.8'}</priority>
+  </url>`).join('')}
+</urlset>`;
+
+  res.header('Content-Type', 'application/xml');
+  res.send(sitemap);
+});
 
 
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  res.send(`User-agent: *
+Allow: /
 
+Sitemap: https://thrillagency.net/sitemap.xml`);
+});
 
 
 app.get('*',function(req,res){
