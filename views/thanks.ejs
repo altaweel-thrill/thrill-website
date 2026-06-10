@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<% const isArabic = locale === "ar"; %>
+<html lang="<%= isArabic ? 'ar' : 'en' %>" dir="<%= isArabic ? 'rtl' : 'ltr' %>">
 
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="creative Agency">
+  <meta name="description" content="<%= isArabic ? 'شكراً لتواصلك مع وكالة ثريل' : 'Thank you for contacting Thrill Agency' %>">
 
-  <title>Thank You - Thrill Agency</title>
+  <title><%= isArabic ? 'شكراً لتواصلك - وكالة ثريل' : 'Thank You - Thrill Agency' %></title>
+  <% if (isArabic) { %><base href="/"><% } %>
 
   <!-- Fav Icon -->
   <link rel="icon" type="image/x-icon" href="assets/imgs/logo/favicon.png">
@@ -16,6 +18,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <% if (isArabic) { %>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <% } %>
 
   <!-- All CSS files -->
   <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -24,7 +29,7 @@
   <link rel="stylesheet" href="assets/css/progressbar.css">
   <link rel="stylesheet" href="assets/css/meanmenu.min.css">
   <link rel="stylesheet" href="assets/css/master.css">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
 
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -36,7 +41,7 @@
 </head>
 
 
-<body class="dark">
+<body class="dark<%= isArabic ? ' dir-rtl arabic-page thanks-arabic' : '' %>">
 
   <!-- Cursor Animation -->
   <div class="cursor1"></div>
@@ -57,7 +62,10 @@
 
   <!-- Go Top Button -->
   <button id="scroll_top" class="scroll-top"><i class="fa-solid fa-arrow-up"></i></button>
-  <%- include('components/header.ejs'); -%>
+  <%- include('components/header.ejs', {
+    isArabic,
+    languageSwitchHref: isArabic ? '/thanks' : '/ar/thanks'
+  }); -%>
 
 
 
@@ -76,11 +84,11 @@
               <div class="col-xxl-12">
                 <div class="error__content">
                   <!-- <img src="assets/imgs/thumb/404.png" alt="Page not found"> -->
-                  <h2>Thank You</h2>
-                  <p>Your request has been sent and the Thrill team will contact you</p>
+                  <h2><%= isArabic ? 'شكراً لك' : 'Thank You' %></h2>
+                  <p><%= isArabic ? 'تم إرسال طلبك بنجاح، وسيتواصل معك فريق ثريل قريباً.' : 'Your request has been sent and the Thrill team will contact you.' %></p>
                   <div class="btn_wrapper">
-                    <a href="/" class="wc-btn-primary btn-hover btn-item"><span></span> Back to <br>Homepage <i
-                        class="fa-solid fa-arrow-right"></i></a>
+                    <a href="<%= isArabic ? '/ar' : '/' %>" class="wc-btn-primary btn-hover btn-item"><span></span><%= isArabic ? 'العودة للرئيسية' : 'Back to Homepage' %> <i
+                        class="fa-solid fa-arrow-<%= isArabic ? 'left' : 'right' %>"></i></a>
                   </div>
                 </div>
               </div>

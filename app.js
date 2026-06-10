@@ -19,12 +19,22 @@ app.listen(port,function(){
 
 
 app.get('/',function(req,res){
-res.render("index");
+res.render("index", { locale: "en" });
+
+});
+
+app.get('/ar',function(req,res){
+res.render("index", { locale: "ar" });
 
 });
 
 app.get('/service',function(req,res){
-    res.render("service");
+    res.render("service", { locale: "en" });
+
+})
+
+app.get('/ar/service',function(req,res){
+    res.render("service", { locale: "ar" });
     
 })
 
@@ -34,7 +44,12 @@ app.get('/card',function(req,res){
   
 })
 app.get('/social-media',function(req,res){
-  res.render("social-media");
+  res.render("social-media", { locale: "en" });
+
+})
+
+app.get('/ar/social-media',function(req,res){
+  res.render("social-media", { locale: "ar" });
   
 })
 app.get('/privacy-policy',function(req,res){
@@ -174,13 +189,23 @@ app.get('/mora',function(req,res){
 })
 
 app.get('/about',function(req,res){
-        res.render("about");
-        
+        res.render("about", { locale: "en" });
+
+})
+
+app.get('/ar/about',function(req,res){
+        res.render("about", { locale: "ar" });
+
 })
 
 
 app.get('/web-and-app',function(req,res){
-        res.render("web-and-app");
+        res.render("web-and-app", { locale: "en" });
+
+})
+
+app.get('/ar/web-and-app',function(req,res){
+        res.render("web-and-app", { locale: "ar" });
 
 })
 
@@ -197,13 +222,23 @@ app.get('/parkview',function(req,res){
 
 
 app.get('/contact',function(req,res){
-            res.render("contact");
-            
+            res.render("contact", { locale: "en" });
+
+})
+
+app.get('/ar/contact',function(req,res){
+            res.render("contact", { locale: "ar" });
+
 })
 
 app.get('/portfolio',function(req,res){
-            res.render("portfolio");
-            
+            res.render("portfolio", { locale: "en" });
+
+})
+
+app.get('/ar/portfolio',function(req,res){
+            res.render("portfolio", { locale: "ar" });
+
 })
 app.get('/flowy',function(req,res){
             res.render("flowy");    
@@ -213,8 +248,12 @@ app.get('/hlayel',function(req,res){
             res.render("hlayel");    
 })
 app.get('/thanks',function(req,res){
-  res.render("thanks");
+  res.render("thanks", { locale: "en" });
   
+})
+app.get('/ar/thanks',function(req,res){
+  res.render("thanks", { locale: "ar" });
+
 })
 app.get('/algarawi',function(req,res){
   res.render("algarawi");
@@ -243,7 +282,7 @@ const limiter = rateLimit({
 });
 
 app.post("/contact", limiter, async (req, res) => {
-  const { name, email, phone, subject, message, recaptchaToken, website } = req.body;
+  const { name, email, phone, subject, message, recaptchaToken, website, locale } = req.body;
 
   if (website) return res.status(400).send("Spam detected");
   if (!recaptchaToken) return res.status(400).send("No captcha");
@@ -290,7 +329,7 @@ Message: ${message}
       `,
     });
 
-    return res.redirect("/thanks");
+    return res.redirect(locale === "ar" ? "/ar/thanks" : "/thanks");
   } catch (err) {
     console.error(err);
     return res.status(500).send("Server error");

@@ -1,26 +1,29 @@
+<% const headerIsArabic = typeof isArabic !== "undefined" && isArabic; %>
+<% const headerLanguageSwitchHref = typeof languageSwitchHref !== "undefined" ? languageSwitchHref : (headerIsArabic ? "/" : "/ar"); %>
 <!-- Header area start -->
 <header class="header__area-2">
     <div class="header__inner-2">
       <div class="header__logo-2">
-        <a href="/"><img src="assets/imgs/logo/site-logo-white-2.png" width="200"  alt="Site Logo"></a>
+        <a href="<%= headerIsArabic ? '/ar' : '/' %>"><img src="assets/imgs/logo/site-logo-white-2.png" width="200"  alt="<%= headerIsArabic ? 'شعار وكالة ثريل' : 'Site Logo' %>"></a>
       </div>
       <div class="header__nav-2">
-        <ul class="main-menu menu-anim">
-        <li class=""><a href="/">home</a>
-        <li class=""><a href="/about">About us</a>
-        <li class=""><a href="/service">Services</a>
+        <ul class="main-menu<%= headerIsArabic ? '' : ' menu-anim' %>">
+        <li class=""><a href="<%= headerIsArabic ? '/ar' : '/' %>"><%= headerIsArabic ? 'الرئيسية' : 'home' %></a>
+        <li class=""><a href="<%= headerIsArabic ? '/ar/about' : '/about' %>"><%= headerIsArabic ? 'من نحن' : 'About us' %></a>
+        <li class=""><a href="<%= headerIsArabic ? '/ar/service' : '/service' %>"><%= headerIsArabic ? 'خدماتنا' : 'Services' %></a>
         <!-- <li class=""><a href="/portfolio">Portfolio</a> -->
 
-             <li><a href="#">Portfolio</a>
+             <li><a href="#"><%= headerIsArabic ? 'أعمالنا' : 'Portfolio' %></a>
             <ul class="main-dropdown">
-              <li><a href="/portfolio">Branding</a></li>
-                <li><a href="/social-media">Social Media</a></li>
-              <li><a href="/web-and-app">Websites and Apps</a></li>
+              <li><a href="<%= headerIsArabic ? '/ar/portfolio' : '/portfolio' %>"><%= headerIsArabic ? 'الهوية والعلامة' : 'Branding' %></a></li>
+                <li><a href="<%= headerIsArabic ? '/ar/social-media' : '/social-media' %>"><%= headerIsArabic ? 'التواصل الاجتماعي' : 'Social Media' %></a></li>
+              <li><a href="<%= headerIsArabic ? '/ar/web-and-app' : '/web-and-app' %>"><%= headerIsArabic ? 'المواقع والتطبيقات' : 'Websites and Apps' %></a></li>
              
             </ul>
           </li>
-        <li class=""><a href="/contact">Contact</a>
+        <li class=""><a href="<%= headerIsArabic ? '/ar/contact' : '/contact' %>"><%= headerIsArabic ? 'تواصل معنا' : 'Contact' %></a>
         <li class=""><a href="tel:+920000404">920000404</a> </li>
+        <li class="language-switch"><a href="<%= headerLanguageSwitchHref %>" lang="<%= headerIsArabic ? 'en' : 'ar' %>"><%= headerIsArabic ? 'English' : 'العربية' %></a></li>
 
        
         </ul>
@@ -39,10 +42,10 @@
     <div class="offcanvas__body">
       <div class="offcanvas__left">
         <div class="offcanvas__logo">
-          <a href="/"><img src="assets/imgs/logo/site-logo-white-2.png" width="120" alt="Offcanvas Logo"></a>
+          <a href="<%= headerIsArabic ? '/ar' : '/' %>"><img src="assets/imgs/logo/site-logo-white-2.png" width="120" alt="<%= headerIsArabic ? 'شعار وكالة ثريل' : 'Offcanvas Logo' %>"></a>
         </div>
         <div class="offcanvas__social">
-          <h3 class="social-title">Follow Us</h3>
+          <h3 class="social-title"><%= headerIsArabic ? 'تابعنا' : 'Follow Us' %></h3>
           <ul>
             <li><a target="_blank" href="https://www.linkedin.com/company/thrill-creative-agency/">linkedin</a></li>
             <li><a target="_blank" href="https://www.tiktok.com/@thrill_family">Tiktok</a></li>
@@ -60,34 +63,35 @@
       <div class="offcanvas__mid">
         <div class="offcanvas__menu-wrapper">
           <nav class="offcanvas__menu">
-            <ul class="menu-anim">
-              <li><a href="/">Home</a></li>
-              <li><a href="/about">About</a></li>
-              <li><a href="/service">Service</a></li>
-               <li><a href="#">Portfolio</a>
+            <ul class="<%= headerIsArabic ? '' : 'menu-anim' %>">
+              <li><a href="<%= headerIsArabic ? '/ar' : '/' %>"><%= headerIsArabic ? 'الرئيسية' : 'Home' %></a></li>
+              <li><a href="<%= headerIsArabic ? '/ar/about' : '/about' %>"><%= headerIsArabic ? 'من نحن' : 'About' %></a></li>
+              <li><a href="<%= headerIsArabic ? '/ar/service' : '/service' %>"><%= headerIsArabic ? 'خدماتنا' : 'Service' %></a></li>
+               <li><a href="#"><%= headerIsArabic ? 'أعمالنا' : 'Portfolio' %></a>
             <ul class="menu-text">
-              <li class="menu-text"><a href="/portfolio">Branding</a></li>
-                <li class="menu-text"><a href="/social-media">Social Media</a></li>
-              <li class="menu-text"><a href="/web-and-app">Websites and Apps</a></li>
+              <li class="menu-text"><a href="<%= headerIsArabic ? '/ar/portfolio' : '/portfolio' %>"><%= headerIsArabic ? 'الهوية والعلامة' : 'Branding' %></a></li>
+                <li class="menu-text"><a href="<%= headerIsArabic ? '/ar/social-media' : '/social-media' %>"><%= headerIsArabic ? 'التواصل الاجتماعي' : 'Social Media' %></a></li>
+              <li class="menu-text"><a href="<%= headerIsArabic ? '/ar/web-and-app' : '/web-and-app' %>"><%= headerIsArabic ? 'المواقع والتطبيقات' : 'Websites and Apps' %></a></li>
              
             </ul>
           </li>
-              <li><a href="/contact">contact</a></li> 
+              <li><a href="<%= headerIsArabic ? '/ar/contact' : '/contact' %>"><%= headerIsArabic ? 'تواصل معنا' : 'contact' %></a></li>
+              <li class="language-switch"><a href="<%= headerLanguageSwitchHref %>" lang="<%= headerIsArabic ? 'en' : 'ar' %>"><%= headerIsArabic ? 'English' : 'العربية' %></a></li>
             </ul>
           </nav>
         </div>
       </div>
       <div class="offcanvas__right">
-      
+
         <div class="offcanvas__contact mt-5">
-          <h3>Get in touch</h3>
+          <h3><%= headerIsArabic ? 'تواصل معنا' : 'Get in touch' %></h3>
           <ul>
             <li><a href="tel:+966 53 690 0404">+966 53 690 0404</a></li>
-            <li><a href="mailto:hello@thrillagancy.net">hello@thrillagancy.net</a></li>
-            <li><h3>Saudi Arabia </h3>
-              <p>Sidra Tower,
-                Prince Sultan Bin Abdulaziz Rd,
-                Al Andalus District, Al-Khobar </p></li>
+            <li><a href="mailto:hello@thrillagency.net">hello@thrillagency.net</a></li>
+            <li><h3><%= headerIsArabic ? 'المملكة العربية السعودية' : 'Saudi Arabia' %></h3>
+              <p><%= headerIsArabic
+                ? 'برج سدرة، طريق الأمير سلطان بن عبدالعزيز، حي الأندلس، الخبر'
+                : 'Sidra Tower, Prince Sultan Bin Abdulaziz Rd, Al Andalus District, Al-Khobar' %></p></li>
           </ul>
         </div>
         <img src="assets/imgs/shape/11.png" alt="shape" class="shape-1">
@@ -98,5 +102,3 @@
       </div>
     </div>
   </div>
-
-  

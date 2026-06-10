@@ -1,13 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<% const isArabic = locale === "ar"; %>
+<html lang="<%= isArabic ? 'ar' : 'en' %>" dir="<%= isArabic ? 'rtl' : 'ltr' %>">
 
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="creative Agency">
+  <meta name="description" content="<%= isArabic ? 'تعرّف على وكالة ثريل وقصتنا ورسالتنا ورؤيتنا وفريقنا' : 'creative Agency' %>">
 
-  <title>About - Thrill Agency</title>
+  <title><%= isArabic ? 'من نحن - وكالة ثريل' : 'About - Thrill Agency' %></title>
+  <% if (isArabic) { %><base href="/"><% } %>
+  <link rel="alternate" hreflang="en" href="/about">
+  <link rel="alternate" hreflang="ar" href="/ar/about">
 
   <!-- Fav Icon -->
   <link rel="icon" type="image/x-icon" href="assets/imgs/logo/favicon.png">
@@ -16,6 +20,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <% if (isArabic) { %>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <% } %>
 
   <!-- All CSS files -->
   <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -24,7 +31,7 @@
   <link rel="stylesheet" href="assets/css/progressbar.css">
   <link rel="stylesheet" href="assets/css/meanmenu.min.css">
   <link rel="stylesheet" href="assets/css/master.css">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
 
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -36,7 +43,7 @@
 </head>
 
 
-<body class="dark">
+<body class="dark<%= isArabic ? ' dir-rtl arabic-page about-arabic' : '' %>">
 
   <!-- Cursor Animation -->
   <div class="cursor1"></div>
@@ -60,7 +67,10 @@
 
 
   <!-- Header area start -->
-  <%- include('components/header'); -%>
+  <%- include('components/header', {
+    isArabic,
+    languageSwitchHref: isArabic ? '/about' : '/ar/about'
+  }); -%>
 
   <!-- Header area end -->
 
@@ -80,12 +90,13 @@
             <div class="row">
               <div class="col-xxl-12">
                 <div class="hero__about-content">
-                  <h1 class="hero-title animation__word_come">             We are <br>A Comprehensive marketing and services agency for creating visual and digital designs in a modern-creative way.
-                  </h1>
+                  <h1 class="hero-title<%= isArabic ? '' : ' animation__word_come' %>"><%= isArabic
+                    ? 'نحن وكالة تسويق وخدمات متكاملة، نصنع التصاميم البصرية والحلول الرقمية بأسلوب حديث ومبتكر.'
+                    : 'We are A Comprehensive marketing and services agency for creating visual and digital designs in a modern-creative way.' %></h1>
                   <div class="hero__about-info">
                     <div class="hero__about-btn">
                       <div class="btn_wrapper">
-                        <a href="/service" class="wc-btn-primary btn-hover btn-item"><span></span> Services                         <i class="fa-solid fa-arrow-right"></i></a>
+                        <a href="<%= isArabic ? '/ar/service' : '/service' %>" class="wc-btn-primary btn-hover btn-item"><span></span> <%= isArabic ? 'خدماتنا' : 'Services' %> <i class="fa-solid fa-arrow-<%= isArabic ? 'left' : 'right' %>"></i></a>
                       </div>
                     </div>
                     <!-- <div class="hero__about-text title-anim">
@@ -122,22 +133,25 @@
 
               <div class="row">
                 <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5">
-                  <h2 class="sec-sub-title title-anim">Thrill Agency</h2>
-                  <h3 class="sec-title title-anim">Our story</h3>
+                  <h2 class="sec-sub-title<%= isArabic ? '' : ' title-anim' %>"><%= isArabic ? 'وكالة ثريل' : 'Thrill Agency' %></h2>
+                  <h3 class="sec-title<%= isArabic ? '' : ' title-anim' %>"><%= isArabic ? 'قصتنا' : 'Our story' %></h3>
                 </div>
                 <div class="col-xxl-7 col-xl-7 col-lg-7 col-md-7">
                   <div class="story__text">
-                    <p style="margin-bottom: 20px;">
-                      WE ARE A COMPREHENSIVE MARKETING AND SERVICES AGENCY FOR CREATING VISUAL AND DIGITAL DESIGNS
-                      IN A MODERN-CREATIVE WAY.
-                      </p>
+                    <p style="margin-bottom: 20px;"><%= isArabic
+                      ? 'نحن وكالة تسويق وخدمات متكاملة، نبتكر التصاميم البصرية والحلول الرقمية بأسلوب حديث وإبداعي.'
+                      : 'WE ARE A COMPREHENSIVE MARKETING AND SERVICES AGENCY FOR CREATING VISUAL AND DIGITAL DESIGNS IN A MODERN-CREATIVE WAY.' %></p>
 
-                      <h3 style="color: aliceblue;">OUR MISSION</h3>
-                      <p style="margin-bottom: 20px;" >PRESENTING THE BRAND IN AN INNOVATIVE AND EFFECTIVE WAY, AS WE HELP OUR CLIENTS REACH, EХPAND AND EХCEL IN THEIR GOALS, REGARDLESS OF THE SIZE OF THE PROJECT OR COMMERCIAL SECTOR IN WHICH THEY OPERATE OR TARGET.</p>
+                      <h3 class="story-heading"><%= isArabic ? 'رسالتنا' : 'OUR MISSION' %></h3>
+                      <p style="margin-bottom: 20px;"><%= isArabic
+                        ? 'نقدّم العلامات التجارية بطريقة مبتكرة وفعّالة، ونساعد عملاءنا على الوصول والتوسع والتفوّق في أهدافهم، بغض النظر عن حجم المشروع أو القطاع التجاري الذي يعملون فيه أو يستهدفونه.'
+                        : 'PRESENTING THE BRAND IN AN INNOVATIVE AND EFFECTIVE WAY, AS WE HELP OUR CLIENTS REACH, EХPAND AND EХCEL IN THEIR GOALS, REGARDLESS OF THE SIZE OF THE PROJECT OR COMMERCIAL SECTOR IN WHICH THEY OPERATE OR TARGET.' %></p>
                     
-                      <h3 style="color: aliceblue;">OUR VISION</h3>
+                      <h3 class="story-heading"><%= isArabic ? 'رؤيتنا' : 'OUR VISION' %></h3>
                      
-                      <p style="margin-bottom: 20px;" >WE ASPIRE TO BE THE PIONEERS IN PROVIDING THE BEST CONTENT AND MARLETING PLANS FOR BRANDS, OUR AMBITION SEEMS SIMPLE, BUT IT REQUIRES A LOT OF HARD AND DEDICATED WORK TO ACHIEVE THIS GOAL,</p>
+                      <p style="margin-bottom: 20px;"><%= isArabic
+                        ? 'نطمح إلى الريادة في تقديم أفضل المحتوى والخطط التسويقية للعلامات التجارية. قد يبدو طموحنا بسيطاً، لكنه يتطلب الكثير من العمل الجاد والتفاني لتحقيقه.'
+                        : 'WE ASPIRE TO BE THE PIONEERS IN PROVIDING THE BEST CONTENT AND MARLETING PLANS FOR BRANDS, OUR AMBITION SEEMS SIMPLE, BUT IT REQUIRES A LOT OF HARD AND DEDICATED WORK TO ACHIEVE THIS GOAL.' %></p>
                   </div>
                 </div>
 
@@ -170,7 +184,7 @@
 
          <!-- Workflow area start -->
          <section class="workflow__area-6" >
-         <div class="client__section__title" style="align-items: center; margin-bottom: 20px;"> <h2 style="text-align: center;">OUR WORKFLOW</h2></div>
+         <div class="client__section__title workflow-heading"> <h2><%= isArabic ? 'آلية عملنا' : 'OUR WORKFLOW' %></h2></div>
 
           <div class="container g-0 line pb-130">
             <div class="line-3"> </div>
@@ -178,9 +192,10 @@
               <div class="row">
                 <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3">
                   <div class="workflow__slide-6">
-                    <h6 class="workflow__title-6">DISCUSSION </h6>
-                  <p>THE FIRST AND ESSENTIAL STEP IS THE DIRECT MEETING WITH THE CLIENT TO DISCUSS HIS GOALS AND VISION THAT WILL BE TRANSFERRED CREATIVELY BY OUR TEAM ON ALL SOCIAL PLATFORMS AND SEARCH SITES.
-                  </p>
+                    <h6 class="workflow__title-6"><%= isArabic ? 'النقاش' : 'DISCUSSION' %></h6>
+                  <p><%= isArabic
+                    ? 'الخطوة الأولى والأساسية هي الاجتماع المباشر مع العميل لمناقشة أهدافه ورؤيته، ثم تحويلها إبداعياً بواسطة فريقنا عبر المنصات الرقمية ومحركات البحث.'
+                    : 'THE FIRST AND ESSENTIAL STEP IS THE DIRECT MEETING WITH THE CLIENT TO DISCUSS HIS GOALS AND VISION THAT WILL BE TRANSFERRED CREATIVELY BY OUR TEAM ON ALL SOCIAL PLATFORMS AND SEARCH SITES.' %></p>
                   </div>
                 </div>
 
@@ -190,11 +205,10 @@
 
                 <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3">
                   <div class="workflow__slide-6">
-                    <h6 class="workflow__title-6">CREATIVE IDEAS</h6>
-                    <p>AFTER THE MEETING, WE WILL
-                      CONDUCT AN IN-DEPTH STUDY OF THE SECTOR AND COMPETITORS AS WELL AS  FACTS  ABOUT  YOUR  BRAND  AND
-                      THE STORY BEHIND IT TO DESIGN A SUCCESSFUL BUSINESS
-                      PLAN BASED ON OUR </p>
+                    <h6 class="workflow__title-6"><%= isArabic ? 'الأفكار الإبداعية' : 'CREATIVE IDEAS' %></h6>
+                    <p><%= isArabic
+                      ? 'بعد الاجتماع، نُجري دراسة متعمقة للقطاع والمنافسين وحقائق العلامة والقصة التي تقف خلفها، لنصمم خطة عمل ناجحة مبنية على فهم واضح.'
+                      : 'AFTER THE MEETING, WE WILL CONDUCT AN IN-DEPTH STUDY OF THE SECTOR AND COMPETITORS AS WELL AS FACTS ABOUT YOUR BRAND AND THE STORY BEHIND IT TO DESIGN A SUCCESSFUL BUSINESS PLAN.' %></p>
                   </div>
                 </div>
 
@@ -204,15 +218,10 @@
 
                 <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3">
                   <div class="workflow__slide-6">
-                    <h6 class="workflow__title-6">PRODUCTION </h6>
-                        <p>
-                          AFTER STUDIES AND RESEARCH,
-AN ACTION PLAN IS PRODUCED AND IMPLEMENTED TO DELIVER
-THE CUSTOMER'S MESSAGE IN
-A DISTINCTIVE AND INNOVATIVE WAY ATTRACTS AND SATISFIES
-THE AUDIENCE TO OBTAIN RESULTS THEY HAVE NOT EXPERIENCED BY NOBODY BEFORE.
-
-                        </p>
+                    <h6 class="workflow__title-6"><%= isArabic ? 'الإنتاج والتنفيذ' : 'PRODUCTION' %></h6>
+                    <p><%= isArabic
+                      ? 'بعد الدراسة والبحث، ننتج خطة العمل وننفذها لإيصال رسالة العميل بطريقة مميزة ومبتكرة تجذب الجمهور وتحقق نتائج ملموسة.'
+                      : 'AFTER STUDIES AND RESEARCH, AN ACTION PLAN IS PRODUCED AND IMPLEMENTED TO DELIVER THE CUSTOMER MESSAGE IN A DISTINCTIVE AND INNOVATIVE WAY THAT ATTRACTS AND SATISFIES THE AUDIENCE.' %></p>
                   </div>
                 </div>
 
@@ -221,10 +230,10 @@ THE AUDIENCE TO OBTAIN RESULTS THEY HAVE NOT EXPERIENCED BY NOBODY BEFORE.
 
                 <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3">
                   <div class="workflow__slide-6">
-                    <h6 class="workflow__title-6">        HAPPY EXPERIENCE
-                    </h6>
-                    <p>        WE CARE A LOT ABOUT THE SMALL DETAILS THAT HAVE A BIG IMPACT ON THE  EXPERIENCE  OF  THE  CUSTOMER, AND THE RELATIONSHIP IN BETWEEN.
-                    </p>
+                    <h6 class="workflow__title-6"><%= isArabic ? 'تجربة سعيدة' : 'HAPPY EXPERIENCE' %></h6>
+                    <p><%= isArabic
+                      ? 'نهتم كثيراً بالتفاصيل الصغيرة التي تصنع أثراً كبيراً في تجربة العميل وفي العلاقة التي نبنيها معه.'
+                      : 'WE CARE A LOT ABOUT THE SMALL DETAILS THAT HAVE A BIG IMPACT ON THE EXPERIENCE OF THE CUSTOMER AND THE RELATIONSHIP IN BETWEEN.' %></p>
                   </div>
                 </div>
               </div>
@@ -272,8 +281,8 @@ THE AUDIENCE TO OBTAIN RESULTS THEY HAVE NOT EXPERIENCED BY NOBODY BEFORE.
         <!-- Team area start -->
         <section class="team__area pt-140 pb-140" style="background-color: #231F20;">
           <div class="sec-title-wrapper">
-            <h2 class="sec-sub-title title-anim">Our Team</h2>
-            <h3 class="sec-title title-anim">How we work</h3>
+            <h2 class="sec-sub-title<%= isArabic ? '' : ' title-anim' %>"><%= isArabic ? 'فريقنا' : 'Our Team' %></h2>
+            <h3 class="sec-title<%= isArabic ? '' : ' title-anim' %>"><%= isArabic ? 'العقول خلف العمل' : 'How we work' %></h3>
           </div>
 
 
@@ -282,10 +291,10 @@ THE AUDIENCE TO OBTAIN RESULTS THEY HAVE NOT EXPERIENCED BY NOBODY BEFORE.
              
               <div class="swiper-slide team__slide">
                 <a href="#">
-                  <img src="assets/imgs/teams/1.png" alt="Team Member">
+                  <img src="assets/imgs/teams/1.png" alt="<%= isArabic ? 'عضو فريق ثريل' : 'Team Member' %>">
                   <div class="team__info">
                     <h4 class="team__member-name">MOHAMMED Al ODEH</h4>
-                    <h5 class="team__member-role">CEO</h5>
+                    <h5 class="team__member-role"><%= isArabic ? 'الرئيس التنفيذي' : 'CEO' %></h5>
                   </div>
                 </a>
               </div>
@@ -306,7 +315,7 @@ THE AUDIENCE TO OBTAIN RESULTS THEY HAVE NOT EXPERIENCED BY NOBODY BEFORE.
                   <img src="assets/imgs/teams/3.png" alt="Team Member">
                   <div class="team__info">
                     <h4 class="team__member-name">RAZAN ALMOHAMMED</h4>
-                    <h5 class="team__member-role">BUSINESS DEVELOPMENT MANAGER</h5>
+                    <h5 class="team__member-role"><%= isArabic ? 'مديرة تطوير الأعمال' : 'BUSINESS DEVELOPMENT MANAGER' %></h5>
                   </div>
                 </a>
               </div>
@@ -316,7 +325,7 @@ THE AUDIENCE TO OBTAIN RESULTS THEY HAVE NOT EXPERIENCED BY NOBODY BEFORE.
                   <img src="assets/imgs/teams/7.png" alt="Team Member">
                   <div class="team__info">
                     <h4 class="team__member-name">AHMED ALHILAL</h4>
-                    <h5 class="team__member-role">CREATIVE DIRECTOR</h5>
+                    <h5 class="team__member-role"><%= isArabic ? 'المدير الإبداعي' : 'CREATIVE DIRECTOR' %></h5>
                   </div>
                 </a>
               </div>
@@ -327,7 +336,7 @@ THE AUDIENCE TO OBTAIN RESULTS THEY HAVE NOT EXPERIENCED BY NOBODY BEFORE.
                   <img src="assets/imgs/teams/12.png" alt="Team Member">
                   <div class="team__info">
                     <h4 class="team__member-name">MODHI TURKI</h4>
-                    <h5 class="team__member-role">PROJECT MANAGER</h5>
+                    <h5 class="team__member-role"><%= isArabic ? 'مديرة المشاريع' : 'PROJECT MANAGER' %></h5>
                   </div>
                 </a>
               </div>
@@ -337,7 +346,7 @@ THE AUDIENCE TO OBTAIN RESULTS THEY HAVE NOT EXPERIENCED BY NOBODY BEFORE.
                   <img src="assets/imgs/teams/4.png" alt="Team Member">
                   <div class="team__info">
                     <h4 class="team__member-name">KHALED AYMAN</h4>
-                    <h5 class="team__member-role">ART DIRECTOR</h5>
+                    <h5 class="team__member-role"><%= isArabic ? 'المدير الفني' : 'ART DIRECTOR' %></h5>
                   </div>
                 </a>
               </div>
@@ -348,7 +357,7 @@ THE AUDIENCE TO OBTAIN RESULTS THEY HAVE NOT EXPERIENCED BY NOBODY BEFORE.
                   <img src="assets/imgs/teams/13.png" alt="Team Member">
                   <div class="team__info">
                     <h4 class="team__member-name">NOURA A. ALDEHELAN</h4>
-                    <h5 class="team__member-role">KEY ACCOUNT MANAGER</h5>
+                    <h5 class="team__member-role"><%= isArabic ? 'مديرة الحسابات الرئيسية' : 'KEY ACCOUNT MANAGER' %></h5>
                   </div>
                 </a>
               </div>
@@ -360,7 +369,7 @@ THE AUDIENCE TO OBTAIN RESULTS THEY HAVE NOT EXPERIENCED BY NOBODY BEFORE.
                   <img src="assets/imgs/teams/5.png" alt="Team Member">
                   <div class="team__info">
                     <h4 class="team__member-name">ADEL HALAWI</h4>
-                    <h5 class="team__member-role">PHOTOGRAPHER</h5>
+                    <h5 class="team__member-role"><%= isArabic ? 'مصور فوتوغرافي' : 'PHOTOGRAPHER' %></h5>
                   </div>
                 </a>
               </div>
@@ -370,7 +379,7 @@ THE AUDIENCE TO OBTAIN RESULTS THEY HAVE NOT EXPERIENCED BY NOBODY BEFORE.
                   <img src="assets/imgs/teams/6.png" alt="Team Member">
                   <div class="team__info">
                     <h4 class="team__member-name">LAMIA AL-GHALAINIY</h4>
-                    <h5 class="team__member-role">VIDEOGRAPHER</h5>
+                    <h5 class="team__member-role"><%= isArabic ? 'مصور فيديو' : 'VIDEOGRAPHER' %></h5>
                   </div>
                 </a>
               </div>
@@ -383,7 +392,7 @@ THE AUDIENCE TO OBTAIN RESULTS THEY HAVE NOT EXPERIENCED BY NOBODY BEFORE.
                   <img src="assets/imgs/teams/8.png" alt="Team Member">
                   <div class="team__info">
                     <h4 class="team__member-name">AHMED ALTAWEEL </h4>
-                    <h5 class="team__member-role">SOFTWARE DEVELOPMENT MANAGER</h5>
+                    <h5 class="team__member-role"><%= isArabic ? 'مدير تطوير البرمجيات' : 'SOFTWARE DEVELOPMENT MANAGER' %></h5>
                   </div>
                 </a>
               </div>
@@ -394,7 +403,7 @@ THE AUDIENCE TO OBTAIN RESULTS THEY HAVE NOT EXPERIENCED BY NOBODY BEFORE.
                   <img src="assets/imgs/teams/14.png" alt="Team Member">
                   <div class="team__info">
                     <h4 class="team__member-name">RAHAF FAHAD</h4>
-                    <h5 class="team__member-role">CONTENT CREATOR</h5>
+                    <h5 class="team__member-role"><%= isArabic ? 'صانعة محتوى' : 'CONTENT CREATOR' %></h5>
                   </div>
                 </a>
               </div>
@@ -404,7 +413,7 @@ THE AUDIENCE TO OBTAIN RESULTS THEY HAVE NOT EXPERIENCED BY NOBODY BEFORE.
                   <img src="assets/imgs/teams/9.png" alt="Team Member">
                   <div class="team__info">
                     <h4 class="team__member-name">SAIF EL SAYED</h4>
-                    <h5 class="team__member-role">SENIOR GRAPHIC DESIGNER</h5>
+                    <h5 class="team__member-role"><%= isArabic ? 'مصمم جرافيك أول' : 'SENIOR GRAPHIC DESIGNER' %></h5>
                   </div>
                 </a>
               </div>
@@ -418,7 +427,7 @@ THE AUDIENCE TO OBTAIN RESULTS THEY HAVE NOT EXPERIENCED BY NOBODY BEFORE.
                   <img src="assets/imgs/teams/16.png" alt="Team Member">
                   <div class="team__info">
                     <h4 class="team__member-name">MARYAM ALABDULATIF</h4>
-                    <h5 class="team__member-role">SALES SPECIALIST</h5>
+                    <h5 class="team__member-role"><%= isArabic ? 'أخصائية مبيعات' : 'SALES SPECIALIST' %></h5>
                   </div>
                 </a>
               </div>
@@ -429,7 +438,7 @@ THE AUDIENCE TO OBTAIN RESULTS THEY HAVE NOT EXPERIENCED BY NOBODY BEFORE.
                   <img src="assets/imgs/teams/17.png" alt="Team Member">
                   <div class="team__info">
                    <h4 class="team__member-name"> SOUHA OCHI </h4>
-                   <h5 class="team__member-role">MARKETING COORDINATOR</h5>
+                   <h5 class="team__member-role"><%= isArabic ? 'منسقة تسويق' : 'MARKETING COORDINATOR' %></h5>
 
                   </div>
                 </a>
@@ -440,7 +449,7 @@ THE AUDIENCE TO OBTAIN RESULTS THEY HAVE NOT EXPERIENCED BY NOBODY BEFORE.
                   <img src="assets/imgs/teams/18.png" alt="Team Member">
                   <div class="team__info">
                     <h4 class="team__member-name">MISHAAN AL-SAHLI</h4>
-                    <h5 class="team__member-role">BUSINESS DEVELOPMENT MANAGER</h5>
+                    <h5 class="team__member-role"><%= isArabic ? 'مدير تطوير الأعمال' : 'BUSINESS DEVELOPMENT MANAGER' %></h5>
                   </div>
                 </a>
               </div>
@@ -456,7 +465,7 @@ THE AUDIENCE TO OBTAIN RESULTS THEY HAVE NOT EXPERIENCED BY NOBODY BEFORE.
                   <img src="assets/imgs/teams/10.png" alt="Team Member">
                   <div class="team__info">
                     <h4 class="team__member-name">HUSSEIN ABOHAMOUD</h4>
-                    <h5 class="team__member-role">SENIOR GRAPHIC DESIGNER</h5>
+                    <h5 class="team__member-role"><%= isArabic ? 'مصمم جرافيك أول' : 'SENIOR GRAPHIC DESIGNER' %></h5>
                   </div>
                 </a>
               </div>
@@ -467,7 +476,7 @@ THE AUDIENCE TO OBTAIN RESULTS THEY HAVE NOT EXPERIENCED BY NOBODY BEFORE.
                   <img src="assets/imgs/teams/11.png" alt="Team Member">
                   <div class="team__info">
                     <h4 class="team__member-name">MOHAMED NADY </h4>
-                    <h5 class="team__member-role">SENIOR GRAPHIC DESIGNER</h5>
+                    <h5 class="team__member-role"><%= isArabic ? 'مصمم جرافيك أول' : 'SENIOR GRAPHIC DESIGNER' %></h5>
                   </div>
                 </a>
               </div>
@@ -477,7 +486,7 @@ THE AUDIENCE TO OBTAIN RESULTS THEY HAVE NOT EXPERIENCED BY NOBODY BEFORE.
                   <img src="assets/imgs/teams/15.png" alt="Team Member">
                   <div class="team__info">
                     <h4 class="team__member-name">GHADAH Alshammary</h4>
-                    <h5 class="team__member-role">SALES SPECIALIST</h5>
+                    <h5 class="team__member-role"><%= isArabic ? 'أخصائية مبيعات' : 'SALES SPECIALIST' %></h5>
                   </div>
                 </a>
               </div>
@@ -575,11 +584,11 @@ THE AUDIENCE TO OBTAIN RESULTS THEY HAVE NOT EXPERIENCED BY NOBODY BEFORE.
             <div class="row">
               <div class="col-xxl-12">
                 <div class="cta__content">
-                  <p class="cta__sub-title">Work with us</p>
-                  <h2 class="cta__title title-anim">We would love to hear more about your project</h2>
+                  <p class="cta__sub-title"><%= isArabic ? 'اعمل معنا' : 'Work with us' %></p>
+                  <h2 class="cta__title<%= isArabic ? '' : ' title-anim' %>"><%= isArabic ? 'يسعدنا أن نعرف أكثر عن مشروعك' : 'We would love to hear more about your project' %></h2>
                   <div class="btn_wrapper">
-                    <a href="/contact" class="wc-btn-primary btn-hover btn-item"><span></span>Let’s talk us <i
-                        class="fa-solid fa-arrow-right"></i></a>
+                    <a href="<%= isArabic ? '/ar/contact' : '/contact' %>" class="wc-btn-primary btn-hover btn-item"><span></span><%= isArabic ? 'لنتحدث' : 'Let’s talk us' %> <i
+                        class="fa-solid fa-arrow-<%= isArabic ? 'left' : 'right' %>"></i></a>
                   </div>
                 </div>
               </div>
@@ -592,7 +601,7 @@ THE AUDIENCE TO OBTAIN RESULTS THEY HAVE NOT EXPERIENCED BY NOBODY BEFORE.
 
 
 
-      <%- include('components/footer.ejs'); -%>
+      <%- include('components/footer.ejs', { isArabic }); -%>
 
 
     </div>

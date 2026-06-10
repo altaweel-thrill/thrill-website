@@ -1,13 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<% const isArabic = locale === "ar"; %>
+<html lang="<%= isArabic ? 'ar' : 'en' %>" dir="<%= isArabic ? 'rtl' : 'ltr' %>">
 
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="creative Agency">
+  <meta name="description" content="<%= isArabic ? 'وكالة ثريل الإبداعية للتسويق والتصميم والحلول الرقمية' : 'creative Agency' %>">
 
-  <title>Thrill Agency</title>
+  <title><%= isArabic ? 'وكالة ثريل الإبداعية' : 'Thrill Agency' %></title>
+  <% if (isArabic) { %><base href="/"><% } %>
+  <link rel="alternate" hreflang="en" href="/">
+  <link rel="alternate" hreflang="ar" href="/ar">
 
   <!-- Fav Icon -->
   <link rel="icon" type="image/x-icon" href="assets/imgs/logo/favicon.png">
@@ -16,6 +20,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <% if (isArabic) { %>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <% } %>
 
   <!-- All CSS files -->
   <link  rel="stylesheet" href="/assets/css/bootstrap.min.css">
@@ -39,7 +46,7 @@
 </head>
 
 
-<body class="dark">
+<body class="dark<%= isArabic ? ' dir-rtl arabic-page' : '' %>">
 
   <!-- Cursor Animation -->
   <div class="cursor1"></div>
@@ -62,7 +69,7 @@
   <button id="scroll_top" class="scroll-top"><i class="fa-solid fa-arrow-up"></i></button>
 
 
-  <%- include('components/header'); -%>
+  <%- include('components/header', { isArabic }); -%>
 
 
 
@@ -87,14 +94,16 @@
 
   <div class="hero__inner-2">
     <div class="sec-title-wrapper">
-      <h2 class="sec-title-3">HELLO &nbsp;<br> WE ARE</h2>
-      <h2 class="sec-title-3">THRILL <br>AGENCY</h2>
+      <h2 class="sec-title-3"><%= isArabic ? 'مرحباً، نحن' : 'HELLO' %><br><%= isArabic ? '' : ' WE ARE' %></h2>
+      <h2 class="sec-title-3"><%= isArabic ? 'وكالة' : 'THRILL' %> <br><%= isArabic ? 'ثريل' : 'AGENCY' %></h2>
     </div>
     <div  class="hero__text-2 ">
-      <p >We are <br>A Comprehensive marketing and services agency for creating visual and digital designs in a modern-creative way.</p>
+      <p><%= isArabic
+        ? 'وكالة تسويق متكاملة نصنع التصاميم البصرية والحلول الرقمية بأسلوب حديث ومبتكر.'
+        : 'We are A Comprehensive marketing and services agency for creating visual and digital designs in a modern-creative way.' %></p>
       <div class="hero__button btn_wrapper">
-        <a href="/service" class="wc-btn-pink btn-hover btn-item">
-          <span></span> Explore <br>our services <i class="fa-solid fa-arrow-right"></i>
+        <a href="<%= isArabic ? '/ar/service' : '/service' %>" class="wc-btn-pink btn-hover btn-item">
+          <span></span> <%= isArabic ? 'اكتشف خدماتنا' : 'Explore our services' %> <i class="fa-solid fa-arrow-<%= isArabic ? 'left' : 'right' %>"></i>
         </a>
       </div>
     </div>
@@ -114,13 +123,16 @@
               <div class="row">
                 <div class="col-xxl-7 col-xl-7 col-lg-7 col-md-6">
                   <div class="sec-title-wrapper">
-                    <h2 class="sec-title title-anim">Features are more helpful to create creative shapes as well.</h2>
+                    <h2 class="sec-title title-anim"><%= isArabic
+                      ? 'نحوّل الأفكار إلى تجارب إبداعية تصنع فرقاً.'
+                      : 'Features are more helpful to create creative shapes as well.' %></h2>
                   </div>
                 </div>
                 <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-6">
                   <div class="feature__text text-anim">
-                    <p>We are constantly rethinking the future by creating the next generation of products, brands and
-                      services from a hybrid perspective. The unthinkable today becomes inevitable.</p>
+                    <p><%= isArabic
+                      ? 'نعيد التفكير في المستقبل باستمرار، ونبني جيلاً جديداً من المنتجات والعلامات والخدمات برؤية تجمع بين الإبداع والاستراتيجية والتقنية.'
+                      : 'We are constantly rethinking the future by creating the next generation of products, brands and services from a hybrid perspective. The unthinkable today becomes inevitable.' %></p>
                   </div>
                 </div>
               </div>
@@ -134,30 +146,31 @@
                   <div class="feature__list animation__feature2">
                     <div class="feature__item">
                       <img src="assets/imgs/feature/icon/1.png" alt="Feature Icon">
-                      <h3 class="feature__title">Branding</h3>
-                      <p>Having these marketplace to your branded skilled team of designers and developers who
-                        embracement
-                        perfection.</p>
+                      <h3 class="feature__title"><%= isArabic ? 'بناء العلامة' : 'Branding' %></h3>
+                      <p><%= isArabic
+                        ? 'نبني هوية واضحة ومميزة تعبّر عن جوهر علامتك وتمنحها حضوراً ثابتاً في أذهان جمهورها.'
+                        : 'Having these marketplace to your branded skilled team of designers and developers who embracement perfection.' %></p>
                     </div>
                     <div class="feature__item">
                       <img src="assets/imgs/feature/icon/2.png" alt="Feature Icon">
-                      <h3 class="feature__title">Optimum</h3>
-                      <p>Brand identity design a the key to success whether you breath rebranding an existing business
-                        or
-                        creating a business</p>
+                      <h3 class="feature__title"><%= isArabic ? 'الاستراتيجية' : 'Optimum' %></h3>
+                      <p><%= isArabic
+                        ? 'نبدأ بفهم أهدافك والسوق والجمهور، ثم نرسم مساراً عملياً يقود علامتك إلى النمو.'
+                        : 'Brand identity design a the key to success whether you breath rebranding an existing business or creating a business.' %></p>
                     </div>
                     <div class="feature__item">
                       <img class="" src="assets/imgs/feature/icon/3.png" alt="Feature Icon">
-                      <h3 class="feature__title">Thinking</h3>
-                      <p>Creative typography plays the big role to pull off this trending more effectively with the
-                        thinking use a thicker point</p>
+                      <h3 class="feature__title"><%= isArabic ? 'التفكير الإبداعي' : 'Thinking' %></h3>
+                      <p><%= isArabic
+                        ? 'نبحث عن الفكرة التي تستحق الانتباه، ونصوغها بصرياً ورقمياً بطريقة أصيلة ومؤثرة.'
+                        : 'Creative typography plays the big role to pull off this trending more effectively with the thinking use a thicker point.' %></p>
                     </div>
                     <div class="feature__item">
                       <img src="assets/imgs/feature/icon/4.png" alt="Feature Icon">
-                      <h3 class="feature__title">Execution</h3>
-                      <p>Stricky with multiple shades of the colours. However, this type of alone can look awesome
-                        forever
-                        an online business</p>
+                      <h3 class="feature__title"><%= isArabic ? 'التنفيذ' : 'Execution' %></h3>
+                      <p><%= isArabic
+                        ? 'نحوّل الرؤية إلى مخرجات متقنة، من أدق التفاصيل إلى التجربة الكاملة عبر جميع نقاط التواصل.'
+                        : 'Stricky with multiple shades of the colours. However, this type of alone can look awesome forever an online business.' %></p>
                     </div>
                   </div>
                 </div>
@@ -173,49 +186,49 @@
           <div class="swiper roll__slider">
             <div class="swiper-wrapper roll__wrapper">
               <div class="swiper-slide roll__slide">
-                <h2>Development</h2>
+                <h2><%= isArabic ? 'تطوير' : 'Development' %></h2>
               </div>
               <div class="swiper-slide roll__slide">
-                <h2>Studio</h2>
+                <h2><%= isArabic ? 'استوديو' : 'Studio' %></h2>
               </div>
               <div class="swiper-slide roll__slide">
-                <h2>Strategy</h2>
+                <h2><%= isArabic ? 'استراتيجية' : 'Strategy' %></h2>
               </div>
               <div class="swiper-slide roll__slide">
-                <h2>Branding</h2>
+                <h2><%= isArabic ? 'علامات تجارية' : 'Branding' %></h2>
               </div>
               <div class="swiper-slide roll__slide">
-                <h2>Agency</h2>
+                <h2><%= isArabic ? 'وكالة' : 'Agency' %></h2>
               </div>
               <div class="swiper-slide roll__slide">
-                <h2>typhography</h2>
+                <h2><%= isArabic ? 'خطوط' : 'typhography' %></h2>
               </div>
               <div class="swiper-slide roll__slide">
-                <h2>Design</h2>
+                <h2><%= isArabic ? 'تصميم' : 'Design' %></h2>
               </div>
               <div class="swiper-slide roll__slide">
-                <h2>Interaction</h2>
+                <h2><%= isArabic ? 'تفاعل' : 'Interaction' %></h2>
               </div>
               <div class="swiper-slide roll__slide">
-                <h2>Element</h2>
+                <h2><%= isArabic ? 'ابتكار' : 'Element' %></h2>
               </div>
               <div class="swiper-slide roll__slide">
-                <h2>DIgital SOlution</h2>
+                <h2><%= isArabic ? 'حلول رقمية' : 'DIgital SOlution' %></h2>
               </div>
               <div class="swiper-slide roll__slide">
-                <h2>Strategy</h2>
+                <h2><%= isArabic ? 'استراتيجية' : 'Strategy' %></h2>
               </div>
               <div class="swiper-slide roll__slide">
-                <h2>Branding</h2>
+                <h2><%= isArabic ? 'علامات تجارية' : 'Branding' %></h2>
               </div>
               <div class="swiper-slide roll__slide">
-                <h2>Agency</h2>
+                <h2><%= isArabic ? 'وكالة' : 'Agency' %></h2>
               </div>
               <div class="swiper-slide roll__slide">
-                <h2>Interaction</h2>
+                <h2><%= isArabic ? 'تفاعل' : 'Interaction' %></h2>
               </div>
               <div class="swiper-slide roll__slide">
-                <h2>DIgital SOlution</h2>
+                <h2><%= isArabic ? 'حلول رقمية' : 'DIgital SOlution' %></h2>
               </div>
             </div>
           </div>
@@ -228,49 +241,49 @@
           <div dir="rtl" class="swiper roll__slider">
             <div class="swiper-wrapper roll__wrapper">
               <div class="swiper-slide roll__slide ">
-                <h2>Development</h2>
+                <h2><%= isArabic ? 'تطوير' : 'Development' %></h2>
               </div>
               <div class="swiper-slide roll__slide">
-                <h2>Studio</h2>
+                <h2><%= isArabic ? 'استوديو' : 'Studio' %></h2>
               </div>
               <div class="swiper-slide roll__slide">
-                <h2>Strategy</h2>
+                <h2><%= isArabic ? 'استراتيجية' : 'Strategy' %></h2>
               </div>
               <div class="swiper-slide roll__slide">
-                <h2>Branding</h2>
+                <h2><%= isArabic ? 'علامات تجارية' : 'Branding' %></h2>
               </div>
               <div class="swiper-slide roll__slide">
-                <h2>Agency</h2>
+                <h2><%= isArabic ? 'وكالة' : 'Agency' %></h2>
               </div>
               <div class="swiper-slide roll__slide">
-                <h2>typhography</h2>
+                <h2><%= isArabic ? 'خطوط' : 'typhography' %></h2>
               </div>
               <div class="swiper-slide roll__slide">
-                <h2>Design</h2>
+                <h2><%= isArabic ? 'تصميم' : 'Design' %></h2>
               </div>
               <div class="swiper-slide roll__slide">
-                <h2>Interaction</h2>
+                <h2><%= isArabic ? 'تفاعل' : 'Interaction' %></h2>
               </div>
               <div class="swiper-slide roll__slide">
-                <h2>Element</h2>
+                <h2><%= isArabic ? 'ابتكار' : 'Element' %></h2>
               </div>
               <div class="swiper-slide roll__slide">
-                <h2>DIgital SOlution</h2>
+                <h2><%= isArabic ? 'حلول رقمية' : 'DIgital SOlution' %></h2>
               </div>
               <div class="swiper-slide roll__slide">
-                <h2>Strategy</h2>
+                <h2><%= isArabic ? 'استراتيجية' : 'Strategy' %></h2>
               </div>
               <div class="swiper-slide roll__slide">
-                <h2>Branding</h2>
+                <h2><%= isArabic ? 'علامات تجارية' : 'Branding' %></h2>
               </div>
               <div class="swiper-slide roll__slide">
-                <h2>Agency</h2>
+                <h2><%= isArabic ? 'وكالة' : 'Agency' %></h2>
               </div>
               <div class="swiper-slide roll__slide">
-                <h2>Interaction</h2>
+                <h2><%= isArabic ? 'تفاعل' : 'Interaction' %></h2>
               </div>
               <div class="swiper-slide roll__slide">
-                <h2>DIgital SOlution</h2>
+                <h2><%= isArabic ? 'حلول رقمية' : 'DIgital SOlution' %></h2>
               </div>
             </div>
           </div>
@@ -405,7 +418,7 @@
             <div class="row">
               <div class="col-xxl-12">
                 <div class="sec-title-wrapper">
-                  <h2 class="sec-title title-anim">WE PROMISED </h2>
+                  <h2 class="sec-title title-anim"><%= isArabic ? 'وعدناكم' : 'WE PROMISED' %></h2>
 
                
 
@@ -413,12 +426,14 @@
                 </div>
                 <div class="sec-text-wrapper">
                   <div class="">
-                    <h3 style="color: aliceblue;">TO DO OUR BEST AND CHALLENGE OURSELVES TO EХPAND OUR HORIZONS AND OUR AWARENESS OF WHAT WE PROVIDE TO OUR CLIENTS AND OURSELVESi</h3>
+                    <h3 class="about-promise"><%= isArabic
+                      ? 'أن نقدم أفضل ما لدينا، ونتحدى أنفسنا دائماً لنوسّع آفاقنا ونرفع قيمة ما نصنعه لعملائنا ولأنفسنا.'
+                      : 'TO DO OUR BEST AND CHALLENGE OURSELVES TO EХPAND OUR HORIZONS AND OUR AWARENESS OF WHAT WE PROVIDE TO OUR CLIENTS AND OURSELVES' %></h3>
 
                   </div>
                   <div class="sec-btn btn_wrapper">
-                    <a class="wc-btn-pink btn-hover btn-item" href="/about"><span></span> Explore Us <i
-                        class="fa-solid fa-arrow-right"></i></a>
+                    <a class="wc-btn-pink btn-hover btn-item" href="<%= isArabic ? '/ar/about' : '/about' %>"><span></span> <%= isArabic ? 'اعرف أكثر عنا' : 'Explore Us' %> <i
+                        class="fa-solid fa-arrow-<%= isArabic ? 'left' : 'right' %>"></i></a>
                   </div>
                 </div>
               </div>
@@ -432,8 +447,9 @@
           <div class="container pb-140">
             <div class="row">
               <div class="col-xxl-12">
-                <h2 class="brand__title-2 title-anim">We worked with global largest brands
-                </h2>
+                <h2 class="brand__title-2 title-anim"><%= isArabic
+                  ? 'عملنا مع علامات رائدة محلياً وعالمياً'
+                  : 'We worked with global largest brands' %></h2>
 
                 
                 <div class="brand__list-2">
@@ -476,12 +492,11 @@
             <div class="row">
               <div class="col-xxl-12">
                 <div class="cta__content-2">
-                  <p class="cta__sub-title-2 title-anim">Have you project in mind?</p>
-                  <h2 class="cta__title-2 title-anim">Let’s make something
-                    great together!</h2>
+                  <p class="cta__sub-title-2 title-anim"><%= isArabic ? 'لديك مشروع في بالك؟' : 'Have you project in mind?' %></p>
+                  <h2 class="cta__title-2 title-anim"><%= isArabic ? 'لنصنع شيئاً رائعاً معاً!' : 'Let’s make something great together!' %></h2>
                   <div class="btn_wrapper">
-                    <a href="/contact" class="wc-btn-pink btn-hover btn-item"><span></span>Contact <br>with us <i
-                        class="fa-solid fa-arrow-right"></i></a>
+                    <a href="<%= isArabic ? '/ar/contact' : '/contact' %>" class="wc-btn-pink btn-hover btn-item"><span></span><%= isArabic ? 'تواصل معنا' : 'Contact with us' %> <i
+                        class="fa-solid fa-arrow-<%= isArabic ? 'left' : 'right' %>"></i></a>
                   </div>
                 </div>
               </div>
@@ -498,7 +513,7 @@
       </main>
 
 
-      <%- include('components/footer.ejs'); -%>
+      <%- include('components/footer.ejs', { isArabic }); -%>
 
      
 

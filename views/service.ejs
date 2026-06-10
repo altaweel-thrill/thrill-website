@@ -1,13 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<% const isArabic = locale === "ar"; %>
+<html lang="<%= isArabic ? 'ar' : 'en' %>" dir="<%= isArabic ? 'rtl' : 'ltr' %>">
 
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="creative Agency">
+  <meta name="description" content="<%= isArabic ? 'خدمات وكالة ثريل في الهوية البصرية والتواصل الاجتماعي والإنتاج الإعلامي والتطوير والتسويق' : 'creative Agency' %>">
 
-  <title>Service - Thrill Agency</title>
+  <title><%= isArabic ? 'خدماتنا - وكالة ثريل' : 'Service - Thrill Agency' %></title>
+  <% if (isArabic) { %><base href="/"><% } %>
+  <link rel="alternate" hreflang="en" href="/service">
+  <link rel="alternate" hreflang="ar" href="/ar/service">
 
   <!-- Fav Icon -->
   <link rel="icon" type="image/x-icon" href="assets/imgs/logo/favicon.png">
@@ -16,6 +20,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <% if (isArabic) { %>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <% } %>
 
   <!-- All CSS files -->
   <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -24,7 +31,7 @@
   <link rel="stylesheet" href="assets/css/progressbar.css">
   <link rel="stylesheet" href="assets/css/meanmenu.min.css">
   <link rel="stylesheet" href="assets/css/master.css">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
 
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -37,7 +44,7 @@
 </head>
 
 
-<body class="dark">
+<body class="dark<%= isArabic ? ' dir-rtl arabic-page service-arabic' : '' %>">
   <!-- Cursor Animation -->
   <div class="cursor1"></div>
   <div class="cursor2"></div>
@@ -60,7 +67,10 @@
   <!-- Go Top Button -->
   <button id="scroll_top" class="scroll-top"><i class="fa-solid fa-arrow-up"></i></button>
 
-  <%- include('components/header.ejs'); -%>
+  <%- include('components/header.ejs', {
+    isArabic,
+    languageSwitchHref: isArabic ? '/service' : '/ar/service'
+  }); -%>
 
  
 
@@ -78,22 +88,23 @@
           <div class="solution__wrapper">
             <div class="solution__left">
               <div class="solution__img-1">
-                <img src="assets/imgs/thumb/solution.png" alt="Solution Image">
+                <img src="assets/imgs/thumb/solution.png" alt="<%= isArabic ? 'حلول رقمية' : 'Solution Image' %>">
               </div>
               <div class="solution__img-2">
-                <img src="assets/imgs/thumb/solution-2.png" alt="Solution Image">
+                <img src="assets/imgs/thumb/solution-2.png" alt="<%= isArabic ? 'حلول رقمية' : 'Solution Image' %>">
               </div>
             </div>
 
             <div class="solution__mid">
-              <h1 class="solution__title animation__char_come">Digital Solution</h1>
-              <p>We’re designing digital experiences that enrich human lives and it helps to grow your business
-                globally trends.</p>
+              <h1 class="solution__title<%= isArabic ? '' : ' animation__char_come' %>"><%= isArabic ? 'حلول رقمية' : 'Digital Solution' %></h1>
+              <p><%= isArabic
+                ? 'نصمم تجارب رقمية تثري حياة الناس وتساعد أعمالك على النمو ومواكبة الاتجاهات العالمية.'
+                : 'We’re designing digital experiences that enrich human lives and it helps to grow your business globally trends.' %></p>
             </div>
 
             <div class="solution__right">
               <div class="solution__img-3">
-                <img src="assets/imgs/thumb/solution-3.png" alt="Solution Image">
+                <img src="assets/imgs/thumb/solution-3.png" alt="<%= isArabic ? 'حلول رقمية' : 'Solution Image' %>">
               </div>
             </div>
           </div>
@@ -103,9 +114,9 @@
               <div class="col-xxl-12">
                 <div class="solution__btm">
                   <ul>
-                    <li>Approch</li>
-                    <li>Creativity</li>
-                    <li>Experienced</li>
+                    <li><%= isArabic ? 'منهجية' : 'Approch' %></li>
+                    <li><%= isArabic ? 'إبداع' : 'Creativity' %></li>
+                    <li><%= isArabic ? 'خبرة' : 'Experienced' %></li>
                   </ul>
                 </div>
               </div>
@@ -131,12 +142,12 @@
                 <div class="content-wrapper">
                   <div class="left-content">
                     <ul class="service__list-6">
-                      <li class="active"><a href="#service_1">VISUAL IDENTITY <br>DESIGN</a></li>
-                      <li><a href="#service_2">SOCIAL MEDIA<br>MANGEMENT</a></li>
-                      <li><a href="#service_3">MEDIA <br>PRODUCTION</a></li>
-                      <li><a href="#service_4">APPLICATIONS &  <br> WEBSITES</a></li>
-                      <li><a href="#service_5">SPONSORDED  <br>ADVERTISEMENT <br>MANGEMENT</a></li>
-                      <li><a href="#service_6">PLANNING & <br> STRATEGY</a></li>
+                      <li class="active"><a href="#service_1"><%= isArabic ? 'تصميم الهوية البصرية' : 'VISUAL IDENTITY DESIGN' %></a></li>
+                      <li><a href="#service_2"><%= isArabic ? 'إدارة التواصل الاجتماعي' : 'SOCIAL MEDIA MANGEMENT' %></a></li>
+                      <li><a href="#service_3"><%= isArabic ? 'الإنتاج الإعلامي' : 'MEDIA PRODUCTION' %></a></li>
+                      <li><a href="#service_4"><%= isArabic ? 'التطبيقات والمواقع' : 'APPLICATIONS & WEBSITES' %></a></li>
+                      <li><a href="#service_5"><%= isArabic ? 'إدارة الإعلانات الممولة' : 'SPONSORED ADVERTISEMENT MANGEMENT' %></a></li>
+                      <li><a href="#service_6"><%= isArabic ? 'التخطيط والاستراتيجية' : 'PLANNING & STRATEGY' %></a></li>
                       <!-- <li><a href="#service_7">WEBSITES</a></li> -->
                     </ul>
                   </div>
@@ -175,13 +186,10 @@
                         </div>
 
                         <div class="animation__service_page">
-                          <h2 class="service__title-6">VISUAL IDENTITY DESIGN</h2>
-                          <p>OUR AGENCY HAS THE UNIQUEST DIGITAL DESIGNS AND PUBLICATIONS WE WILL MALE YOU IDENTIFIABLE AND EYE-CATCHING COMPARED TO COMPETITORS USING
-                            TRADITIONAL SCHOOL METHODS DESIGNED IN A
-                            MODERN AND CONTEMPORARY STYLE WE BELIEVE
-                            THAT THERE MUST BE DIFFERENCE AND DISTINCTION BETWEEN THE ESTABLISHMENT AND THE OTHER
-                            
-                            </p>
+                          <h2 class="service__title-6"><%= isArabic ? 'تصميم الهوية البصرية' : 'VISUAL IDENTITY DESIGN' %></h2>
+                          <p><%= isArabic
+                            ? 'نصنع هويات بصرية وتصاميم رقمية فريدة تمنح علامتك حضوراً واضحاً وجذاباً بين المنافسين. نمزج أسس التصميم الراسخة بأسلوب حديث ومعاصر لأننا نؤمن أن لكل منشأة شخصية تستحق التميّز.'
+                            : 'OUR AGENCY HAS THE UNIQUEST DIGITAL DESIGNS AND PUBLICATIONS. WE WILL MAKE YOU IDENTIFIABLE AND EYE-CATCHING COMPARED TO COMPETITORS USING TRADITIONAL SCHOOL METHODS DESIGNED IN A MODERN AND CONTEMPORARY STYLE.' %></p>
                          
                           <!-- <div class="btn_wrapper">
                             <a href="service-details.html" class="wc-btn-secondary btn-item btn-hover"><span></span>Get
@@ -197,11 +205,10 @@
                         </div>
 
                         <div class="animation__service_page">
-                          <h2 class="service__title-6">SOCIAL MEDIA MANGEMENT</h2>
-                          <p>OUR DISTINGUISHED TEAM WILL INTRODUCE YOU TO YOUR FACILITY USING SCHEDULED AND SPECIFIC STORIES , </br>
-                            WE WILL ALSO WORL TO INCREASE THE NUMBER OF FOLLOWERS
-                            WE COMMUNICATE WITH THEM TO ENSURE THE HIGHEST AND THE BEST OUTCOMES ??
-                            </p>
+                          <h2 class="service__title-6"><%= isArabic ? 'إدارة التواصل الاجتماعي' : 'SOCIAL MEDIA MANGEMENT' %></h2>
+                          <p><%= isArabic
+                            ? 'يقدّم فريقنا علامتك للجمهور عبر محتوى مدروس وجدول نشر واضح وقصص مخصصة، ونعمل على تنمية مجتمع المتابعين والتواصل معهم لتحقيق أفضل النتائج.'
+                            : 'OUR DISTINGUISHED TEAM WILL INTRODUCE YOU TO YOUR FACILITY USING SCHEDULED AND SPECIFIC STORIES. WE WILL ALSO WORK TO INCREASE THE NUMBER OF FOLLOWERS AND COMMUNICATE WITH THEM TO ENSURE THE BEST OUTCOMES.' %></p>
                           
                           <!-- <div class="btn_wrapper">
                             <a href="service-details.html" class="wc-btn-secondary btn-item btn-hover"><span></span>Get
@@ -218,12 +225,10 @@
                         </div>
 
                         <div class="animation__service_page">
-                          <h2 class="service__title-6">MEDIA PRODUCTION</h2>
-                          <p>WE COMBINE CREATIVIT Y WITH THE LATEST TECHNOLOGY TO
-                            CLARIFY YOUR MESSAGE TO THE AUDIENCE THROUGH CONTENT THAT IS INGRAINED IN THEIR MINDS AND IS COMPATIBLE WITH
-                            THE DEVELOPMENT OF SOCIAL NETWORLING SITES, WHICH IS
-                            COMPLETELY DIFFERENT FROM TELEVISION ADVERTISEMENTS IN TERMS OF QUALITY AND DURATION.
-                            </p>
+                          <h2 class="service__title-6"><%= isArabic ? 'الإنتاج الإعلامي' : 'MEDIA PRODUCTION' %></h2>
+                          <p><%= isArabic
+                            ? 'نجمع بين الإبداع وأحدث التقنيات لنقدّم رسالتك للجمهور عبر محتوى راسخ في الذاكرة ومصمم خصيصاً لمنصات التواصل الحديثة من حيث الجودة والإيقاع والمدة.'
+                            : 'WE COMBINE CREATIVITY WITH THE LATEST TECHNOLOGY TO CLARIFY YOUR MESSAGE TO THE AUDIENCE THROUGH MEMORABLE CONTENT COMPATIBLE WITH THE DEVELOPMENT OF SOCIAL NETWORKING SITES.' %></p>
                           
                           <!-- <div class="btn_wrapper">
                             <a href="service-details.html" class="wc-btn-secondary btn-item btn-hover"><span></span>Get
@@ -239,15 +244,15 @@
                         </div>
 
                         <div class="animation__service_page">
-                          <h2 class="service__title-6">APPLICATIONS  AND WEBSITES</h2>
-                          <p>THE APPLICATIONS DEPARTMENT OF OUR AGENCY HELPS STARTUPS BASED ON BUILDING SUCCESSFUL APPLICATIONS AND WEBSITES USING
-                            SPRINT DESIGN, WHICH WILL HELP US FIND MANY SOLUTIONS TO ALL CHALLENGES AS QUICLLY AS POSSIBLE.
-                            </p>
+                          <h2 class="service__title-6"><%= isArabic ? 'التطبيقات والمواقع' : 'APPLICATIONS AND WEBSITES' %></h2>
+                          <p><%= isArabic
+                            ? 'يساعد فريق التطبيقات والمواقع الشركات الناشئة والمنشآت على بناء منتجات رقمية ناجحة باستخدام منهجيات تصميم سريعة تكشف التحديات وتقود إلى حلول عملية بأقصر وقت.'
+                            : 'THE APPLICATIONS DEPARTMENT OF OUR AGENCY HELPS STARTUPS BUILD SUCCESSFUL APPLICATIONS AND WEBSITES USING SPRINT DESIGN, WHICH HELPS US FIND SOLUTIONS TO CHALLENGES AS QUICKLY AS POSSIBLE.' %></p>
 
                             <ul>
-                              <li>APPLICATION DEVELOPMENT SERVICES </li><br>
-                              <li>WEBSITE DEVELOPMENT SERVICES <br></li><br>
-                              <li>USER EXPERIENCE AND USER INTERFACE SERVICES <br></li><br>
+                              <li><%= isArabic ? 'خدمات تطوير التطبيقات' : 'APPLICATION DEVELOPMENT SERVICES' %></li><br>
+                              <li><%= isArabic ? 'خدمات تطوير المواقع' : 'WEBSITE DEVELOPMENT SERVICES' %></li><br>
+                              <li><%= isArabic ? 'تصميم تجربة وواجهة المستخدم' : 'USER EXPERIENCE AND USER INTERFACE SERVICES' %></li><br>
                              
                             </ul>
                           
@@ -265,8 +270,10 @@
                         </div>
 
                         <div class="animation__service_page">
-                          <h2 class="service__title-6">SPONSORDED ADVERTISEMENT MANGEMENT</h2>
-                          <p>DESIGNED FOR TODAY'S MARKET, WE VALUE BEING INFORMED AND KEEP PACE WITH EVERY DIGITAL PLATFORM AS WE MONITOR AND DEVELOP OUR PRACTICES TO REACH THE TARGET GROUPS.</p>
+                          <h2 class="service__title-6"><%= isArabic ? 'إدارة الإعلانات الممولة' : 'SPONSORED ADVERTISEMENT MANGEMENT' %></h2>
+                          <p><%= isArabic
+                            ? 'نصمم الحملات لسوق اليوم ونواكب تطورات المنصات الرقمية باستمرار، ونراقب الأداء ونطوّر الممارسات للوصول إلى الفئات المستهدفة بكفاءة.'
+                            : 'DESIGNED FOR TODAY’S MARKET, WE KEEP PACE WITH EVERY DIGITAL PLATFORM AS WE MONITOR AND DEVELOP OUR PRACTICES TO REACH THE TARGET GROUPS.' %></p>
                           
                           <!-- <div class="btn_wrapper">
                             <a href="service-details.html" class="wc-btn-secondary btn-item btn-hover"><span></span>Get
@@ -282,11 +289,10 @@
                         </div>
 
                         <div class="animation__service_page">
-                          <h2 class="service__title-6">PLANNING AND STRATEGIES</h2>
-                         <p>FROM IDENTITY DESIGN AND PRODUCTION TO RESEARCH AND
-                          MANAGEMENT OF SOCIAL MEDIA SITES, WE HAVE THE ELEMENTS YOU NEED TO EXPAND YOUR BUSINESS. OUR STRATEGIES WILL GUARANTEE YOU A SUCCESSFUL AND EASY-TO-IMPLEMENT
-                          MARKETING PLAN .
-                          </p>
+                          <h2 class="service__title-6"><%= isArabic ? 'التخطيط والاستراتيجية' : 'PLANNING AND STRATEGIES' %></h2>
+                         <p><%= isArabic
+                           ? 'من تصميم الهوية والإنتاج إلى البحث وإدارة منصات التواصل، نمتلك العناصر التي يحتاجها عملك للتوسع. نبني لك خطة تسويقية ناجحة وواضحة وقابلة للتنفيذ.'
+                           : 'FROM IDENTITY DESIGN AND PRODUCTION TO RESEARCH AND MANAGEMENT OF SOCIAL MEDIA SITES, WE HAVE THE ELEMENTS YOU NEED TO EXPAND YOUR BUSINESS. OUR STRATEGIES WILL PROVIDE A SUCCESSFUL AND EASY-TO-IMPLEMENT MARKETING PLAN.' %></p>
                           <!-- <div class="btn_wrapper">
                             <a href="service-details.html" class="wc-btn-secondary btn-item btn-hover"><span></span>Get
                               free
@@ -334,11 +340,11 @@
             <div class="row">
               <div class="col-xxl-12">
                 <div class="cta__content">
-                  <p class="cta__sub-title">Work with us</p>
-                  <h2 class="cta__title title-anim">We would love to hear more about your project</h2>
+                  <p class="cta__sub-title"><%= isArabic ? 'اعمل معنا' : 'Work with us' %></p>
+                  <h2 class="cta__title<%= isArabic ? '' : ' title-anim' %>"><%= isArabic ? 'يسعدنا أن نعرف أكثر عن مشروعك' : 'We would love to hear more about your project' %></h2>
                   <div class="btn_wrapper">
-                    <a href="/contact" class="wc-btn-primary btn-item btn-hover"><span></span>Let’s talk us <i
-                        class="fa-solid fa-arrow-right"></i></a>
+                    <a href="<%= isArabic ? '/ar/contact' : '/contact' %>" class="wc-btn-primary btn-item btn-hover"><span></span><%= isArabic ? 'لنتحدث' : 'Let’s talk us' %> <i
+                        class="fa-solid fa-arrow-<%= isArabic ? 'left' : 'right' %>"></i></a>
                   </div>
                 </div>
               </div>
@@ -351,7 +357,7 @@
 
 
 
-      <%- include('components/footer.ejs'); -%>
+      <%- include('components/footer.ejs', { isArabic }); -%>
 
 
 

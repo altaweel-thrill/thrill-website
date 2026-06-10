@@ -1,13 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<% const isArabic = locale === "ar"; %>
+<html lang="<%= isArabic ? 'ar' : 'en' %>" dir="<%= isArabic ? 'rtl' : 'ltr' %>">
 
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="creative Agency">
+  <meta name="description" content="<%= isArabic ? 'مختارات من مشاريع الهوية والعلامات التجارية التي نفذتها وكالة ثريل' : 'Selected branding and visual identity projects by Thrill Agency' %>">
 
-  <title>Portfolio - Thrill Agency</title>
+  <title><%= isArabic ? 'الهوية والعلامة - وكالة ثريل' : 'Branding Portfolio - Thrill Agency' %></title>
+  <% if (isArabic) { %><base href="/"><% } %>
+  <link rel="alternate" hreflang="en" href="/portfolio">
+  <link rel="alternate" hreflang="ar" href="/ar/portfolio">
 
   <!-- Fav Icon -->
   <link rel="icon" type="image/x-icon" href="assets/imgs/logo/favicon.png">
@@ -16,6 +20,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <% if (isArabic) { %>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <% } %>
 
   <!-- All CSS files -->
   <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -24,7 +31,7 @@
   <link rel="stylesheet" href="assets/css/progressbar.css">
   <link rel="stylesheet" href="assets/css/meanmenu.min.css">
   <link rel="stylesheet" href="assets/css/master.css">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
 
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -36,7 +43,7 @@
 </head>
 
 
-<body class="dark">
+<body class="dark<%= isArabic ? ' dir-rtl arabic-page branding-arabic' : '' %>">
 
   <!-- Cursor Animation -->
   <div class="cursor1"></div>
@@ -60,7 +67,10 @@
 
 
   <!-- Header area start -->
-  <%- include('components/header'); -%>
+  <%- include('components/header', {
+    isArabic,
+    languageSwitchHref: isArabic ? '/portfolio' : '/ar/portfolio'
+  }); -%>
 
   <!-- Header area end -->
 
@@ -85,13 +95,14 @@
             <div class="row">
               <div class="col-xxl-8 col-xl-7 col-lg-6 col-md-6">
                 <div class="sec-title-wrapper">
-                  <h2 class="sec-title-2 animation__char_come">Selected <br> Projects</h2>
+                  <h2 class="sec-title-2<%= isArabic ? '' : ' animation__char_come' %>"><%= isArabic ? 'مختارات من' : 'Selected' %> <br><%= isArabic ? 'مشاريعنا' : 'Projects' %></h2>
                 </div>
               </div>
               <div class="col-xxl-4 col-xl-5 col-lg-6 col-md-6">
                 <div class="blog__text">
-                  <p>Crafting new bright brands, unique visual systems and digital experience focused on a wide range of
-                    original collabs. </p>
+                  <p><%= isArabic
+                    ? 'نصنع علامات تجارية مميزة وأنظمة بصرية متكاملة وتجارب رقمية تعكس شخصية كل مشروع وتمنحه حضوراً واضحاً.'
+                    : 'Crafting bright brands, unique visual systems and digital experiences through a wide range of original collaborations.' %></p>
                 </div>
               </div>
             </div>
@@ -102,7 +113,7 @@
           <div class="container">
             <div class="row top_row">
 
-              <h2 class="portfolio__text">Branding</h2>
+              <h2 class="portfolio__text"><%= isArabic ? 'الهوية والعلامة' : 'Branding' %></h2>
               <div class="portfolio__list-1">
 
 
@@ -112,7 +123,7 @@
                   <a href="/louga"><img class="mover" src="assets/imgs/portfolio/louga/1.gif" alt="Portfolio Image"></a>
                   <div class="portfolio__info">
                     <h3 class="portfolio__title">Louga</h3>
-                    <p>Branding</p>
+                    <p><%= isArabic ? 'تصميم الهوية' : 'Branding' %></p>
                   </div>
                 </div>
 
@@ -120,7 +131,7 @@
                   <a href="/nubul"><img class="mover" src="assets/imgs/portfolio/nubul/1.gif" alt="Portfolio Image"></a>
                   <div class="portfolio__info">
                     <h3 class="portfolio__title">Nubul</h3>
-                    <p>Rebranding</p>
+                    <p><%= isArabic ? 'إعادة بناء الهوية' : 'Rebranding' %></p>
                   </div>
                 </div>
 
@@ -128,7 +139,7 @@
                   <a href="/algarawi"><img class="mover" src="assets/imgs/portfolio/algarawi/1.gif" alt="Portfolio Image"></a>
                   <div class="portfolio__info">
                     <h3 class="portfolio__title">Algarawi</h3>
-                    <p>Rebranding</p>
+                    <p><%= isArabic ? 'إعادة بناء الهوية' : 'Rebranding' %></p>
                   </div>
                 </div>
 
@@ -139,7 +150,7 @@
                   <a href="/flowy"><img class="mover" src="assets/imgs/portfolio/flowy/1.png" alt="Portfolio Image"></a>
                   <div class="portfolio__info">
                     <h3 class="portfolio__title">Flowy</h3>
-                    <p>Branding</p>
+                    <p><%= isArabic ? 'تصميم الهوية' : 'Branding' %></p>
                   </div>
                 </div>
 
@@ -148,7 +159,7 @@
                   <a href="/parkview"><img class="mover" src="assets/imgs/portfolio/parkview/1.png" alt="Portfolio Image"></a>
                   <div class="portfolio__info">
                     <h3 class="portfolio__title">Parkview</h3>
-                    <p>Branding</p>
+                    <p><%= isArabic ? 'تصميم الهوية' : 'Branding' %></p>
                   </div>
                 </div>
 
@@ -157,14 +168,14 @@
                   <a href="/nahj"><img class="mover" src="assets/imgs/portfolio/nahj/1.png" alt="Portfolio Image"></a>
                   <div class="portfolio__info">
                     <h3 class="portfolio__title">Nahj</h3>
-                    <p>Branding</p>
+                    <p><%= isArabic ? 'تصميم الهوية' : 'Branding' %></p>
                   </div>
                 </div>
                 <div class="portfolio__item">
                   <a href="/gsf"><img class="mover" src="assets/imgs/portfolio/gsf/1.gif" alt="Portfolio Image"></a>
                   <div class="portfolio__info">
                     <h3 class="portfolio__title">GSF</h3>
-                    <p>Branding</p>
+                    <p><%= isArabic ? 'تصميم الهوية' : 'Branding' %></p>
                   </div>
                 </div>
                
@@ -172,7 +183,7 @@
                   <a href="/hlayel"><img class="mover" src="assets/imgs/portfolio/hlayel/1.png" alt="Portfolio Image"></a>
                   <div class="portfolio__info">
                     <h3 class="portfolio__title">Hlayel</h3>
-                    <p>Debranding</p>
+                    <p><%= isArabic ? 'تطوير الهوية' : 'Debranding' %></p>
                   </div>
                 </div>
 
@@ -181,7 +192,7 @@
                   <a href="/mood-code"><img class="mover" src="assets/imgs/portfolio/mood-code/1.gif" alt="Portfolio Image"></a>
                   <div class="portfolio__info">
                     <h3 class="portfolio__title">Mood Code</h3>
-                    <p>Branding</p>
+                    <p><%= isArabic ? 'تصميم الهوية' : 'Branding' %></p>
                   </div>
                 </div>
 
@@ -189,7 +200,7 @@
                   <a href="/luini"><img class="mover" src="assets/imgs/portfolio/luini/1.gif" alt="Portfolio Image"></a>
                   <div class="portfolio__info">
                     <h3 class="portfolio__title">Luini</h3>
-                    <p>Branding</p>
+                    <p><%= isArabic ? 'تصميم الهوية' : 'Branding' %></p>
                   </div>
                 </div>
 
@@ -197,7 +208,7 @@
                   <a href="/ribbon"><img class="mover" src="assets/imgs/portfolio/ribbon/1.gif" alt="Portfolio Image"></a>
                   <div class="portfolio__info">
                     <h3 class="portfolio__title">Ribbon</h3>
-                    <p>Branding</p>
+                    <p><%= isArabic ? 'تصميم الهوية' : 'Branding' %></p>
                   </div>
                 </div>
 
@@ -205,7 +216,7 @@
                   <a href="/seapoint"><img class="mover" src="assets/imgs/portfolio/seapoint/2.gif" alt="Portfolio Image"></a>
                   <div class="portfolio__info">
                     <h3 class="portfolio__title">Sea Point</h3>
-                    <p>Branding</p>
+                    <p><%= isArabic ? 'تصميم الهوية' : 'Branding' %></p>
                   </div>
                 </div>
 
@@ -214,7 +225,7 @@
                   <a href="/moheet"><img class="mover" src="assets/imgs/portfolio/moheet/1.gif" alt="Portfolio Image"></a>
                   <div class="portfolio__info">
                     <h3 class="portfolio__title">Moheet</h3>
-                    <p>Branding</p>
+                    <p><%= isArabic ? 'تصميم الهوية' : 'Branding' %></p>
                   </div>
                 </div>
 
@@ -225,7 +236,7 @@
                   <a href="/aqed"><img class="mover" src="assets/imgs/portfolio/aqed/1.gif" alt="Portfolio Image"></a>
                   <div class="portfolio__info">
                     <h3 class="portfolio__title">Aqed</h3>
-                    <p>Branding</p>
+                    <p><%= isArabic ? 'تصميم الهوية' : 'Branding' %></p>
                   </div>
                 </div>
 
@@ -233,7 +244,7 @@
                   <a href="/bazar"><img class="mover" src="assets/imgs/portfolio/bazar/1.gif" alt="Portfolio Image"></a>
                   <div class="portfolio__info">
                     <h3 class="portfolio__title">Bazar</h3>
-                    <p>Branding</p>
+                    <p><%= isArabic ? 'تصميم الهوية' : 'Branding' %></p>
                   </div>
                 </div>
 
@@ -241,7 +252,7 @@
                   <a href="/mora"><img class="mover" src="assets/imgs/portfolio/mora/1.png" alt="Portfolio Image"></a>
                   <div class="portfolio__info">
                     <h3 class="portfolio__title">Mora</h3>
-                    <p>Branding</p>
+                    <p><%= isArabic ? 'تصميم الهوية' : 'Branding' %></p>
                   </div>
                 </div>
 
@@ -270,11 +281,11 @@
             <div class="row">
               <div class="col-xxl-12">
                 <div class="cta__content">
-                  <p class="cta__sub-title">Work with us</p>
-                  <h2 class="cta__title title-anim">We would love to hear more about your project</h2>
+                  <p class="cta__sub-title"><%= isArabic ? 'اعمل معنا' : 'Work with us' %></p>
+                  <h2 class="cta__title<%= isArabic ? '' : ' title-anim' %>"><%= isArabic ? 'يسعدنا أن نعرف أكثر عن مشروعك' : 'We would love to hear more about your project' %></h2>
                   <div class="btn_wrapper">
-                    <a href="/contact" class="wc-btn-primary btn-hover btn-item"><span></span>Let’s talk us <i
-                        class="fa-solid fa-arrow-right"></i></a>
+                    <a href="<%= isArabic ? '/ar/contact' : '/contact' %>" class="wc-btn-primary btn-hover btn-item"><span></span><%= isArabic ? 'لنتحدث' : 'Let’s talk us' %> <i
+                        class="fa-solid fa-arrow-<%= isArabic ? 'left' : 'right' %>"></i></a>
                   </div>
                 </div>
               </div>
@@ -287,7 +298,7 @@
 
 
 
-      <%- include('components/footer.ejs'); -%>
+      <%- include('components/footer.ejs', { isArabic }); -%>
 
 
     </div>

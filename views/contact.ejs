@@ -1,13 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<% const isArabic = locale === "ar"; %>
+<html lang="<%= isArabic ? 'ar' : 'en' %>" dir="<%= isArabic ? 'rtl' : 'ltr' %>">
 
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="creative Agency">
+  <meta name="description" content="<%= isArabic ? 'تواصل مع وكالة ثريل لبدء مشروعك الإبداعي والتسويقي' : 'Contact Thrill Agency to start your next creative project' %>">
 
-  <title>Contact - Thrill Agency</title>
+  <title><%= isArabic ? 'تواصل معنا - وكالة ثريل' : 'Contact - Thrill Agency' %></title>
+  <% if (isArabic) { %><base href="/"><% } %>
+  <link rel="alternate" hreflang="en" href="/contact">
+  <link rel="alternate" hreflang="ar" href="/ar/contact">
 
   <!-- Fav Icon -->
   <link rel="icon" type="image/x-icon" href="assets/imgs/logo/favicon.png">
@@ -16,6 +20,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <% if (isArabic) { %>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <% } %>
 
   <!-- All CSS files -->
   <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -24,7 +31,7 @@
   <link rel="stylesheet" href="assets/css/progressbar.css">
   <link rel="stylesheet" href="assets/css/meanmenu.min.css">
   <link rel="stylesheet" href="assets/css/master.css">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
 
 <script src="https://www.google.com/recaptcha/api.js?render=6LdZxNYsAAAAAFet6g0axs3w1JAcgaDY-vahAlLh"></script>
 
@@ -38,7 +45,7 @@
   </head>
 
 
-<body class="dark">
+<body class="dark<%= isArabic ? ' dir-rtl arabic-page contact-arabic' : '' %>">
 
   <!-- Cursor Animation -->
   <div class="cursor1"></div>
@@ -63,7 +70,10 @@
 
 
   <!-- Header area start -->
-  <%- include('components/header.ejs'); -%>
+  <%- include('components/header.ejs', {
+    isArabic,
+    languageSwitchHref: isArabic ? '/contact' : '/ar/contact'
+  }); -%>
 
   <!-- Header area end -->
 
@@ -84,93 +94,87 @@
             <div class="row">
               <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6">
                 <div class="sec-title-wrapper">
-                  <h2 class="sec-title-2 animation__char_come">Let’s get in touch</h2>
+                  <h2 class="sec-title-2<%= isArabic ? '' : ' animation__char_come' %>"><%= isArabic ? 'لنتواصل معاً' : 'Let’s get in touch' %></h2>
                 </div>
               </div>
               <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6">
                 <div class="contact__text">
-                  <p>Great! We're excited to hear from you and let's start
-                    something special togerter. call us for any inquery.</p>
+                  <p><%= isArabic
+                    ? 'يسعدنا أن نسمع منك ونبدأ معاً شيئاً مميزاً. تواصل معنا لأي استفسار أو مشروع جديد.'
+                    : "Great! We're excited to hear from you and start something special together. Call us for any inquiry." %></p>
                 </div>
               </div>
             </div>
             <div class="row contact__btm">
               <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5">
                 <div class="contact__info">
-                  <h3 class="sub-title-anim-top animation__word_come">Get Thrilled! <br>Say let's Thrill it 🚀</h3>
+                  <h3 class="<%= isArabic ? '' : 'sub-title-anim-top animation__word_come' %>">
+                    <span><%= isArabic ? 'جاهز لبدء مشروعك؟' : 'Get Thrilled!' %></span>
+                    <span><%= isArabic ? 'لنصنع شيئاً رائعاً معاً' : "Say let's Thrill it" %></span>
+                  </h3>
                   <ul>
                     <li><a href="tel:+966536900404">+966 536 900 404</a></li>
-                    <li><a href="mailto:hello@thrillagancy.net">hello@thrillagancy.net</a></li>
-                    <div class="row g-3">
-                      <div class="col-12">
-                        <div class="btn_wrapper">
-                          <a id="Wsthrill" href="https://wa.me/966536900404" target="_blank" class="wc-btn-primary btn-hover btn-item"><span></span> Send   <br> Message  &nbsp;
-                            
+                    <li><a href="mailto:hello@thrillagency.net">hello@thrillagency.net</a></li>
+                    <li class="contact__whatsapp">
+                      <div class="contact__whatsapp-wrap">
+                        <a id="Wsthrill" href="https://wa.me/966536900404" target="_blank" rel="noopener" class="contact__whatsapp-btn">
                             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16">
                             <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
                           </svg>
-                          <br>
-                         
-                
+                          <span><%= isArabic ? 'أرسل رسالة' : 'Send Message' %></span>
                         </a>
-                        </div>
                       </div>
-                    </div>
+                    </li>
                     <li>
-                      <h3>Saudi Arabia </h3>
-                      <h3>Sidra Tower,
-                      Prince Sultan Bin Abdulaziz Rd,
-                      Al Andalus District, Al-Khobar</h3></li>
-
-                      
-                    </ul>
-
-                    <div class="p-4"></div>
-
-                   <ul>
-                    <li><a href="tel:+971505546565">+971 50 554 6565</a></li>
-                    <li><a href="mailto:hello@thrillagancy.net">hello@thrillagancy.net</a></li>
-
-                       <li>
-                      <h3>United Arab Emirates </h3>
-                      <h3>Business Bay - Dubai</h3></li>
+                      <h3><%= isArabic ? 'المملكة العربية السعودية' : 'Saudi Arabia' %></h3>
+                      <p><%= isArabic
+                        ? 'برج سدرة، طريق الأمير سلطان بن عبدالعزيز، حي الأندلس، الخبر'
+                        : 'Sidra Tower, Prince Sultan Bin Abdulaziz Rd, Al Andalus District, Al-Khobar' %></p>
+                    </li>
+                    <li class="contact__branch"><a href="tel:+971505546565">+971 50 554 6565</a></li>
+                    <li><a href="mailto:hello@thrillagency.net">hello@thrillagency.net</a></li>
+                    <li>
+                      <h3><%= isArabic ? 'الإمارات العربية المتحدة' : 'United Arab Emirates' %></h3>
+                      <p><%= isArabic ? 'الخليج التجاري، دبي' : 'Business Bay - Dubai' %></p>
+                    </li>
                   </ul>
                 </div>
               </div>
               <div class="col-xxl-7 col-xl-7 col-lg-7 col-md-7">
                 <div class="contact__form">
-                 <form action="/contact" method="post" id="contactForm">
-  <input type="hidden" name="recaptchaToken" id="recaptchaToken">
+                  <form action="/contact" method="post" id="contactForm">
+                    <input type="hidden" name="recaptchaToken" id="recaptchaToken">
+                    <input type="hidden" name="locale" value="<%= isArabic ? 'ar' : 'en' %>">
 
-  <!-- Honeypot ضد البوتات -->
-  <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
+                    <!-- Honeypot ضد البوتات -->
+                    <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
 
                     <div class="row g-3">
                       <div class="col-xxl-6 col-xl-6 col-12">
-                        <input type="text" required name="name" placeholder="Name *">
+                        <input type="text" required name="name" autocomplete="name" placeholder="<%= isArabic ? 'الاسم *' : 'Name *' %>">
                       </div>
                       <div class="col-xxl-6 col-xl-6 col-12">
-                        <input type="email" required name="email" placeholder="Email *">
+                        <input type="email" required name="email" autocomplete="email" placeholder="<%= isArabic ? 'البريد الإلكتروني *' : 'Email *' %>">
                       </div>
                     </div>
                     <div class="row g-3">
                       <div class="col-xxl-6 col-xl-6 col-12">
-                        <input type="tel" required name="phone" placeholder="Phone">
+                        <input type="tel" required name="phone" autocomplete="tel" dir="ltr" placeholder="<%= isArabic ? 'رقم الهاتف *' : 'Phone *' %>">
                       </div>
                       <div class="col-xxl-6 col-xl-6 col-12">
-                        <input type="text" required name="subject" placeholder="Subject *">
+                        <input type="text" required name="subject" placeholder="<%= isArabic ? 'الموضوع *' : 'Subject *' %>">
                       </div>
                     </div>
                     <div class="row g-3">
                       <div class="col-12">
-                        <textarea name="message" required placeholder="Messages *"></textarea>
+                        <textarea name="message" required placeholder="<%= isArabic ? 'اكتب رسالتك *' : 'Message *' %>"></textarea>
                       </div>
                     </div>
                     <div class="row g-3">
                       <div class="col-12">
                         <div class="btn_wrapper">
-                          <button type="submit" class="wc-btn-primary btn-hover btn-item"><span></span> Send <br>Message <i
-                              class="fa-solid fa-arrow-right"></i></button>
+                          <button type="submit" class="wc-btn-primary btn-hover btn-item"><span></span><%= isArabic ? 'إرسال الرسالة' : 'Send Message' %> <i
+                              class="fa-solid fa-arrow-<%= isArabic ? 'left' : 'right' %>"></i></button>
                         </div>
                       </div>
                     </div>
@@ -186,7 +190,7 @@
 
 
       <!-- Footer area start -->
-      <%- include('components/footer.ejs'); -%>
+      <%- include('components/footer.ejs', { isArabic }); -%>
 
       <!-- Footer area end -->
 

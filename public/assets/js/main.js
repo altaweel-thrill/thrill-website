@@ -1114,7 +1114,7 @@
 
   /////////////////////////////////////////////////////
   // 32. Menu Text Animation
-  document.querySelectorAll('.menu-anim > li > a').forEach(button => button.innerHTML = '<div class="menu-text"><span>' + button.textContent.split('').join('</span><span>') + '</span></div>');
+  document.querySelectorAll('.menu-anim > li:not(.language-switch) > a').forEach(button => button.innerHTML = '<div class="menu-text"><span>' + button.textContent.split('').join('</span><span>') + '</span></div>');
 
   setTimeout(() => {
     var menu_text = document.querySelectorAll(".menu-text span")
@@ -1177,16 +1177,18 @@
   // 35. Home Page 2 Animations
   let tHero = gsap.timeline()
 
-  let heading_title = new SplitText(".sec-title-3", { type: "chars" })
-  let heading_char = heading_title.chars
+  if (!document.body.classList.contains("arabic-page")) {
+    let heading_title = new SplitText(".sec-title-3", { type: "chars" })
+    let heading_char = heading_title.chars
 
-  tHero.from(heading_char, {
-    rotate: 20,
-    ease: "back.out",
-    opacity: 0,
-    duration: 2,
-    stagger: 0.1
-  })
+    tHero.from(heading_char, {
+      rotate: 20,
+      ease: "back.out",
+      opacity: 0,
+      duration: 2,
+      stagger: 0.1
+    })
+  }
 
   tHero.from(".hero2-shape img", {
     xPercent: -100,
@@ -4067,4 +4069,3 @@
 
 
 })(jQuery);
-
