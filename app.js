@@ -1,21 +1,110 @@
 const express = require('express');
 const ejs = require('ejs');
 const path = require('path')
+const crypto = require('crypto');
 var nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
+const axios = require("axios");
+const rateLimit = require("express-rate-limit");
 
 require("dotenv").config();
 
 const app = express();
+const trustProxy = process.env.TRUST_PROXY || (process.env.NODE_ENV === "production" ? "1" : "");
+
+if (trustProxy) {
+  let trustProxySetting = trustProxy;
+  if (/^\d+$/.test(trustProxy)) trustProxySetting = Number(trustProxy);
+  if (trustProxy === "true" || trustProxy === "false") trustProxySetting = trustProxy === "true";
+  app.set("trust proxy", trustProxySetting);
+}
+
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname , '/public')));
 // app.use(express.static(__dirname + '/public'));
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false, limit: "20kb", parameterLimit: 20 }))
 
 var port = process.env.PORT || 3000;
 app.listen(port,function(){
     console.log('server started');
 });
+
+const CONTACT_FORM_ACTION = "CONTACT_FORM";
+const CONTACT_FORM_MIN_AGE_MS = 2000;
+const CONTACT_FORM_MAX_AGE_MS = 4 * 60 * 60 * 1000;
+const configuredRecaptchaScore = Number(process.env.RECAPTCHA_MIN_SCORE);
+const RECAPTCHA_MIN_SCORE =
+  Number.isFinite(configuredRecaptchaScore) &&
+  configuredRecaptchaScore >= 0 &&
+  configuredRecaptchaScore <= 1
+    ? configuredRecaptchaScore
+    : 0.5;
+const RECAPTCHA_ALLOWED_HOSTNAMES = new Set(
+  (process.env.RECAPTCHA_ALLOWED_HOSTNAMES || "thrillagency.net,www.thrillagency.net,localhost,127.0.0.1")
+    .split(",")
+    .map((hostname) => hostname.trim().toLowerCase())
+    .filter(Boolean)
+);
+
+function getContactFormSecret() {
+  return process.env.CONTACT_FORM_SECRET || process.env.RECAPTCHA_SECRET;
+}
+
+function createContactFormToken() {
+  const secret = getContactFormSecret();
+  if (!secret) return "";
+
+  const issuedAt = Date.now().toString();
+  const signature = crypto.createHmac("sha256", secret).update(issuedAt).digest("hex");
+  return `${issuedAt}.${signature}`;
+}
+
+function isValidContactFormToken(token) {
+  const secret = getContactFormSecret();
+  if (!secret || typeof token !== "string") return false;
+
+  const [issuedAt, signature, extra] = token.split(".");
+  if (extra || !/^\d+$/.test(issuedAt || "") || !/^[a-f0-9]{64}$/.test(signature || "")) {
+    return false;
+  }
+
+  const age = Date.now() - Number(issuedAt);
+  if (age < CONTACT_FORM_MIN_AGE_MS || age > CONTACT_FORM_MAX_AGE_MS) return false;
+
+  const expectedSignature = crypto.createHmac("sha256", secret).update(issuedAt).digest("hex");
+  return crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expectedSignature));
+}
+
+function normalizeContactFields(body) {
+  return {
+    name: String(body.name || "").trim(),
+    email: String(body.email || "").trim().toLowerCase(),
+    phone: String(body.phone || "").trim(),
+    subject: String(body.subject || "").trim(),
+    message: String(body.message || "").trim(),
+  };
+}
+
+function hasValidContactFields(fields) {
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phonePattern = /^[+\d\s().-]+$/;
+  const phoneDigits = fields.phone.replace(/\D/g, "");
+
+  return (
+    fields.name.length >= 2 &&
+    fields.name.length <= 100 &&
+    fields.email.length <= 254 &&
+    emailPattern.test(fields.email) &&
+    fields.phone.length <= 30 &&
+    phonePattern.test(fields.phone) &&
+    phoneDigits.length >= 7 &&
+    phoneDigits.length <= 15 &&
+    fields.subject.length >= 2 &&
+    fields.subject.length <= 150 &&
+    fields.message.length >= 10 &&
+    fields.message.length <= 5000
+  );
+}
 
 
 app.get('/',function(req,res){
@@ -222,12 +311,12 @@ app.get('/parkview',function(req,res){
 
 
 app.get('/contact',function(req,res){
-            res.render("contact", { locale: "en" });
+            res.render("contact", { locale: "en", contactFormToken: createContactFormToken() });
 
 })
 
 app.get('/ar/contact',function(req,res){
-            res.render("contact", { locale: "ar" });
+            res.render("contact", { locale: "ar", contactFormToken: createContactFormToken() });
 
 })
 
@@ -271,26 +360,30 @@ app.get('/luini',function(req,res){
 })
 
 
-
-
-const axios = require("axios");
-const rateLimit = require("express-rate-limit");
-
-const limiter = rateLimit({
+const contactLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 5,
+  limit: 3,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: "Too many contact requests. Please try again later.",
 });
 
-app.post("/contact", limiter, async (req, res) => {
-  const { name, email, phone, subject, message, recaptchaToken, website, locale } = req.body;
+app.post("/contact", contactLimiter, async (req, res) => {
+  const { recaptchaToken, website, locale, contactFormToken } = req.body;
+  const fields = normalizeContactFields(req.body);
 
   if (website) return res.status(400).send("Spam detected");
-  if (!recaptchaToken) return res.status(400).send("No captcha");
+  if (!isValidContactFormToken(contactFormToken)) {
+    return res.status(400).send("Invalid form submission");
+  }
+  if (!hasValidContactFields(fields)) {
+    return res.status(400).send("Invalid form fields");
+  }
+  if (!recaptchaToken || typeof recaptchaToken !== "string" || recaptchaToken.length > 4096) {
+    return res.status(400).send("Captcha failed");
+  }
 
   try {
-    console.log("recaptchaToken:", recaptchaToken);
-console.log("token length:", recaptchaToken?.length);
-console.log("secret exists:", !!process.env.RECAPTCHA_SECRET);
     const verify = await axios.post(
       "https://www.google.com/recaptcha/api/siteverify",
       null,
@@ -298,13 +391,34 @@ console.log("secret exists:", !!process.env.RECAPTCHA_SECRET);
         params: {
           secret: process.env.RECAPTCHA_SECRET,
           response: recaptchaToken,
+          remoteip: req.ip,
         },
+        timeout: 5000,
       }
     );
 
-    console.log("captcha:", verify.data);
+    const captcha = verify.data || {};
+    const captchaScore = Number(captcha.score);
+    const captchaHostname = String(captcha.hostname || "").toLowerCase();
+    const challengeTime = Date.parse(captcha.challenge_ts);
+    const challengeAge = Date.now() - challengeTime;
+    const validChallengeTime =
+      Number.isFinite(challengeTime) && challengeAge >= -30000 && challengeAge <= 2 * 60 * 1000;
 
-    if (!verify.data.success || verify.data.score < 0.3) {
+    if (
+      !captcha.success ||
+      !Number.isFinite(captchaScore) ||
+      captchaScore < RECAPTCHA_MIN_SCORE ||
+      captcha.action !== CONTACT_FORM_ACTION ||
+      !RECAPTCHA_ALLOWED_HOSTNAMES.has(captchaHostname) ||
+      !validChallengeTime
+    ) {
+      console.warn("Rejected contact captcha", {
+        ip: req.ip,
+        score: captchaScore,
+        action: captcha.action,
+        hostname: captchaHostname,
+      });
       return res.status(400).send("Captcha failed");
     }
 
@@ -321,17 +435,17 @@ console.log("secret exists:", !!process.env.RECAPTCHA_SECRET);
       to: "hello@thrillagency.net",
       subject: "Contact Form - Thrill",
       text: `
-Name: ${name}
-Email: ${email}
-Phone: ${phone}
-Subject: ${subject}
-Message: ${message}
+Name: ${fields.name}
+Email: ${fields.email}
+Phone: ${fields.phone}
+Subject: ${fields.subject}
+Message: ${fields.message}
       `,
     });
 
     return res.redirect(locale === "ar" ? "/ar/thanks" : "/thanks");
   } catch (err) {
-    console.error(err);
+    console.error("Contact form error:", err.message);
     return res.status(500).send("Server error");
   }
 });

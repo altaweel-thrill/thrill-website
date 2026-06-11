@@ -145,29 +145,33 @@
                   <form action="/contact" method="post" id="contactForm">
                     <input type="hidden" name="recaptchaToken" id="recaptchaToken">
                     <input type="hidden" name="locale" value="<%= isArabic ? 'ar' : 'en' %>">
+                    <input type="hidden" name="contactFormToken" value="<%= contactFormToken %>">
 
                     <!-- Honeypot ضد البوتات -->
-                    <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
+                    <div aria-hidden="true" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;">
+                      <label for="contactWebsite">Website</label>
+                      <input type="text" id="contactWebsite" name="website" tabindex="-1" autocomplete="off">
+                    </div>
 
                     <div class="row g-3">
                       <div class="col-xxl-6 col-xl-6 col-12">
-                        <input type="text" required name="name" autocomplete="name" placeholder="<%= isArabic ? 'الاسم *' : 'Name *' %>">
+                        <input type="text" required minlength="2" maxlength="100" name="name" autocomplete="name" placeholder="<%= isArabic ? 'الاسم *' : 'Name *' %>">
                       </div>
                       <div class="col-xxl-6 col-xl-6 col-12">
-                        <input type="email" required name="email" autocomplete="email" placeholder="<%= isArabic ? 'البريد الإلكتروني *' : 'Email *' %>">
+                        <input type="email" required maxlength="254" name="email" autocomplete="email" placeholder="<%= isArabic ? 'البريد الإلكتروني *' : 'Email *' %>">
                       </div>
                     </div>
                     <div class="row g-3">
                       <div class="col-xxl-6 col-xl-6 col-12">
-                        <input type="tel" required name="phone" autocomplete="tel" dir="ltr" placeholder="<%= isArabic ? 'رقم الهاتف *' : 'Phone *' %>">
+                        <input type="tel" required minlength="7" maxlength="30" name="phone" autocomplete="tel" dir="ltr" placeholder="<%= isArabic ? 'رقم الهاتف *' : 'Phone *' %>">
                       </div>
                       <div class="col-xxl-6 col-xl-6 col-12">
-                        <input type="text" required name="subject" placeholder="<%= isArabic ? 'الموضوع *' : 'Subject *' %>">
+                        <input type="text" required minlength="2" maxlength="150" name="subject" placeholder="<%= isArabic ? 'الموضوع *' : 'Subject *' %>">
                       </div>
                     </div>
                     <div class="row g-3">
                       <div class="col-12">
-                        <textarea name="message" required placeholder="<%= isArabic ? 'اكتب رسالتك *' : 'Message *' %>"></textarea>
+                        <textarea name="message" required minlength="10" maxlength="5000" placeholder="<%= isArabic ? 'اكتب رسالتك *' : 'Message *' %>"></textarea>
                       </div>
                     </div>
                     <div class="row g-3">
