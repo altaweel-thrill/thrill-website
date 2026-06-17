@@ -270,6 +270,123 @@ body {
   transform: translateY(-3px);
 }
 
+.media-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  background: rgba(0, 0, 0, .88);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .25s ease, visibility .25s ease;
+}
+
+.media-popup.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.media-popup__content {
+  position: relative;
+  width: min(92vw, 720px);
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.media-popup__stage {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.media-popup__stage img,
+.media-popup__stage video {
+  max-width: 100%;
+  max-height: 90vh;
+  border-radius: 18px;
+  object-fit: contain;
+  background: #000;
+}
+
+.media-popup__stage video {
+  width: min(92vw, 520px);
+}
+
+.media-popup__close,
+.media-popup__nav {
+  position: absolute;
+  z-index: 2;
+  border: 0;
+  color: #fff;
+  background: rgba(0, 0, 0, .62);
+  cursor: pointer;
+  transition: background .2s ease, transform .2s ease;
+}
+
+.media-popup__close:hover,
+.media-popup__nav:hover {
+  background: rgba(255, 255, 255, .16);
+}
+
+.media-popup__close {
+  top: -18px;
+  right: -18px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-size: 20px;
+}
+
+.media-popup__nav {
+  top: 50%;
+  width: 44px;
+  height: 58px;
+  border-radius: 14px;
+  font-size: 22px;
+  transform: translateY(-50%);
+}
+
+.media-popup__nav:hover {
+  transform: translateY(-50%) scale(1.04);
+}
+
+.media-popup__prev {
+  left: -58px;
+}
+
+.media-popup__next {
+  right: -58px;
+}
+
+.media-popup__counter {
+  position: absolute;
+  left: 50%;
+  bottom: -34px;
+  transform: translateX(-50%);
+  min-width: 54px;
+  padding: 5px 12px;
+  border-radius: 99px;
+  background: rgba(0, 0, 0, .62);
+  color: #fff;
+  font-size: 13px;
+  text-align: center;
+}
+
+.media-popup__nav[hidden],
+.media-popup__counter[hidden] {
+  display: none;
+}
+
+body.media-popup-open {
+  overflow: hidden;
+}
+
 /* ================= RESPONSIVE ================= */
 @media (max-width: 1200px) {
   .reels-grid { grid-template-columns: repeat(3, 1fr); }
@@ -281,6 +398,32 @@ body {
 
 @media (max-width: 575px) {
   .reels-grid { grid-template-columns: 1fr; }
+  .media-popup {
+    padding: 18px;
+  }
+  .media-popup__content {
+    max-height: 86vh;
+  }
+  .media-popup__stage img,
+  .media-popup__stage video {
+    max-height: 86vh;
+  }
+  .media-popup__close {
+    top: 10px;
+    right: 10px;
+  }
+  .media-popup__prev {
+    left: 10px;
+  }
+  .media-popup__next {
+    right: 10px;
+  }
+  .media-popup__nav {
+    background: rgba(0, 0, 0, .72);
+  }
+  .media-popup__counter {
+    bottom: 12px;
+  }
 }
 </style>
 </head>
@@ -641,6 +784,22 @@ body {
     </div>
   </div>
 </section>
+
+<div class="media-popup" id="mediaPopup" aria-hidden="true">
+  <div class="media-popup__content" role="dialog" aria-modal="true" aria-label="Media preview">
+    <button class="media-popup__close" type="button" aria-label="Close preview">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <button class="media-popup__nav media-popup__prev" type="button" aria-label="Previous media">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <div class="media-popup__stage"></div>
+    <button class="media-popup__nav media-popup__next" type="button" aria-label="Next media">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+    <div class="media-popup__counter"></div>
+  </div>
+</div>
  
 <!-- ===== CTA ===== -->
 <section class="cta">
@@ -689,6 +848,132 @@ document.querySelectorAll(".reel-card.video video").forEach(video => {
     video.currentTime = 0;
   });
 });
+</script>
+
+<script>
+(() => {
+  const popup = document.getElementById("mediaPopup");
+  if (!popup) return;
+
+  document.body.appendChild(popup);
+
+  const stage = popup.querySelector(".media-popup__stage");
+  const closeButton = popup.querySelector(".media-popup__close");
+  const prevButton = popup.querySelector(".media-popup__prev");
+  const nextButton = popup.querySelector(".media-popup__next");
+  const counter = popup.querySelector(".media-popup__counter");
+  let items = [];
+  let currentIndex = 0;
+
+  const normalizeSrc = (src) => {
+    if (!src) return "";
+    return src.replace(window.location.origin + "/", "");
+  };
+
+  const pauseGridVideos = () => {
+    document.querySelectorAll(".reel-card.video video").forEach((video) => {
+      video.pause();
+      video.currentTime = 0;
+    });
+  };
+
+  const collectItems = (card) => {
+    const video = card.querySelector("video");
+    if (video) {
+      return [{
+        type: "video",
+        src: normalizeSrc(video.currentSrc || video.getAttribute("src"))
+      }];
+    }
+
+    return Array.from(card.querySelectorAll("img"))
+      .map((img) => ({
+        type: "image",
+        src: normalizeSrc(img.currentSrc || img.getAttribute("src")),
+        alt: img.getAttribute("alt") || "LubeEx preview"
+      }))
+      .filter((item) => item.src);
+  };
+
+  const updateControls = () => {
+    const hasMultiple = items.length > 1;
+    prevButton.hidden = !hasMultiple;
+    nextButton.hidden = !hasMultiple;
+    counter.hidden = !hasMultiple;
+    counter.textContent = hasMultiple ? `${currentIndex + 1} / ${items.length}` : "";
+  };
+
+  const renderItem = () => {
+    stage.innerHTML = "";
+    const item = items[currentIndex];
+    if (!item) return;
+
+    if (item.type === "video") {
+      const video = document.createElement("video");
+      video.src = item.src;
+      video.controls = true;
+      video.autoplay = true;
+      video.muted = true;
+      video.playsInline = true;
+      video.preload = "auto";
+      video.addEventListener("loadeddata", () => {
+        video.play().catch(() => {});
+      });
+      stage.appendChild(video);
+    } else {
+      const image = document.createElement("img");
+      image.src = item.src;
+      image.alt = item.alt;
+      stage.appendChild(image);
+    }
+
+    updateControls();
+  };
+
+  const openPopup = (nextItems) => {
+    items = nextItems;
+    currentIndex = 0;
+    pauseGridVideos();
+    renderItem();
+    popup.classList.add("is-open");
+    popup.setAttribute("aria-hidden", "false");
+    document.body.classList.add("media-popup-open");
+  };
+
+  const closePopup = () => {
+    popup.classList.remove("is-open");
+    popup.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("media-popup-open");
+    stage.querySelectorAll("video").forEach((video) => video.pause());
+    stage.innerHTML = "";
+  };
+
+  const showOffset = (offset) => {
+    if (!items.length) return;
+    currentIndex = (currentIndex + offset + items.length) % items.length;
+    renderItem();
+  };
+
+  document.querySelectorAll(".reel-card").forEach((card) => {
+    card.addEventListener("click", () => {
+      const nextItems = collectItems(card);
+      if (nextItems.length) openPopup(nextItems);
+    });
+  });
+
+  closeButton.addEventListener("click", closePopup);
+  prevButton.addEventListener("click", () => showOffset(-1));
+  nextButton.addEventListener("click", () => showOffset(1));
+  popup.addEventListener("click", (event) => {
+    if (event.target === popup) closePopup();
+  });
+  document.addEventListener("keydown", (event) => {
+    if (!popup.classList.contains("is-open")) return;
+    if (event.key === "Escape") closePopup();
+    if (event.key === "ArrowLeft") showOffset(-1);
+    if (event.key === "ArrowRight") showOffset(1);
+  });
+})();
 </script>
 
 </body>
