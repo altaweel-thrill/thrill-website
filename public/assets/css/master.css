@@ -104,6 +104,41 @@
   src: url("https://wealcoder.com/assets/fonts/newyork/FontsFree-Net-NewYork.ttf");
   font-weight: 400;
 }
+@font-face {
+  font-family: "Simah Zaza";
+  src: url("../fonts/simah-zaza/SimahZaza-Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Simah Zaza";
+  src: url("../fonts/simah-zaza/SimahZaza-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Simah Zaza";
+  src: url("../fonts/simah-zaza/SimahZaza-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Simah Zaza";
+  src: url("../fonts/simah-zaza/SimahZaza-SemiBold.otf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Simah Zaza";
+  src: url("../fonts/simah-zaza/SimahZaza-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 /*----------------------------------------*/
 /*  02. MIXIN CSS START
 /*----------------------------------------*/
@@ -31947,6 +31982,20 @@ ul.mega-menu-2.woocomerce-megamenu {
 
 .dir-rtl {
   direction: rtl;
+}
+html[lang="ar"],
+html[lang="ar"] body,
+.arabic-page {
+  font-family: "Simah Zaza", "Kanit", sans-serif;
+}
+.arabic-page :where(h1, h2, h3, h4, h5, h6, p, a, span, li, button, input, textarea, label, small, strong, em, div) {
+  font-family: "Simah Zaza", "Kanit", sans-serif;
+}
+.arabic-page :where(i, .fa, .fa-solid, .fa-regular, [class^="fa-"], [class*=" fa-"]) {
+  font-family: "Font Awesome 6 Free";
+}
+.arabic-page :where(.fa-brands) {
+  font-family: "Font Awesome 6 Brands";
 }
 .dir-rtl li {
   text-align: right;

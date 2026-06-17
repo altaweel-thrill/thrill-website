@@ -196,7 +196,7 @@
 .arabic-page input,
 .arabic-page textarea,
 .arabic-page button {
-  font-family: "Noto Sans Arabic", sans-serif;
+  font-family: "Simah Zaza", sans-serif;
 }
 
 .arabic-page .main-dropdown,
@@ -223,7 +223,7 @@
 
 .language-switch a[lang="ar"] {
   direction: rtl;
-  font-family: "Noto Sans Arabic", sans-serif;
+  font-family: "Simah Zaza", sans-serif;
 }
 
 .arabic-page .hero__inner-2 .sec-title-wrapper {
