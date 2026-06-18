@@ -226,6 +226,23 @@
   font-family: "Simah Zaza", sans-serif;
 }
 
+.arabic-page,
+.arabic-page * {
+  font-family: "Simah Zaza", sans-serif !important;
+}
+
+.arabic-page :where(i, .fa, .fa-solid, .fa-regular, [class^="fa-"], [class*=" fa-"]),
+.arabic-page :where(i, .fa, .fa-solid, .fa-regular, [class^="fa-"], [class*=" fa-"])::before,
+.arabic-page :where(i, .fa, .fa-solid, .fa-regular, [class^="fa-"], [class*=" fa-"])::after {
+  font-family: "Font Awesome 6 Free" !important;
+}
+
+.arabic-page :where(.fa-brands),
+.arabic-page :where(.fa-brands)::before,
+.arabic-page :where(.fa-brands)::after {
+  font-family: "Font Awesome 6 Brands" !important;
+}
+
 .arabic-page .hero__inner-2 .sec-title-wrapper {
   direction: rtl;
 }
