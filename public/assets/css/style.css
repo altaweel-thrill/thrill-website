@@ -196,7 +196,7 @@
 .arabic-page input,
 .arabic-page textarea,
 .arabic-page button {
-  font-family: "Simah Zaza", sans-serif;
+  font-family: "IBM Plex Sans Arabic", sans-serif;
 }
 
 .arabic-page .main-dropdown,
@@ -223,12 +223,12 @@
 
 .language-switch a[lang="ar"] {
   direction: rtl;
-  font-family: "Simah Zaza", sans-serif;
+  font-family: "IBM Plex Sans Arabic", sans-serif;
 }
 
 .arabic-page,
 .arabic-page * {
-  font-family: "Simah Zaza", sans-serif !important;
+  font-family: "IBM Plex Sans Arabic", sans-serif !important;
 }
 
 .arabic-page :where(i, .fa, .fa-solid, .fa-regular, [class^="fa-"], [class*=" fa-"]),
@@ -272,6 +272,10 @@
 .arabic-page .feature__text {
   padding-right: 85px;
   padding-left: 0;
+}
+
+.arabic-page .feature__top .sec-title {
+  line-height: 1.28;
 }
 
 .arabic-page .feature__text p,
