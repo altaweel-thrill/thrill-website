@@ -349,10 +349,7 @@ app.get('/algarawi',function(req,res){
   
 })
 
-app.get('/algarawi2',function(req,res){
-  res.render("algarawi2");
-  
-})
+
 
 app.get('/seapoint',function(req,res){
   res.render("seapoint");
