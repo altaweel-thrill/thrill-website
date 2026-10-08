@@ -1,0 +1,28 @@
+<title><%= pageTitle %></title>
+<meta name="description" content="<%= pageDescription %>">
+<% if (seo.noindex) { %>
+<meta name="robots" content="noindex, follow">
+<% } else { %>
+<link rel="canonical" href="<%= seo.url %>">
+<% } %>
+<% if (seo.alternates) { %>
+<link rel="alternate" hreflang="en" href="<%= seo.alternates.en %>">
+<link rel="alternate" hreflang="ar" href="<%= seo.alternates.ar %>">
+<link rel="alternate" hreflang="x-default" href="<%= seo.alternates.en %>">
+<% } %>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Thrill Agency">
+<meta property="og:title" content="<%= pageTitle %>">
+<meta property="og:description" content="<%= pageDescription %>">
+<meta property="og:url" content="<%= seo.url %>">
+<meta property="og:image" content="<%= seo.image %>">
+<meta property="og:image:alt" content="Thrill Agency">
+<meta property="og:locale" content="<%= seo.arabic ? 'ar_SA' : 'en_US' %>">
+<% if (seo.alternates) { %>
+<meta property="og:locale:alternate" content="<%= seo.arabic ? 'en_US' : 'ar_SA' %>">
+<% } %>
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="<%= pageTitle %>">
+<meta name="twitter:description" content="<%= pageDescription %>">
+<meta name="twitter:image" content="<%= seo.image %>">
+<meta name="twitter:image:alt" content="Thrill Agency">

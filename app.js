@@ -20,6 +20,24 @@ if (trustProxy) {
 }
 
 app.set("view engine", "ejs");
+const SITE_URL = "https://thrillagency.net";
+const translatedPages = ["/", "/about", "/service", "/portfolio", "/social-media", "/web-and-app", "/contact"];
+
+app.use((req, res, next) => {
+  const pagePath = req.path.replace(/\/+$/, "") || "/";
+  const arabic = pagePath === "/ar" || pagePath.startsWith("/ar/");
+  const englishPath = arabic ? pagePath.slice(3) || "/" : pagePath;
+  res.locals.seo = {
+    url: SITE_URL + pagePath,
+    arabic,
+    alternates: translatedPages.includes(englishPath)
+      ? { en: SITE_URL + englishPath, ar: SITE_URL + (englishPath === "/" ? "/ar" : "/ar" + englishPath) }
+      : null,
+    image: SITE_URL + "/assets/imgs/logo/site-logo-white-2.png",
+    noindex: englishPath === "/thanks",
+  };
+  next();
+});
 app.use(express.static(path.join(__dirname , '/public')));
 // app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: false, limit: "20kb", parameterLimit: 20 }))
@@ -451,7 +469,7 @@ Message: ${fields.message}
   }
 });
 app.get('/sitemap.xml', (req, res) => {
-  const baseUrl = 'https://thrillagency.net';
+  const baseUrl = SITE_URL;
 
   const pages = [
     '/',
@@ -494,7 +512,8 @@ app.get('/sitemap.xml', (req, res) => {
     '/ribbon',
     '/mora',
     '/nahj',
-    '/parkview'
+    '/parkview',
+    ...translatedPages.map(page => page === '/' ? '/ar' : '/ar' + page)
   ];
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
@@ -522,6 +541,8 @@ Sitemap: https://thrillagency.net/sitemap.xml`);
 
 
 app.get('*',function(req,res){
-    res.render("404");
+    res.locals.seo.noindex = true;
+    res.locals.seo.alternates = null;
+    res.status(404).render("404");
     
 })

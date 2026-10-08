@@ -6,9 +6,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="<%= isArabic ? 'شكراً لتواصلك مع وكالة ثريل' : 'Thank you for contacting Thrill Agency' %>">
 
-  <title><%= isArabic ? 'شكراً لتواصلك - وكالة ثريل' : 'Thank You - Thrill Agency' %></title>
+  <%- include('components/seo', { pageTitle: isArabic ? 'شكراً لتواصلك - وكالة ثريل' : 'Thank You - Thrill Agency', pageDescription: isArabic ? 'شكراً لتواصلك مع وكالة ثريل' : 'Thank you for contacting Thrill Agency' }) %>
   <% if (isArabic) { %><base href="/"><% } %>
 
   <!-- Fav Icon -->

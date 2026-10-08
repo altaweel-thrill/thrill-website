@@ -6,12 +6,9 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="<%= isArabic ? 'خدمات وكالة ثريل في الهوية البصرية والتواصل الاجتماعي والإنتاج الإعلامي والتطوير والتسويق' : 'creative Agency' %>">
 
-  <title><%= isArabic ? 'خدماتنا - وكالة ثريل' : 'Service - Thrill Agency' %></title>
+  <%- include('components/seo', { pageTitle: isArabic ? 'خدماتنا - وكالة ثريل' : 'Service - Thrill Agency', pageDescription: isArabic ? 'خدمات وكالة ثريل في الهوية البصرية والتواصل الاجتماعي والإنتاج الإعلامي والتطوير والتسويق' : 'creative Agency' }) %>
   <% if (isArabic) { %><base href="/"><% } %>
-  <link rel="alternate" hreflang="en" href="/service">
-  <link rel="alternate" hreflang="ar" href="/ar/service">
 
   <!-- Fav Icon -->
   <link rel="icon" type="image/x-icon" href="assets/imgs/logo/favicon.png">
