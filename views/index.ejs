@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <%- include('components/seo', { pageTitle: isArabic ? 'وكالة ثريل الإبداعية' : 'Thrill Agency', pageDescription: isArabic ? 'وكالة ثريل الإبداعية للتسويق والتصميم والحلول الرقمية' : 'creative Agency' }) %>
+  <%- include('components/seo') %>
   <% if (isArabic) { %><base href="/"><% } %>
 
   <!-- Fav Icon -->
@@ -93,7 +93,7 @@
   <div class="hero__inner-2">
     <div class="sec-title-wrapper">
       <h2 class="sec-title-3"><%= isArabic ? 'مرحباً ' : 'HELLO' %><br><%= isArabic ? '' : ' WE ARE' %></h2>
-      <h2 class="sec-title-3"><%= isArabic ? 'وكالة' : 'THRILL' %> <br><%= isArabic ? 'ثريل' : 'AGENCY' %></h2>
+      <h1 class="sec-title-3"><%= isArabic ? 'وكالة' : 'THRILL' %> <br><%= isArabic ? 'ثريل' : 'AGENCY' %></h1>
     </div>
     <div  class="hero__text-2 ">
       <p><%= isArabic

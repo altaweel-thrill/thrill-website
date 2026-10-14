@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <%- include('components/seo', { pageTitle: isArabic ? 'المواقع والتطبيقات - وكالة ثريل' : 'Websites and Apps - Thrill Agency', pageDescription: isArabic ? 'مختارات من مشاريع تصميم وتطوير المواقع والتطبيقات لدى وكالة ثريل' : 'Selected website and application projects by Thrill Agency' }) %>
+  <%- include('components/seo') %>
   <% if (isArabic) { %><base href="/"><% } %>
 
   <!-- Fav Icon -->
@@ -111,7 +111,7 @@
           <div class="container">
             <div class="row top_row">
 
-              <h2 class="portfolio__text"><%= isArabic ? 'المواقع والتطبيقات' : 'Websites' %><% if (!isArabic) { %><br>Apps<% } %></h2>
+              <h1 class="portfolio__text"><%= isArabic ? 'المواقع والتطبيقات' : 'Websites' %><% if (!isArabic) { %><br>Apps<% } %></h1>
               <div class="portfolio__list-1">
 
 

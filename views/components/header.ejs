@@ -1,5 +1,5 @@
 <% const headerIsArabic = typeof isArabic !== "undefined" && isArabic; %>
-<% const headerLanguageSwitchHref = typeof languageSwitchHref !== "undefined" ? languageSwitchHref : (headerIsArabic ? "/" : "/ar"); %>
+<% const headerLanguageSwitchHref = typeof languageSwitchHref !== "undefined" ? languageSwitchHref : (typeof seo !== "undefined" && seo.alternates ? new URL(headerIsArabic ? seo.alternates.en : seo.alternates.ar).pathname : (headerIsArabic ? "/" : "/ar")); %>
 <!-- Header area start -->
 <header class="header__area-2">
     <div class="header__inner-2">

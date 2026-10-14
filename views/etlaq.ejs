@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<% const isArabic = locale === "ar"; %>
+<html lang="<%= isArabic ? 'ar' : 'en' %>" dir="<%= isArabic ? 'rtl' : 'ltr' %>">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%- include('components/seo') %>
+
+<% if (isArabic) { %><base href="/"><% } %>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="icon" type="image/x-icon" href="assets/imgs/logo/favicon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/css/all.min.css">
+<link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+<link rel="stylesheet" href="assets/css/progressbar.css">
+<link rel="stylesheet" href="assets/css/meanmenu.min.css">
+<link rel="stylesheet" href="assets/css/master.css">
+<link rel="stylesheet" href="/assets/css/style.css">
+<% if (isArabic) { %>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<% } %>
+
+<style>
+body {
+  margin: 0;
+  background: #0a0a0a;
+  font-family: "Kanit", sans-serif;
+  color: #fff;
+}
+
+.page-header {
+  padding: 140px 0 80px;
+  text-align: center;
+}
+
+.page-header h1 {
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  font-weight: 600;
+  margin: 0;
+}
+
+.page-header p {
+  margin-top: 14px;
+  font-size: 16px;
+  color: #9f9f9f;
+}
+
+.reels-portfolio {
+  padding-bottom: 120px;
+}
+
+.container {
+  max-width: 1400px;
+  margin: auto;
+  padding: 0 24px;
+}
+
+.reels-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+}
+
+.reel-card {
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
+  background: #000;
+  cursor: pointer;
+}
+
+.reel-card .media {
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+}
+.reel-card .media2 {
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+}
+
+
+.reel-card img,
+.reel-card video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform .5s ease, filter .4s ease;
+}
+
+.reel-card .overlay {
+  position: absolute;
+  inset: 0;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
+  background: linear-gradient(transparent 45%, rgba(0, 0, 0, .9));
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .35s ease;
+}
+
+.reel-card:hover .overlay,
+.reel-card:focus-visible .overlay {
+  opacity: 1;
+  visibility: visible;
+}
+
+.reel-card:hover img,
+.reel-card:hover video {
+  filter: brightness(0.55);
+  transform: scale(1.05);
+}
+
+.overlay h4 {
+  margin: 4px 0 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.overlay p {
+  margin: 0;
+  font-size: 13px;
+  color: #d0d0d0;
+}
+
+.tag {
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 100px;
+  background: #ff0050;
+  width: fit-content;
+}
+
+.play-icon {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44px;
+  color: #fff;
+  opacity: 1;
+  transition: opacity .3s ease;
+  pointer-events: none;
+}
+
+.reel-card.video:hover .play-icon {
+  opacity: 0;
+}
+
+.reel-card .swiper,
+.reel-card .swiper-slide {
+  width: 100%;
+  height: 100%;
+}
+
+.reel-card .swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.multi-icon {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 4;
+  background: rgba(0,0,0,.6);
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cta {
+  border-top: 1px solid rgba(255,255,255,.08);
+  padding: 100px 24px;
+  text-align: center;
+}
+
+.cta span {
+  display: block;
+  font-size: 13px;
+  letter-spacing: .12em;
+  color: #888;
+  margin-bottom: 14px;
+}
+
+.cta h2 {
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  font-weight: 600;
+  margin: 0;
+}
+
+.cta a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 32px;
+  padding: 14px 28px;
+  border-radius: 100px;
+  background: #fff;
+  color: #000;
+  font-size: 15px;
+  text-decoration: none;
+  transition: transform .3s ease;
+}
+
+.cta a:hover {
+  transform: translateY(-3px);
+}
+
+.media-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  background: rgba(0, 0, 0, .88);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .25s ease, visibility .25s ease;
+}
+
+.media-popup.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.media-popup__content {
+  position: relative;
+  width: min(92vw, 720px);
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.media-popup__stage {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.media-popup__stage img,
+.media-popup__stage video {
+  max-width: 100%;
+  max-height: 90vh;
+  border-radius: 18px;
+  object-fit: contain;
+  background: #000;
+}
+
+.media-popup__stage video {
+  width: min(92vw, 520px);
+}
+
+.media-popup__close,
+.media-popup__nav {
+  position: absolute;
+  z-index: 2;
+  border: 0;
+  color: #fff;
+  background: rgba(0, 0, 0, .62);
+  cursor: pointer;
+  transition: background .2s ease, transform .2s ease;
+}
+
+.media-popup__close:hover,
+.media-popup__nav:hover {
+  background: rgba(255, 255, 255, .16);
+}
+
+.media-popup__close {
+  top: -18px;
+  right: -18px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-size: 20px;
+}
+
+.media-popup__nav {
+  top: 50%;
+  width: 44px;
+  height: 58px;
+  border-radius: 14px;
+  font-size: 22px;
+  transform: translateY(-50%);
+}
+
+.media-popup__nav:hover {
+  transform: translateY(-50%) scale(1.04);
+}
+
+.media-popup__prev {
+  left: -58px;
+}
+
+.media-popup__next {
+  right: -58px;
+}
+
+.media-popup__counter {
+  position: absolute;
+  left: 50%;
+  bottom: -34px;
+  transform: translateX(-50%);
+  min-width: 54px;
+  padding: 5px 12px;
+  border-radius: 99px;
+  background: rgba(0, 0, 0, .62);
+  color: #fff;
+  font-size: 13px;
+  text-align: center;
+}
+
+.media-popup__nav[hidden],
+.media-popup__counter[hidden] {
+  display: none;
+}
+
+body.media-popup-open {
+  overflow: hidden;
+}
+
+.etlaq-arabic .page-header,
+.etlaq-arabic .cta {
+  text-align: center;
+}
+
+.etlaq-arabic .cta span {
+  letter-spacing: 0;
+}
+
+.etlaq-arabic .overlay {
+  text-align: right;
+}
+
+/* Keep carousel gestures and physical preview arrows consistent in both languages. */
+.instaSwiper,
+.media-popup__content {
+  direction: ltr;
+}
+
+@media (max-width: 1200px) {
+  .reels-grid { grid-template-columns: repeat(3,1fr); }
+}
+@media (max-width: 991px) {
+  .reels-grid { grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width: 575px) {
+  .reels-grid { grid-template-columns: 1fr; }
+  .media-popup {
+    padding: 18px;
+  }
+  .media-popup__content {
+    max-height: 86vh;
+  }
+  .media-popup__stage img,
+  .media-popup__stage video {
+    max-height: 86vh;
+  }
+  .media-popup__close {
+    top: 10px;
+    right: 10px;
+  }
+  .media-popup__prev {
+    left: 10px;
+  }
+  .media-popup__next {
+    right: 10px;
+  }
+  .media-popup__nav {
+    background: rgba(0, 0, 0, .72);
+  }
+  .media-popup__counter {
+    bottom: 12px;
+  }
+}
+</style>
+  <%- include('components/google-analytics.ejs'); %>
+</head>
+
+<body class="dark<%= isArabic ? ' dir-rtl arabic-page etlaq-arabic' : '' %>">
+
+<div class="cursor1"></div>
+<div class="cursor2"></div>
+
+<%- include('components/loading.ejs'); -%>
+
+<div class="has-smooth" id="has_smooth" style="display:none"></div> 
+
+<button id="scroll_top" class="scroll-top">
+  <i class="fa-solid fa-arrow-up"></i>
+</button>
+
+<%- include('components/header', { isArabic, languageSwitchHref: isArabic ? '/etlaq' : '/ar/etlaq' }); -%>
+
+<div id="smooth-wrapper">
+<div id="smooth-content">
+<main>
+
+<section class="page-header">
+  <div class="container">
+    <h1><%= isArabic ? 'إطلاق' : 'ETLAQ' %></h1>
+    <p><%= isArabic ? 'بوستات وفيديوهات التواصل الاجتماعي' : 'Social Media Posts & Videos' %></p>
+  </div>
+</section>
+
+<section class="reels-portfolio">
+<div class="container">
+<%
+  const etlaqMedia = [
+    {
+        "type": "image",
+        "title": "عام الذكاء الاصطناعي",
+        "files": [
+            "ai-year.png"
+        ]
+    },
+    {
+        "type": "image",
+        "title": "فكرتك تستاهل أكثر من ذاكرتك",
+        "files": [
+            "idea.png"
+        ]
+    },
+    {
+        "type": "image",
+        "title": "الموهبة وحدها لا تكفي",
+        "files": [
+            "talented.png"
+        ]
+    },
+    {
+        "type": "image",
+        "title": "متواجدين عشانك",
+        "files": [
+            "launch.png"
+        ]
+    },
+    {
+        "type": "image",
+        "title": "مع إطلاق",
+        "files": [
+            "comparison.png"
+        ]
+    },
+    {
+        "type": "image",
+        "title": "الذكاء الاصطناعي يغيّر كل شيء",
+        "files": [
+            "ai.png"
+        ]
+    },
+    {
+        "type": "image",
+        "title": "خلّك شجاع وابدأ الآن",
+        "files": [
+            "start.png"
+        ]
+    },
+    {
+        "type": "image",
+        "title": "المنصة قاعدة تكبر",
+        "files": [
+            "growing.png"
+        ]
+    },
+    {
+        "type": "image",
+        "title": "اللي قبلك جرّب",
+        "files": [
+            "error.png"
+        ]
+    },
+    {
+        "type": "image",
+        "title": "الموهوبين يبدؤون وقت التخطيط",
+        "files": [
+            "planning.png"
+        ]
+    },
+    {
+        "type": "image",
+        "title": "فرصتك تبدأ الآن",
+        "files": [
+            "opportunity.png"
+        ]
+    },
+    {
+        "type": "image",
+        "title": "إطلاق.. الجسر بين فكرتك وسوقك الرقمي",
+        "files": [
+            "bridge.png"
+        ]
+    },
+    {
+        "type": "image",
+        "title": "خايف تسولف عن فكرتك ويسرقونها؟",
+        "files": [
+            "share.png"
+        ]
+    },
+    {
+        "type": "image",
+        "title": "ابنِ تطبيق أحلامك مع إطلاق",
+        "files": [
+            "dream-app.jpg"
+        ]
+    },
+    {
+        "type": "image",
+        "title": "اشترك مع آلاف الأشخاص",
+        "files": [
+            "community.jpg"
+        ]
+    },
+    {
+        "type": "image",
+        "title": "بعد سنة.. بتقول يا ليتني بدأت",
+        "files": [
+            "start-today.jpg"
+        ]
+    },
+    {
+        "type": "image",
+        "title": "تطبيقك في وقت قياسي",
+        "files": [
+            "fast-app.jpg"
+        ]
+    },
+    {
+        "type": "image",
+        "title": "سولف مع إطلاق",
+        "files": [
+            "talk.jpg"
+        ]
+    },
+    {
+        "type": "image",
+        "title": "عندك فكرة تطبيق؟",
+        "files": [
+            "app-idea.jpg"
+        ]
+    },
+    {
+        "type": "image",
+        "title": "إطلاق شريكك الرقمي",
+        "files": [
+            "digital-partner.jpg"
+        ]
+    },
+    {
+        "type": "image",
+        "title": "فكرتك + إطلاق = تطبيق جاهز",
+        "files": [
+            "ready-app.jpg"
+        ]
+    },
+    {
+        "type": "image",
+        "title": "يوم التأسيس",
+        "files": [
+            "founding-day.jpg"
+        ]
+    },
+    {
+        "type": "image",
+        "title": "يوم العلم السعودي",
+        "files": [
+            "flag-day.png"
+        ]
+    },
+    {
+        "type": "image",
+        "title": "عيدكم مبارك",
+        "files": [
+            "eid.png"
+        ]
+    },
+    {
+        "type": "image",
+        "title": "عيد أضحى مبارك",
+        "files": [
+            "eid-al-adha.png"
+        ]
+    },
+    {
+        "type": "image",
+        "title": "عام هجري جديد",
+        "files": [
+            "hijri-year.jpg"
+        ]
+    },
+    {
+        "type": "carousel",
+        "title": "٣ أشياء تمنع فكرتك من الانطلاق",
+        "files": [
+            "carousel-1-1.png",
+            "carousel-1-2.png",
+            "carousel-1-3.png"
+        ]
+    },
+    {
+        "type": "carousel",
+        "title": "من واتساب مليان شكاوى إلى منصة منظّمة",
+        "files": [
+            "carousel-2-1.png",
+            "carousel-2-2.png",
+            "carousel-2-3.png"
+        ]
+    },
+    {
+        "type": "video",
+        "title": "إطلاق — فيديو المنصة",
+        "files": [
+            "etlaq-reel.mp4"
+        ]
+    },
+    {
+        "type": "video",
+        "title": "إطلاق — فيديو العيد",
+        "files": [
+            "eid-reel.mp4"
+        ]
+    },
+    {
+        "type": "video",
+        "title": "إطلاق — فيديو الحملة",
+        "files": [
+            "campaign-reel.mp4"
+        ]
+    }
+];
+  const mediaBase = '/assets/imgs/portfolio/etlaq/';
+%>
+<div class="reels-grid">
+  <% etlaqMedia.forEach((item) => { %>
+  <div class="reel-card<%= item.type === 'video' ? ' video' : '' %>" role="button" tabindex="0" aria-label="<%= isArabic ? 'معاينة إطلاق: ' : 'Preview ETLAQ: ' %><%= item.title %>">
+    <div class="<%= item.type === 'video' ? 'media2' : 'media' %>">
+      <% if (item.type === 'video') { %>
+      <video src="<%= mediaBase + item.files[0] %>#t=0.1" preload="metadata" muted playsinline aria-label="<%= item.title %>"></video>
+      <span class="play-icon"><i class="fa-solid fa-play"></i></span>
+      <% } else if (item.type === 'carousel') { %>
+      <span class="multi-icon"><i class="fa-regular fa-clone"></i></span>
+      <div class="swiper instaSwiper">
+        <div class="swiper-wrapper">
+          <% item.files.forEach((file, index) => { %>
+          <div class="swiper-slide"><img src="<%= mediaBase + file %>" alt="إطلاق — <%= item.title %> — <%= index + 1 %>" loading="lazy" decoding="async"></div>
+          <% }); %>
+        </div>
+      </div>
+      <% } else { %>
+      <img src="<%= mediaBase + item.files[0] %>" alt="إطلاق — <%= item.title %>" loading="lazy" decoding="async">
+      <% } %>
+    </div>
+    <div class="overlay">
+      <span class="tag"><%= item.type === 'video' ? (isArabic ? 'فيديو' : 'Video') : item.type === 'carousel' ? (isArabic ? 'بوست متعدد الصور' : 'Carousel Post') : (isArabic ? 'بوست تواصل اجتماعي' : 'Social Media Post') %></span>
+      <h4><%= isArabic ? 'إطلاق' : 'ETLAQ' %></h4>
+      <p lang="ar" dir="rtl"><%= item.title %></p>
+    </div>
+  </div>
+  <% }); %>
+</div>
+</div>
+</section>
+
+<div class="media-popup" id="mediaPopup" aria-hidden="true">
+  <div class="media-popup__content" role="dialog" aria-modal="true" aria-label="<%= isArabic ? 'معاينة الوسائط' : 'Media preview' %>">
+    <button class="media-popup__close" type="button" aria-label="<%= isArabic ? 'إغلاق المعاينة' : 'Close preview' %>">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <button class="media-popup__nav media-popup__prev" type="button" aria-label="<%= isArabic ? 'الوسائط السابقة' : 'Previous media' %>">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <div class="media-popup__stage"></div>
+    <button class="media-popup__nav media-popup__next" type="button" aria-label="<%= isArabic ? 'الوسائط التالية' : 'Next media' %>">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+    <div class="media-popup__counter"></div>
+  </div>
+</div>
+
+<script src="assets/js/swiper-bundle.min.js"></script> 
+
+<script>
+document.querySelectorAll(".instaSwiper").forEach(swiperEl => {
+  new Swiper(swiperEl, {
+    slidesPerView: 1,
+    loop: true,
+    speed: 500
+  });
+});
+</script>
+
+ 
+<!-- ===== CTA ===== -->
+<section class="cta">
+  <span><%= isArabic ? 'اعمل معنا' : 'WORK WITH US' %></span>
+  <h2><%= isArabic ? 'يسعدنا أن نسمع عن مشروعك' : 'We would love to hear about your project' %></h2>
+  <a href="<%= isArabic ? '/ar/contact' : '/contact' %>">
+    <%= isArabic ? 'لنتحدث' : 'Let’s talk' %>
+    <i class="fa-solid <%= isArabic ? 'fa-arrow-left' : 'fa-arrow-right' %>"></i>
+  </a>
+</section>
+
+ </main>
+
+      <%- include('components/footer.ejs', { isArabic }); -%>
+
+    </div>
+  </div>
+
+
+  <!-- All JS files -->
+  <script src="assets/js/jquery-3.6.0.min.js"></script>
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/swiper-bundle.min.js"></script>
+  <script src="assets/js/counter.js"></script>
+  <script src="assets/js/gsap.min.js"></script>
+  <script src="assets/js/ScrollTrigger.min.js"></script>
+  <script src="assets/js/ScrollToPlugin.min.js"></script>
+  <script src="assets/js/ScrollSmoother.min.js"></script>
+  <script src="assets/js/SplitText.min.js"></script>
+  <script src="assets/js/chroma.min.js"></script>
+  <script src="assets/js/mixitup.min.js"></script>
+  <script src="assets/js/vanilla-tilt.js"></script>
+  <script src="assets/js/jquery.meanmenu.min.js"></script>
+  <script src="assets/js/main.js"></script>
+
+<script>
+document.querySelectorAll(".reel-card.video video").forEach(video => {
+  const card = video.closest(".reel-card");
+
+  card.addEventListener("mouseenter", () => {
+    if (!document.body.classList.contains("media-popup-open")) video.play().catch(()=>{});
+  });
+
+  card.addEventListener("mouseleave", () => {
+    video.pause();
+    video.currentTime = 0;
+  });
+});
+</script>
+
+<script>
+(() => {
+  const popup = document.getElementById("mediaPopup");
+  document.body.appendChild(popup);
+  const stage = popup.querySelector(".media-popup__stage");
+  const closeButton = popup.querySelector(".media-popup__close");
+  const prevButton = popup.querySelector(".media-popup__prev");
+  const nextButton = popup.querySelector(".media-popup__next");
+  const counter = popup.querySelector(".media-popup__counter");
+  let activeItems = [];
+  let activeIndex = 0;
+
+  const normalizeSrc = (src) => (src || "").replace(/\\/g, "/");
+
+  const pauseGridVideos = () => {
+    document.querySelectorAll(".reel-card.video video").forEach((video) => {
+      video.pause();
+      video.currentTime = 0;
+    });
+  };
+
+  const getCardItems = (card) => {
+    const video = card.querySelector("video");
+    if (video) {
+      return [{
+        type: "video",
+        src: normalizeSrc(video.currentSrc || video.getAttribute("src"))
+      }];
+    }
+
+    let images = Array.from(
+      card.querySelectorAll(".swiper-slide:not(.swiper-slide-duplicate) img")
+    );
+
+    if (!images.length) {
+      images = Array.from(card.querySelectorAll("img"));
+    }
+
+    const seen = new Set();
+    return images
+      .map((img) => ({
+        type: "image",
+        src: normalizeSrc(img.currentSrc || img.getAttribute("src")),
+        alt: img.getAttribute("alt") || <%- JSON.stringify(isArabic ? 'معاينة إطلاق' : 'ETLAQ preview') %>
+      }))
+      .filter((item) => {
+        if (!item.src || seen.has(item.src)) return false;
+        seen.add(item.src);
+        return true;
+      });
+  };
+
+  const renderActiveItem = () => {
+    const item = activeItems[activeIndex];
+    if (!item) return;
+
+    stage.innerHTML = "";
+
+    if (item.type === "video") {
+      const video = document.createElement("video");
+      video.src = item.src;
+      video.controls = true;
+      video.autoplay = true;
+      video.muted = true;
+      video.playsInline = true;
+      video.preload = "auto";
+      video.addEventListener("loadeddata", () => {
+        video.play().catch(() => {});
+      }, { once: true });
+      stage.appendChild(video);
+    } else {
+      const image = document.createElement("img");
+      image.src = item.src;
+      image.alt = item.alt || <%- JSON.stringify(isArabic ? 'معاينة إطلاق' : 'ETLAQ preview') %>;
+      stage.appendChild(image);
+    }
+
+    const hasMultipleItems = activeItems.length > 1;
+    prevButton.hidden = !hasMultipleItems;
+    nextButton.hidden = !hasMultipleItems;
+    counter.hidden = !hasMultipleItems;
+    counter.textContent = `${activeIndex + 1} / ${activeItems.length}`;
+  };
+
+  const openPopup = (items) => {
+    if (!items.length) return;
+    pauseGridVideos();
+    activeItems = items;
+    activeIndex = 0;
+    renderActiveItem();
+    popup.classList.add("is-open");
+    popup.setAttribute("aria-hidden", "false");
+    document.body.classList.add("media-popup-open");
+  };
+
+  const closePopup = () => {
+    popup.classList.remove("is-open");
+    popup.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("media-popup-open");
+    stage.querySelectorAll("video").forEach((video) => video.pause());
+    stage.innerHTML = "";
+    activeItems = [];
+    activeIndex = 0;
+  };
+
+  const showPrevious = () => {
+    if (activeItems.length < 2) return;
+    activeIndex = (activeIndex - 1 + activeItems.length) % activeItems.length;
+    renderActiveItem();
+  };
+
+  const showNext = () => {
+    if (activeItems.length < 2) return;
+    activeIndex = (activeIndex + 1) % activeItems.length;
+    renderActiveItem();
+  };
+
+  document.querySelectorAll(".reel-card").forEach((card) => {
+    card.addEventListener("click", () => openPopup(getCardItems(card)));
+    card.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openPopup(getCardItems(card));
+      }
+    });
+  });
+
+  closeButton.addEventListener("click", closePopup);
+  prevButton.addEventListener("click", showPrevious);
+  nextButton.addEventListener("click", showNext);
+
+  popup.addEventListener("click", (event) => {
+    if (event.target === popup) closePopup();
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (!popup.classList.contains("is-open")) return;
+    if (event.key === "Escape") closePopup();
+    if (event.key === "ArrowLeft") showPrevious();
+    if (event.key === "ArrowRight") showNext();
+  });
+})();
+</script>
+
+</body>
+</html>

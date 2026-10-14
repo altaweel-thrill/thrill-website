@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <%- include('components/seo', { pageTitle: isArabic ? 'التواصل الاجتماعي - وكالة ثريل' : 'Social Media - Thrill Agency', pageDescription: isArabic ? 'مختارات من مشاريع إدارة وصناعة محتوى التواصل الاجتماعي لدى وكالة ثريل' : 'Selected social media projects by Thrill Agency' }) %>
+  <%- include('components/seo') %>
   <% if (isArabic) { %><base href="/"><% } %>
 
   <!-- Fav Icon -->
@@ -198,71 +198,74 @@
                     
                   
                    <a href="/nahjroastery"><div class="brand__item-2 fade_bottom">
-                      <img class = "brand_img" src="assets/imgs/brands/29.png" width="140" alt="Brand Logo">
+                      <img class = "brand_img" src="assets/imgs/brands/29.png" width="140" alt="<%= isArabic ? 'أعمال التواصل الاجتماعي — Nahj Roastery' : 'Nahj Roastery social media portfolio' %>">
                     </div></a>
                    <a href="/park_view"><div class="brand__item-2 fade_bottom">
-                      <img class = "brand_img" src="assets/imgs/brands/1.png" width="140" alt="Brand Logo">
+                      <img class = "brand_img" src="assets/imgs/brands/1.png" width="140" alt="<%= isArabic ? 'أعمال التواصل الاجتماعي — PARK VIEW Residence' : 'PARK VIEW Residence social media portfolio' %>">
                     </div></a>
 
                      <a href="/luinii"><div class="brand__item-2 fade_bottom">
-                      <img class = "brand_img" src="assets/imgs/brands/18.png" width="140" alt="Brand Logo">
+                      <img class = "brand_img" src="assets/imgs/brands/18.png" width="140" alt="<%= isArabic ? 'أعمال التواصل الاجتماعي — Luini Bakery' : 'Luini Bakery social media portfolio' %>">
                     </div></a>
 
                        <a href="/hlayell"><div class="brand__item-2 fade_bottom">
-                      <img class = "brand_img" src="assets/imgs/brands/7.png" width="140" alt="Brand Logo">
+                      <img class = "brand_img" src="assets/imgs/brands/7.png" width="140" alt="<%= isArabic ? 'أعمال التواصل الاجتماعي — Hlayel' : 'Hlayel social media portfolio' %>">
                     </div></a>
 
                      <a href="/8portions"><div class="brand__item-2 fade_bottom">
-                      <img class = "brand_img" src="assets/imgs/brands/51.png" width="140" alt="Brand Logo">
+                      <img class = "brand_img" src="assets/imgs/brands/51.png" width="140" alt="<%= isArabic ? 'أعمال التواصل الاجتماعي — 8portions' : '8portions social media portfolio' %>">
                     </div></a>
 
                     <a href="/betula"><div class="brand__item-2 fade_bottom">
-                      <img class = "brand_img" style="max-width: 200px; max-height: 90px;" src="assets/imgs/brands/52.png" width="200" alt="Brand Logo">
+                      <img class = "brand_img" style="max-width: 200px; max-height: 90px;" src="assets/imgs/brands/52.png" width="200" alt="<%= isArabic ? 'أعمال التواصل الاجتماعي — Betula' : 'Betula social media portfolio' %>">
                     </div></a>
 
                     <a href="/nubull"><div class="brand__item-2 fade_bottom">
-                      <img class = "brand_img" src="assets/imgs/brands/53.png" width="140" alt="Brand Logo">
+                      <img class = "brand_img" src="assets/imgs/brands/53.png" width="140" alt="<%= isArabic ? 'أعمال التواصل الاجتماعي — Nubul' : 'Nubul social media portfolio' %>">
                     </div></a>
 
                       <a href="/lavish"><div class="brand__item-2 fade_bottom">
-                      <img class = "brand_img" src="assets/imgs/brands/54.png" width="140" alt="Brand Logo">
+                      <img class = "brand_img" src="assets/imgs/brands/54.png" width="140" alt="<%= isArabic ? 'أعمال التواصل الاجتماعي — Lavish Catering' : 'Lavish Catering social media portfolio' %>">
                     </div></a>
 
 
                      <a href="/allhazems"><div class="brand__item-2 fade_bottom">
-                      <img class = "brand_img" src="assets/imgs/brands/55.png" width="140" alt="Brand Logo">
+                      <img class = "brand_img" src="assets/imgs/brands/55.png" width="140" alt="<%= isArabic ? 'أعمال التواصل الاجتماعي — Alhazems' : 'Alhazems social media portfolio' %>">
                     </div></a>
 
                   <a href="/marissa"><div class="brand__item-2 fade_bottom">
-                      <img class = "brand_img" src="assets/imgs/brands/56.png" width="140" alt="Brand Logo">
+                      <img class = "brand_img" src="assets/imgs/brands/56.png" width="140" alt="<%= isArabic ? 'أعمال التواصل الاجتماعي — Marissa' : 'Marissa social media portfolio' %>">
                     </div></a>
                  
 
                         <a href="/sea_point"><div class="brand__item-2 fade_bottom">
-                      <img class = "brand_img" style="max-width: 200px; max-height: 90px;" src="assets/imgs/brands/57.png" width="200px" alt="Brand Logo">
+                      <img class = "brand_img" style="max-width: 200px; max-height: 90px;" src="assets/imgs/brands/57.png" width="200px" alt="<%= isArabic ? 'أعمال التواصل الاجتماعي — Sea Point' : 'Sea Point social media portfolio' %>">
                     </div></a>
 
                      <a href="/enma"><div class="brand__item-2 fade_bottom">
-                      <img class = "brand_img" style="max-width: 200px; max-height: 90px;" src="assets/imgs/brands/58.png" width="200px" alt="Brand Logo">
+                      <img class = "brand_img" style="max-width: 200px; max-height: 90px;" src="assets/imgs/brands/58.png" width="200px" alt="<%= isArabic ? 'أعمال التواصل الاجتماعي — ENMA BAY' : 'ENMA BAY social media portfolio' %>">
                     </div></a>
 
                     <a href="/tireex"><div class="brand__item-2 fade_bottom">
-                      <img class = "brand_img" style="max-width: 200px; max-height: 90px;" src="assets/imgs/brands/59.png" width="200px" alt="Brand Logo">
+                      <img class = "brand_img" style="max-width: 200px; max-height: 90px;" src="assets/imgs/brands/59.png" width="200px" alt="<%= isArabic ? 'أعمال التواصل الاجتماعي — TireEX' : 'TireEX social media portfolio' %>">
                     </div></a>
 
                     <a href="/lubeex"><div class="brand__item-2 fade_bottom">
-                      <img class = "brand_img" style="max-width: 200px; max-height: 90px;" src="assets/imgs/brands/60.png" width="200px" alt="Brand Logo">
+                      <img class = "brand_img" style="max-width: 200px; max-height: 90px;" src="assets/imgs/brands/60.png" width="200px" alt="<%= isArabic ? 'أعمال التواصل الاجتماعي — LubeEX' : 'LubeEX social media portfolio' %>">
                     </div></a>
 
                     <a href="/marsa"><div class="brand__item-2 fade_bottom">
-                      <img class = "brand_img" style="max-width: 200px; max-height: 90px;" src="assets/imgs/brands/61.png" width="200px" alt="Brand Logo">
+                      <img class = "brand_img" style="max-width: 200px; max-height: 90px;" src="assets/imgs/brands/61.png" width="200px" alt="<%= isArabic ? 'أعمال التواصل الاجتماعي — Marsa' : 'Marsa social media portfolio' %>">
                     </div></a>
 
                     <a href="/meetmoot"><div class="brand__item-2 fade_bottom">
-                      <img class = "brand_img" style="max-width: 200px; max-height: 90px;" src="assets/imgs/brands/62.png" width="200px" alt="Brand Logo">
+                      <img class = "brand_img" style="max-width: 200px; max-height: 90px;" src="assets/imgs/brands/62.png" width="200px" alt="<%= isArabic ? 'أعمال التواصل الاجتماعي — Meet Moot' : 'Meet Moot social media portfolio' %>">
                     </div></a>
 
 
+                    <a href="<%= isArabic ? '/ar/etlaq' : '/etlaq' %>"><div class="brand__item-2 fade_bottom">
+                      <img class = "brand_img" style="max-width: 200px; max-height: 90px;" src="assets/imgs/brands/63.png" width="200px" alt="<%= isArabic ? 'أعمال التواصل الاجتماعي — ETLAQ' : 'ETLAQ social media portfolio' %>">
+                    </div></a>
 
                   
 

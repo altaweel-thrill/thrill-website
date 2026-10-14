@@ -5,7 +5,9 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app"
+    "dev": "nodemon app",
+    "test:seo": "node --test tests/seo.test.js",
+    "test:contact": "node --test tests/contact-security.test.js tests/contact.test.js"
   },
   "author": "",
   "license": "ISC",

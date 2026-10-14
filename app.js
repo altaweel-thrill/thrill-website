@@ -1,7 +1,7 @@
 const express = require('express');
 const ejs = require('ejs');
 const path = require('path')
-const crypto = require('crypto');
+const { createContactSecurity } = require('./lib/contact-security');
 var nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
 const axios = require("axios");
@@ -20,22 +20,31 @@ if (trustProxy) {
 }
 
 app.set("view engine", "ejs");
-const SITE_URL = "https://thrillagency.net";
-const translatedPages = ["/", "/about", "/service", "/portfolio", "/social-media", "/web-and-app", "/contact"];
+const { SITE_URL, pages: seoPages, sitemapPaths, getSeo } = require("./lib/seo");
 
 app.use((req, res, next) => {
-  const pagePath = req.path.replace(/\/+$/, "") || "/";
-  const arabic = pagePath === "/ar" || pagePath.startsWith("/ar/");
-  const englishPath = arabic ? pagePath.slice(3) || "/" : pagePath;
-  res.locals.seo = {
-    url: SITE_URL + pagePath,
-    arabic,
-    alternates: translatedPages.includes(englishPath)
-      ? { en: SITE_URL + englishPath, ar: SITE_URL + (englishPath === "/" ? "/ar" : "/ar" + englishPath) }
-      : null,
-    image: SITE_URL + "/assets/imgs/logo/site-logo-white-2.png",
-    noindex: englishPath === "/thanks",
-  };
+  const hostname = (req.get("host") || "").toLowerCase().replace(/:\d+$/, "");
+  const isSiteDomain = hostname === "thrillagency.net" || hostname === "www.thrillagency.net";
+
+  if (isSiteDomain && (hostname !== "thrillagency.net" || !req.secure)) {
+    // Preserve form submissions when redirecting requests other than GET/HEAD.
+    const status = req.method === "GET" || req.method === "HEAD" ? 301 : 308;
+    return res.redirect(status, SITE_URL + req.originalUrl);
+  }
+
+  next();
+});
+
+app.use((req, res, next) => {
+  const normalizedPath = (req.path.replace(/\/+$/, "") || "/").toLowerCase();
+  const candidate = getSeo(normalizedPath);
+  const knownPage = seoPages[normalizedPath] ||
+    (candidate.arabic && seoPages[normalizedPath.slice(3) || "/"]?.arTitle);
+  if (knownPage && req.path !== normalizedPath) {
+    const query = req.originalUrl.slice(req.path.length);
+    return res.redirect(req.method === "GET" || req.method === "HEAD" ? 301 : 308, normalizedPath + query);
+  }
+  res.locals.seo = getSeo(req.path);
   next();
 });
 app.use(express.static(path.join(__dirname , '/public')));
@@ -43,20 +52,21 @@ app.use(express.static(path.join(__dirname , '/public')));
 app.use(bodyParser.urlencoded({ extended: false, limit: "20kb", parameterLimit: 20 }))
 
 var port = process.env.PORT || 3000;
-app.listen(port,function(){
+if (require.main === module) {
+  app.listen(port, function() {
     console.log('server started');
-});
+  });
+}
 
 const CONTACT_FORM_ACTION = "CONTACT_FORM";
-const CONTACT_FORM_MIN_AGE_MS = 2000;
-const CONTACT_FORM_MAX_AGE_MS = 4 * 60 * 60 * 1000;
-const configuredRecaptchaScore = Number(process.env.RECAPTCHA_MIN_SCORE);
+const configuredRecaptchaScore = process.env.RECAPTCHA_MIN_SCORE?.trim()
+  ? Number(process.env.RECAPTCHA_MIN_SCORE) : NaN;
 const RECAPTCHA_MIN_SCORE =
   Number.isFinite(configuredRecaptchaScore) &&
   configuredRecaptchaScore >= 0 &&
   configuredRecaptchaScore <= 1
     ? configuredRecaptchaScore
-    : 0.5;
+    : 0.7;
 const RECAPTCHA_ALLOWED_HOSTNAMES = new Set(
   (process.env.RECAPTCHA_ALLOWED_HOSTNAMES || "thrillagency.net,www.thrillagency.net,localhost,127.0.0.1")
     .split(",")
@@ -64,33 +74,32 @@ const RECAPTCHA_ALLOWED_HOSTNAMES = new Set(
     .filter(Boolean)
 );
 
-function getContactFormSecret() {
-  return process.env.CONTACT_FORM_SECRET || process.env.RECAPTCHA_SECRET;
-}
+const contactSecurity = createContactSecurity({
+  secret: process.env.CONTACT_FORM_SECRET || process.env.RECAPTCHA_SECRET,
+});
+const createContactFormToken = contactSecurity.issueToken;
+const RECAPTCHA_SITE_KEY = process.env.RECAPTCHA_SITE_KEY || "6LdZxNYsAAAAAFet6g0axs3w1JAcgaDY-vahAlLh";
 
-function createContactFormToken() {
-  const secret = getContactFormSecret();
-  if (!secret) return "";
-
-  const issuedAt = Date.now().toString();
-  const signature = crypto.createHmac("sha256", secret).update(issuedAt).digest("hex");
-  return `${issuedAt}.${signature}`;
-}
-
-function isValidContactFormToken(token) {
-  const secret = getContactFormSecret();
-  if (!secret || typeof token !== "string") return false;
-
-  const [issuedAt, signature, extra] = token.split(".");
-  if (extra || !/^\d+$/.test(issuedAt || "") || !/^[a-f0-9]{64}$/.test(signature || "")) {
-    return false;
+const contactErrors = {
+  spam: ["Unable to accept this request.", "تعذّر قبول هذا الطلب."],
+  token: ["The form expired or was already sent. Please try again.", "انتهت صلاحية الفورم أو تم إرساله سابقاً. حاول مرة أخرى."],
+  fields: ["Please check the name, email, phone, subject and message.", "تحقق من الاسم والبريد ورقم الهاتف والموضوع والرسالة."],
+  captcha: ["We could not verify your request. Please try again.", "تعذّر التحقق من طلبك. حاول مرة أخرى."],
+  duplicate: ["This message was already submitted. Please wait before sending it again.", "تم إرسال هذه الرسالة سابقاً. انتظر قبل إرسالها مجدداً."],
+  limit: ["Too many requests. Please try again later.", "تم تجاوز عدد الطلبات المسموح. حاول لاحقاً."],
+  unavailable: ["Sending is temporarily unavailable. Please try again later or contact us by email.", "الإرسال غير متاح مؤقتاً. حاول لاحقاً أو تواصل معنا عبر البريد."],
+};
+function contactError(req, res, status, code) {
+  const message = contactErrors[code][req.body?.locale === "ar" ? 1 : 0];
+  res.set('Cache-Control', 'no-store');
+  if (req.accepts(['html', 'json']) === 'json') {
+    return res.status(status).json({ error: message, contactFormToken: createContactFormToken() });
   }
-
-  const age = Date.now() - Number(issuedAt);
-  if (age < CONTACT_FORM_MIN_AGE_MS || age > CONTACT_FORM_MAX_AGE_MS) return false;
-
-  const expectedSignature = crypto.createHmac("sha256", secret).update(issuedAt).digest("hex");
-  return crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expectedSignature));
+  return res.status(status).send(message);
+}
+function renderContact(req, res, locale) {
+  res.set('Cache-Control', 'no-store');
+  res.render("contact", { locale, contactFormToken: createContactFormToken(), recaptchaSiteKey: RECAPTCHA_SITE_KEY });
 }
 
 function normalizeContactFields(body) {
@@ -176,6 +185,14 @@ app.get('/hlayell',function(req,res){
   res.render("hlayell");
   
 })
+
+app.get('/etlaq', function(req, res) {
+  res.render("etlaq", { locale: "en" });
+});
+
+app.get('/ar/etlaq', function(req, res) {
+  res.render("etlaq", { locale: "ar" });
+});
 
 app.get('/nahjroastery',function(req,res){
   res.render("nahjroastery");
@@ -329,12 +346,12 @@ app.get('/parkview',function(req,res){
 
 
 app.get('/contact',function(req,res){
-            res.render("contact", { locale: "en", contactFormToken: createContactFormToken() });
+            renderContact(req, res, "en");
 
 })
 
 app.get('/ar/contact',function(req,res){
-            res.render("contact", { locale: "ar", contactFormToken: createContactFormToken() });
+            renderContact(req, res, "ar");
 
 })
 
@@ -384,36 +401,34 @@ const contactLimiter = rateLimit({
   limit: 3,
   standardHeaders: true,
   legacyHeaders: false,
-  message: "Too many contact requests. Please try again later.",
+  handler: (req, res) => contactError(req, res, 429, "limit"),
 });
 
 app.post("/contact", contactLimiter, async (req, res) => {
   const { recaptchaToken, website, locale, contactFormToken } = req.body;
   const fields = normalizeContactFields(req.body);
 
-  if (website) return res.status(400).send("Spam detected");
-  if (!isValidContactFormToken(contactFormToken)) {
-    return res.status(400).send("Invalid form submission");
+  if (website) return contactError(req, res, 400, "spam");
+  if (!contactSecurity.isValidToken(contactFormToken)) {
+    return contactError(req, res, 400, "token");
   }
   if (!hasValidContactFields(fields)) {
-    return res.status(400).send("Invalid form fields");
+    return contactError(req, res, 400, "fields");
   }
   if (!recaptchaToken || typeof recaptchaToken !== "string" || recaptchaToken.length > 4096) {
-    return res.status(400).send("Captcha failed");
+    return contactError(req, res, 400, "captcha");
   }
 
+  if (!process.env.RECAPTCHA_SECRET || !process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+    return contactError(req, res, 503, "unavailable");
+  }
+
+  let reservation;
   try {
     const verify = await axios.post(
       "https://www.google.com/recaptcha/api/siteverify",
-      null,
-      {
-        params: {
-          secret: process.env.RECAPTCHA_SECRET,
-          response: recaptchaToken,
-          remoteip: req.ip,
-        },
-        timeout: 5000,
-      }
+      new URLSearchParams({ secret: process.env.RECAPTCHA_SECRET, response: recaptchaToken, remoteip: req.ip }).toString(),
+      { headers: { "Content-Type": "application/x-www-form-urlencoded" }, timeout: 5000 }
     );
 
     const captcha = verify.data || {};
@@ -438,11 +453,20 @@ app.post("/contact", contactLimiter, async (req, res) => {
         action: captcha.action,
         hostname: captchaHostname,
       });
-      return res.status(400).send("Captcha failed");
+      return contactError(req, res, 400, "captcha");
+    }
+
+    reservation = contactSecurity.reserve(contactFormToken, fields);
+    if (reservation.error) {
+      const reason = reservation.error === "duplicate" ? "duplicate" : reservation.error === "invalid-token" ? "token" : "limit";
+      return contactError(req, res, reason === "token" ? 400 : 429, reason);
     }
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
+      connectionTimeout: 10000,
+      greetingTimeout: 10000,
+      socketTimeout: 20000,
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
@@ -452,6 +476,7 @@ app.post("/contact", contactLimiter, async (req, res) => {
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: "hello@thrillagency.net",
+      replyTo: fields.email,
       subject: "Contact Form - Thrill",
       text: `
 Name: ${fields.name}
@@ -462,72 +487,28 @@ Message: ${fields.message}
       `,
     });
 
-    return res.redirect(locale === "ar" ? "/ar/thanks" : "/thanks");
+    const redirect = locale === "ar" ? "/ar/thanks" : "/thanks";
+    if (req.accepts(['html', 'json']) === 'json') return res.json({ redirect });
+    return res.redirect(303, redirect);
   } catch (err) {
-    console.error("Contact form error:", err.message);
-    return res.status(500).send("Server error");
+    if (reservation?.rollback) reservation.rollback();
+    console.error("Contact form error:", err.code || "CONTACT_SEND_FAILED");
+    return contactError(req, res, 503, "unavailable");
   }
 });
 app.get('/sitemap.xml', (req, res) => {
-  const baseUrl = SITE_URL;
-
-  const pages = [
-    '/',
-    '/service',
-    '/card',
-    '/social-media',
-    '/privacy-policy',
-    '/about',
-    '/web-and-app',
-    '/contact',
-    '/portfolio',
-    '/flowy',
-    '/hlayel',
-    '/algarawi',
-    '/seapoint',
-    '/luini',
-    '/8portions',
-    '/hlayell',
-    '/nahjroastery',
-    '/nubull',
-    '/lavish',
-    '/park_view',
-    '/betula',
-    '/luinii',
-    '/marissa',
-    '/allhazems',
-    '/sea_point',
-    '/enma',
-    '/lubeex',
-    '/tireex',
-    '/marsa',
-    '/meetmoot',
-    '/aqed',
-    '/gsf',
-    '/louga',
-    '/bazar',
-    '/moheet',
-    '/mood-code',
-    '/nubul',
-    '/ribbon',
-    '/mora',
-    '/nahj',
-    '/parkview',
-    ...translatedPages.map(page => page === '/' ? '/ar' : '/ar' + page)
-  ];
-
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${pages.map(page => `
-  <url>
-    <loc>${baseUrl}${page}</loc>
-    <changefreq>weekly</changefreq>
-    <priority>${page === '/' ? '1.0' : '0.8'}</priority>
-  </url>`).join('')}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${sitemapPaths.map(page => {
+  const { alternates } = getSeo(page);
+  const languages = alternates ? Object.entries({ ...alternates, "x-default": alternates.en })
+    .map(([language, href]) => `    <xhtml:link rel="alternate" hreflang="${language}" href="${href}" />`).join("\n") : "";
+  return `  <url>
+    <loc>${SITE_URL}${page}</loc>${languages ? "\n" + languages : ""}
+  </url>`;
+}).join("\n")}
 </urlset>`;
-
-  res.header('Content-Type', 'application/xml');
-  res.send(sitemap);
+  res.type('application/xml').send(sitemap);
 });
 
 
@@ -546,3 +527,5 @@ app.get('*',function(req,res){
     res.status(404).render("404");
     
 })
+
+module.exports = app;
