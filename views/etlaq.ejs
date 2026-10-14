@@ -681,7 +681,7 @@ body.media-popup-open {
 </div>
 </section>
 
-<div class="media-popup" id="mediaPopup" aria-hidden="true">
+<div class="media-popup" id="mediaPopup" aria-hidden="true" data-preview-alt="<%= isArabic ? 'معاينة إطلاق' : 'ETLAQ preview' %>">
   <div class="media-popup__content" role="dialog" aria-modal="true" aria-label="<%= isArabic ? 'معاينة الوسائط' : 'Media preview' %>">
     <button class="media-popup__close" type="button" aria-label="<%= isArabic ? 'إغلاق المعاينة' : 'Close preview' %>">
       <i class="fa-solid fa-xmark"></i>
@@ -762,6 +762,7 @@ document.querySelectorAll(".reel-card.video video").forEach(video => {
 <script>
 (() => {
   const popup = document.getElementById("mediaPopup");
+  const previewAlt = popup.dataset.previewAlt || "ETLAQ preview";
   document.body.appendChild(popup);
   const stage = popup.querySelector(".media-popup__stage");
   const closeButton = popup.querySelector(".media-popup__close");
@@ -802,7 +803,7 @@ document.querySelectorAll(".reel-card.video video").forEach(video => {
       .map((img) => ({
         type: "image",
         src: normalizeSrc(img.currentSrc || img.getAttribute("src")),
-        alt: img.getAttribute("alt") || <%- JSON.stringify(isArabic ? 'معاينة إطلاق' : 'ETLAQ preview') %>
+        alt: img.getAttribute("alt") || previewAlt
       }))
       .filter((item) => {
         if (!item.src || seen.has(item.src)) return false;
@@ -832,7 +833,7 @@ document.querySelectorAll(".reel-card.video video").forEach(video => {
     } else {
       const image = document.createElement("img");
       image.src = item.src;
-      image.alt = item.alt || <%- JSON.stringify(isArabic ? 'معاينة إطلاق' : 'ETLAQ preview') %>;
+      image.alt = item.alt || previewAlt;
       stage.appendChild(image);
     }
 
