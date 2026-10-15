@@ -215,6 +215,18 @@
   margin-left: 24px;
 }
 
+/* Anchor RTL dropdowns to the right edge of their parent menu item. */
+.arabic-page .main-menu > li > .main-dropdown {
+  right: 0;
+  left: auto;
+}
+
+.arabic-page .main-menu > li:focus-within > .main-dropdown {
+  top: 75px;
+  opacity: 1;
+  visibility: visible;
+}
+
 .language-switch a {
   color: var(--pink) !important;
   font-weight: 600 !important;
